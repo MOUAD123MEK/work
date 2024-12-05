@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="demo1.html" method="get" style="width:900px; border:1px solid blue; padding:10px;border-radius:20px 0px;background:linear-gradient(to left,yellow,orange);">
+        <fieldset>
+            <legend>Informations</legend>
+        <table cellspacing="10" width="50%">
+            <tr><td><label for="lname">Last Name : </label></td><td><input id="lname" type="text" size="60" placeholder="saisir votre nom ..." required></td></tr>
+            <tr><td><label for="fname">Last Name : </label></td><td><input id="fname" type="text" size="60" placeholder="saisir votre prenom ..." required></td></tr>
+            <tr><td><label for="email">Email : </label></td><td><input id="email" type="email" size="60" placeholder="saisir votre email ..." required></td></tr>
+            <tr><td><label for="url">Site Web : </label></td><td><input id="url" type="url" size="60" placeholder="saisir votre url ..." required></td></tr>
+            <tr><td><label for="color">Coleur : </label></td><td><input id="color" type="color" size="60" placeholder="saisir votre prenom ..." required></td></tr>
+            <tr><td><label for="city">City : </label></td>
+                <td>
+                    <select style="width:430px">
+                    <option disabled selected >please choose a city ....!</option>
+                    <option>Casablanca</option>
+                    <option>Rabat</option>
+                    <option>Safi</option>
+                    </select>
+                </td></tr>
+           
+            <tr><td><label for="gender">Gente : </label></td>
+                <td><input id="gender" name="gender" checked type="radio" /> Male&nbsp;&nbsp;&nbsp;<input id="gender" name="gender" type="radio" /> Female
+            
+            
+            </td></tr>
+
+  <tr><td><label for="lng">Langues </label></td>
+    <td>
+        <input id="lng" type="checkbox" value="arabe"> Arabe &nbsp;&nbsp; <input id="lng" type="checkbox" value="français"> Français <br>
+        <input id="lng" type="checkbox" value="allemagne"> allemagne &nbsp;&nbsp; <input id="lng" type="checkbox" value="italie"> Italie <br>
+    </td></tr>
+    <tr><td><label for="exp">Exprerience : </label></td>
+        <td><input id="exp"   type="number" min="1" max="40"  style="width:430px"/> 
+    
+    
+    </td></tr>
+    <tr><td><label for="adress">Adress : </label></td><td>
+          <textarea id="adress" cols="50" rows="5"></textarea>
+
+
+    </td></tr>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend>Actions</legend>
+        <button type="reset">Vider</button>
+        <button type="submit">Envoyer</button>
+
+    </fieldset>
+    </form>
+</body>
+</html>

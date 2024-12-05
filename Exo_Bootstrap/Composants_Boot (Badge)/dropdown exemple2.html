@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Folders</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
+    }
+    .folder-list {
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .folder-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      color: #333;
+    }
+    .folder-item:nth-child(1) { background-color: #d0e7ff; } /* Inbox */
+    .folder-item:nth-child(2) { background-color: #d8f3dc; } /* Sent */
+    .folder-item:nth-child(3) { background-color: #fddede; } /* Spam */
+    .folder-item:nth-child(4) { background-color: #fff7cd; } /* Drafts */
+    .folder-item:nth-child(5) { background-color: #d6d6d6; } /* Starred */
+    .badge {
+      background-color: #007bff;
+      color: #fff;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="folder-list">
+    <div class="folder-item">
+      Inbox <span class="badge">31</span>
+    </div>
+    <div class="folder-item">
+      Sent <span class="badge">6</span>
+    </div>
+    <div class="folder-item">
+      Spam <span class="badge">125</span>
+    </div>
+    <div class="folder-item">
+      Drafts <span class="badge">3</span>
+    </div>
+    <div class="folder-item">
+      Starred <span class="badge">8</span>
+    </div>
+  </div>
+</body>
+</html>

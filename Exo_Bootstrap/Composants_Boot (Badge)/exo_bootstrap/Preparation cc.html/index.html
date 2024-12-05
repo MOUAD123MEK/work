@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        * {
+            box-sizing: border-box;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 5%;
+        }
+
+        .main {
+            width: 65%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .main > iframe {
+            max-width: 100%
+        }
+
+        .playlist {
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+            height: 100%;
+            gap: 2%;
+            padding-left: 1%;
+            border-left: 1px solid gray;
+            overflow: auto;
+            padding: 1%;
+        }
+
+        .playlist-item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 2%;
+            outline: 1px solid gray;
+            border-radius: 5px;
+            padding-inline: 2%;
+            padding-block: 3%;
+        }
+
+        .playlist-item > .title {
+            font-size: 0.8em;
+        }
+        .img-size {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/iH453EXuj54?si=lgIzpzwssY31DL26" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <p class="video-title">How to TAKEOFF, FLY and LAND a HELICOPTER?</p>
+        </div>
+        <div class="playlist">
+            <div class="playlist-item">
+                <div class="thumbnail">
+                    <img class="img-size" src="./thumbnails/learnManualThumbnail.jpg" alt="">
+                </div>
+                <div class="title">
+                    <p>How to drive a manual car - Driving lesson with clutch advice</p>
+                </div>
+            </div>
+
+            <div class="playlist-item">
+                <div class="thumbnail">
+                    <img class="img-size" src="./thumbnails/LearnToRideBike.jpg" alt="">
+                </div>
+                <div class="title">
+                    <p>How to ride a motorcycle BY YOURSELF for the FIRST time!</p>
+                </div>
+            </div>
+            
+            <div class="playlist-item">
+                <div class="thumbnail">
+                    <img class="img-size" src="./thumbnails/driftingThumbnail.jpg" alt="">
+                </div>
+                <div class="title">
+                    <p>Drifting Tutorial for Beginners - Learn How to Drift</p>
+                </div>
+            </div>
+
+            <div class="playlist-item">
+                <div class="thumbnail">
+                    <img class="img-size" src="./thumbnails/driftingThumbnail.jpg" alt="">
+                </div>
+                <div class="title">
+                    <p>Drifting Tutorial for Beginners - Learn How to Drift</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

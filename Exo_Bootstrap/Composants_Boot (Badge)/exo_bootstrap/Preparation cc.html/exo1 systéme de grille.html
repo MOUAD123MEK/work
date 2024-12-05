@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grille 3x3</title>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 10px; 
+        }
+
+        .grid-container div{
+            background-color: lightblue;
+            border-radius: 10px;
+            display: grid;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Grille 3x3</h1>
+    <div class="grid-container">
+        <div class="grid-item">a</div>
+        <div class="grid-item">b</div>
+        <div class="grid-item">c</div>
+        <div class="grid-item">d</div>
+        <div class="grid-item">e</div>
+        <div class="grid-item">f</div>
+        <div class="grid-item">g</div>
+        <div class="grid-item">h</div>
+        <div class="grid-item">i</div>
+    </div>
+</body>
+</html>
+
+
+

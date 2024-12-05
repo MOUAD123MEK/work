@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <style type="text/css">
+      
+    .grid-container {
+  display: grid;
+  grid-template-columns: 100px 100px 100px; 
+  grid-template-rows: 50px 50px; 
+  grid-template-columns: repeat(3, 1fr);
+  display: grid;
+  grid-gap: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  background-color: aqua;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-item">a</div>
+        <div class="grid-item">b</div>
+        <div class="grid-item">c</div>
+        <div class="grid-item">d</div>
+        <div class="grid-item">e</div>
+
+    </div>
+</body>
+</html>

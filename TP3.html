@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index.html</title>
+    <h1>Atelier1</h1>
+    <h1>Plan de cours</h1>
+    <ul>
+    <li>Les paragraphes</li>
+    <li>Les liens hypertextee</li>
+    <li>Les images</li>
+    <li>Les listes</li>
+    <li>Les tableaux</li>
+    </ul>
+</head>
+<body>
+    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Atelier2</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+</head>
+<body>
+    <h1>Atelier2</h1>
+    <tr>
+    <table  border="2">
+        <tr>
+            <td>Nom</td>
+            <th style="text-align: left;"><input type="text" size=30  placeholder="Entrez votre nom"></th>
+        </tr>
+
+        <tr>
+            <td>Prénom</td>  
+            <th style="text-align: left;"><input type="text" size=30 placeholder="Entrez votre prénom"></th>
+         </tr>
+
+        <tr>
+            <td>Sexe</td>
+            <td><input type="radio" =30><label for="radio">Féminin</label><input type="radio" =30><label for="radio">Masculin</td></td>
+        </tr>
+
+            <td>Date de naissance</td>
+            <th style="text-align: left;"><input type="date"></th>
+        </tr>
+
+            <td>Niveau d'étude</td>
+            <th style="text-align: left;"><select name="select">
+                <option value="" selected disabled hidden>selectionner une option</option>
+                <option>1ère année Collège</option>
+                <option>2ème année Collège</option>
+                <option>3ème année Collège</option>
+                </select></th>
+        <tr>
+
+            <td>Spécialité</td>
+            <th style="text-align: left;"><input list="Specialite"><datalist id="Specialite">
+              <!-- vos options ici -->
+            </datalist></th>
+        </tr>
+        
+            <td>Téléphone</td>  
+            <th style="text-align: left;"><input type="tel" size="30"></th>
+        </tr>
+
+            <td>Email</td>  
+            <th style="text-align: left;"><input type="email" size="30"></th>
+        </tr>
+
+            <td>Site web personnel</td>  
+            <th style="text-align: left;"><input type="url" size="30"></th>
+        </tr>
+
+            <td>Adresse</td>  
+            <th><textarea name="Adresse" id="Adresse" cols="40" rows="5" ></textarea></th>    
+        </tr>
+
+            <td>Photo</td>
+            <th style="text-align: left;"><input type="file"></th>
+        </tr>
+  </tr>
+    </table>
+    
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Atelier3</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <h1>Atelier3</h1>
+  <form action="">
+    <fieldset style="border-radius: 10px; border-width: 3px; width: 500px; height: 250px;">
+      <legend><b>Vos coordonnées</b></legend>
+      <table border="0">
+        <tr>
+          <td>Nom :</td>
+          <th style="display: block; text-align: left;">
+            <input type="text" size="30" placeholder="votre nom">
+          </th>
+        </tr>
+        <tr>
+          <td>Prénom :</td>
+          <th style="display: block; text-align: left;">
+            <input type="text" size="30" placeholder="votre prénom">
+          </th>
+        </tr>
+        <tr>
+          <td>Date de naissance :</td>
+          <th style="display: block; text-align: left;">
+            <input type="date">
+          </th>
+        </tr>
+        <tr>
+          <td>Mail :</td>
+          <th style="display: block; text-align: left;">
+            <input type="email" size="30" placeholder="votre mail">
+          </th>
+        </tr>
+        <tr>
+          <td>Votre site :</td>
+          <th style="display: block; text-align: left;">
+            <input type="url" size="30">
+          </th>
+        </tr>
+        <tr>
+          <td>Code :</td>
+          <th style="display: block; text-align: left;">
+            <input type="text" size="30">
+          </th>
+        </tr>
+        <tr>
+          <td>Genre :</td>
+          <td>
+            <input type="radio" name="genre" id="homme" value="homme">
+            <label for="homme">Homme</label>
+            <br>
+            <input type="radio" name="genre" id="femme" value="femme">
+            <label for="femme">Femme</label>
+          </td>
+        </tr>
+        <tr>
+          <td>Pays :</td>
+          <th style="text-align: left;">
+            <select name="pays" id="pays">
+              <option value="" selected disabled hidden>Votre pays</option>
+              <option>Agadir</option>
+              <option>Inezgane</option>
+              <option>AitMelloul</option>
+            </select>
+          </th>
+        </tr>
+      </table>
+    </fieldset>
+  </form>
+  <form action="">
+    <fieldset style="border-radius: 10px; border-width: 3px; width: 500px; height: 170px;">
+      <legend><b>Vos goûts</b></legend>
+      <table border="0">
+        <tr>
+          <td>
+            <input type="checkbox" name="gout1" id="gout1"> Tarte aux fraises à la crème d'amandes <br>
+            <input type="checkbox" name="gout2" id="gout2"> Tarte aux prunes <br>
+            <input type="checkbox" name="gout3" id="gout3"> Tarte rustique aux mirabelles de Lorraine, noisettes et miel <br>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <textarea name="Adresse" id="Adresse" cols="40" rows="5" placeholder="Décriver vos goûts en détail"></textarea><br>
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+  </form>
+  <form action="">
+    <fieldset style="border-radius: 10px; border-width: 3px; width: 500px; height: 70px;">
+      <legend><b>Envoyer nous votre photo</b></legend>
+      <table border="0">
+        <tr>
+          <th style="text-align: left;">
+            <input type="file">
+          </th>
+        </tr>
+        <tr>
+          <th style="text-align: left;">
+            <button>Effacer</button>
+          </th>
+          <th style="text-align: left;">
+            <button>Envoyer</button>
+          </th>
+        </tr>
+      </table>
+    </fieldset>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Atelier4</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body> 
+    <h1>Atelier4</h1>
+    <tr>
+        <form action="">
+            <fieldset style="
+              border-radius: 0px; 
+              border-width: 3px; 
+              width: 500px; 
+              height: 350px;
+              border-top-right-radius: 70px; 
+              border-top-left-radius: 0px;
+              background-color: aqua;
+            ">
+              <legend><b>Vos coordonnées</b></legend>
+              <table border="0">
+                <tr>
+                <td>Nom</td>
+                <th style="text-align: left;"><input type="text" size=30 ></th>
+            </tr>
+    
+            <tr>
+                <td>Prénom</td>  
+                <th style="text-align: left;"><input type="text" size=30 ></th>
+             </tr>
+    
+            <tr>
+                <td>Sexe</td>
+                <td><input type="radio" =30><label for="radio">Féminin</label><input type="radio" =30><label for="radio">Masculin</td></td>
+            </tr>
+    
+                <td>Date de naissance</td>
+                <th style="text-align: left;"><input type="date"></th>
+            </tr>
+    
+                <td>Niveau d'étude</td>
+                <th style="text-align: left;"><select name="select">
+                    <option value="" selected disabled hidden>selectionner une option</option>
+                    <option>1ère année Collège</option>
+                    <option>2ème année Collège</option>
+                    <option>3ème année Collège</option>
+                    </select></th>
+            <tr>
+    
+                <td>Spécialité</td>
+                <th style="text-align: left;"><input list="Specialite"><datalist id="Specialite">
+                  <!-- vos options ici -->
+                </datalist></th>
+            </tr>
+            
+                <td>Téléphone</td>  
+                <th style="text-align: left;"><input type="tel" size="30"></th>
+            </tr>
+    
+                <td>Email</td>  
+                <th style="text-align: left;"><input type="email" size="30"></th>
+            </tr>
+    
+                <td>Site web personnel</td>  
+                <th style="text-align: left;"><input type="url" size="30"></th>
+            </tr>
+    
+                <td>Adresse</td>  
+                <th><textarea name="Adresse" id="Adresse" cols="40" rows="5" ></textarea></th>    
+            </tr>
+    
+                <td>Photo</td>
+                <th style="text-align: left;"><input type="file"></th>
+            </tr>
+      </tr>
+        </table>  
+  </body>
+</html>

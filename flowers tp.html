@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ex01</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style type="text/css">
+        .cont{
+            width: 80%;
+            margin: auto;
+        }
+        .header{
+            width: 90%;
+            height: 120px;
+            background-color: #fdedfb;
+            margin: auto;
+        }
+        ul{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        li{
+            list-style-type: none;
+            padding: 10px;
+            color:rgb(245,140,210) ;
+        }
+        a{
+            font-size: 20px;
+            color:rgb(245,140,210) ;
+            margin-right: 15px;
+            font-weight: bold;
+            font-style: italic;
+        }
+        .section{
+            margin: 30px;
+        }
+        #shop{
+            width:80%;
+            height:300px;
+        }
+        figure{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .section figcaption{
+            font-size: 2em;
+            text-transform: uppercase;
+        }
+        .bouquet{
+            width: 90%;
+            height: 120px;
+            background-color: #fdedfb;
+            margin: auto;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-block: 100px;
+        }
+        .one{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .product{
+            width: 150px;
+            height: 150px;
+        }
+        button{
+            width: 150px;
+            height: 40px;
+            background-color: rgb(245,140,210);
+            border: none;
+            color: white;
+            width: 90%;
+        }
+        .one:hover{
+            border:2px solid rgb(245,140,210);
+        }
+        @media(max-width:800px){
+            ul{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #shop{
+                visibility: hidden;
+            }
+            .bouquet{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cont">
+        <div class="header">
+            <ul>
+                <li><i class="fa-solid fa-tree"></i></li>
+                <li><a href="">accueil</a></li>
+                <li><a href="">Presentation</a></li>
+                <li><a href="">flowers</a></li>
+                <li><a href="">services</a></li>
+                <li><a href="ex1-contact.html" target="_blank">contact</a></li>
+            </ul>
+        </div>
+        <div class="section">
+            <figure>
+                <img id="shop" src="shop.jpg" alt="shop">
+                <figcaption>Lorem ipsum dolor sit amet.</figcaption>
+            </figure>
+        </div>
+        <div class="bouquet">
+            <div class="one">
+                    <figure>
+                        <img class="product"src="flower1.jpg" alt="flower1">
+                        <figcaption>Lorem ipsum dolor sit amet.</figcaption>
+                    </figure>
+                    <button><i class="fa-solid fa-cart-shopping"></i> add to cart</button>
+            </div>
+            <div class="one">
+                
+                    <figure>
+                        <img  class="product" src="flower2.jpg" alt="flower2">
+                        <figcaption>Lorem ipsum dolor sit amet.</figcaption>
+                    </figure>
+                
+                    <button><i class="fa-solid fa-cart-shopping"></i> add to cart</button>
+                
+            </div>
+            <div class="one">
+                
+                    <figure>
+                        <img  class="product" src="flower3.jpg" alt="flower3">
+                        <figcaption>Lorem ipsum dolor sit amet.</figcaption>
+                    </figure>
+                    <button><i class="fa-solid fa-cart-shopping"></i> add to cart</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

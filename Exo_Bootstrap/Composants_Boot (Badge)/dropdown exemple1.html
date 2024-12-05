@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Menu with Badges</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+   
+</head>
+<body>
+    <div class="container mt-5">
+        <nav class="nav">
+            <a class="nav-link" href="#">Business</a>
+            <a class="nav-link text-danger" href="#">Tech <span class="badge bg-danger ms-1">New</span></a>
+            <a class="nav-link" href="#">Pro <span class="badge bg-success ms-1">Spec</span></a>
+            
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Tutorials <span class="badge bg-warning text-dark">7</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">jQuery <span class="badge bg-warning">7</span></a></li>
+                    <li><a class="dropdown-item" href="#">HTML <span class="badge bg-primary">7</span></a></li>
+                    <li><a class="dropdown-item" href="#">CSS <span class="badge bg-secondary">7</span></a></li>
+                    <li><a class="dropdown-item" href="#">Python <span class="badge bg-primary">7</span></a></li>
+                    <li><a class="dropdown-item" href="#">Java <span class="badge bg-success">7</span></a></li>
+                    <li><a class="dropdown-item" href="#">PHP <span class="badge bg-warning">7</span></a></li>
+                    <li><a class="dropdown-item" href="#">Excel <span class="badge bg-secondary">7</span></a></li>
+                </ul>
+            </div>
+
+            <a class="nav-link disabled" href="#">Go Tutorials <span class="badge bg-dark">Underway</span></a>
+        </nav>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

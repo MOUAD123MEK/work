@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Police personnalisée pour plusieurs langues</title>
+    <style type="text/css">
+        style.css{
+            font-family: 'roboto', sans-serif;
+            src: url("C:\Users\hp\Desktop\Oswald-VariableFont_wght.ttf") format('truetype');
+        }
+
+        @font-face {
+            font-family: 'roboto';
+            src: url("C:\Users\hp\Desktop\Oswald-VariableFont_wght.ttf") format('ttf');
+            format('opentype);
+        }
+
+        p [lang="en"]{
+            font-family: 'roboto', sans-serif;
+            font-size: 16px; 
+            font-weight: normal;
+            font-style: normal; 
+        }  
+        
+        
+        p [lang="Zh"]{
+            font-family: 'Noto Sans SC', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            font-style: normal;
+        }
+
+
+
+    </style>  
+</head>
+<body>
+    <p lang="en">This is a paragraph in English.</p>
+    <p lang="Zh">这是一个中文段落。</p>
+
+
+    
+</body>
+</html>

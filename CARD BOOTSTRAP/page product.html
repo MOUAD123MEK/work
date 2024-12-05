@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cats Store</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container my-4">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">CatsStore</a>
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Cart</a></li>
+        </ul>
+        <div class="ms-auto">
+          <button class="btn btn-outline-dark">
+            <i class="bi bi-cart"></i> <span class="badge bg-danger">0</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <h2 class="my-4">Products</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <!-- White Cat Card -->
+      <div class="col">
+        <div class="card" width=>
+          <img src="white cat.png" class="card-img-top" alt="white cat"  height="300"> 
+          <div class="card-body">
+            <h5 class="card-title">white cat</h5>
+            <p class="card-text">Price: $100</p>
+            <a href="#" class="btn btn-primary">Details</a>
+          </div>
+        </div>
+      </div>
+      <!-- Angry Cat Card -->
+      <div class="col">
+        <div class="card">
+          <img src="angry cat.png"  class="card-img-top" alt="angry cat" height="300" >
+          <div class="card-body">
+            <h5 class="card-title">angry cat</h5>
+            <p class="card-text">Price: $1000</p>
+            <a href="#" class="btn btn-primary">Details</a>
+          </div>
+        </div>
+      </div>
+      <!-- Bengal Cat Card -->
+      <div class="col">
+        <div class="card">
+          <img src="bengal cat.png" class="card-img-top" alt="bengal cat" height="300">
+          <div class="card-body">
+            <h5 class="card-title">bengal cat</h5>
+            <p class="card-text">Price: $2000</p>
+            <a href="#" class="btn btn-primary">Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

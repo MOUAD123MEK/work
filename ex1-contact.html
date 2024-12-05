@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>contact</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style type="text/css">
+        .cont{
+            width: 80%;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid black;
+            padding: 10px;
+        }
+        h1{
+            text-align: center;
+        }
+        .section1{
+            width: 60%;
+            line-height: 30px;
+        }
+        .section2{
+            width: 30%;
+        }
+        .a{
+            background-color: aqua;
+            text-align: center;
+        }
+        td{
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nous contacter</h1>
+    <div class="cont">
+        <div class="section1">
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis dolore saepe debitis ducimus!</p>
+            <p><i class="fa-solid fa-house"></i> Address: 123 Street, City</p>
+            <p><i class="fa-solid fa-phone"></i> Phone: 123456789</p>
+            <p><i class="fa-solid fa-envelope"></i> Email: 0X9kA@example.com</p>
+        </div>
+        <div class="section2">
+            <form>
+                <table>
+                    <tr>
+                        <td class="a" colspan="2">text text</td>
+                    </tr>
+                    <tr>
+                        <td><label for="fname">first name</label></td>
+                        <td><input type="text" placeholder="fname"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="lname">last name</label></td>
+                        <td><input type="text" placeholder="lname"></td>  
+                    </tr>
+                    <tr>
+                        <td><label for="Email">email</label></td>
+                        <td><input type="email" placeholder="email"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="phone">phone</label></td>
+                        <td><input type="text" placeholder="phone"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="address">address</label></td>
+                        <td><input type="address" placeholder="address"></td>
+                    </tr>
+                    <tr>
+                        <td class="a" colspan="2"><button type="submit">submit</button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

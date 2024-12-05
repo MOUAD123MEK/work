@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP_4_Exo1</title> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
+    <style type="text/css">
+        html, body {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            height: 100vh;
+            width: 100vw;
+            font-family: "Georgia", 'Times New Roman', Times, serif;
+            overflow: hidden;
+        }
+
+        .header {
+            display: flex;
+            background-color: black;
+            color: white;
+            height: 8vh;
+            border-radius: 10px;
+            width: 98%;
+            margin: 5px;
+        }
+
+        .header i {
+            font-size: 30px;
+        }
+
+        .header ul {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            list-style-type: none;
+            margin: 0;
+            padding-inline: 10px;
+            width: 100vw;
+        }
+
+        .header ul li {
+            width: 10px;
+        }
+
+        .main {
+            width: 98%;
+            margin: 5px;
+            display: flex;
+            flex-direction: row;
+            height: 84vh;
+        }
+
+        .container{
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 50%;
+            border: 2px solid black;
+            border-radius: 10px;
+            margin-block: 150px;
+            margin-inline: 5px;
+            padding: 5px;
+        }
+        .container label, .container input {
+            display: block;
+            width: 100%
+        }
+
+        .container h1 {
+            font-size: 15px;
+            text-align: center;
+            padding-top: 5px;
+            padding-top: 10px;
+        }
+
+        .container p {
+            font-size: 12px;
+            text-align: center;
+            width: 100%;
+        }
+
+        button {
+            background-color:black;
+            color: white;
+            width: 95%;
+            border-radius: 5px;
+            height: 30px;
+            margin: 5px;
+            border: 0;
+            font-size: 12px;
+        }
+        
+        .footer {
+            background-color: black;
+            color: white;
+            height: 8vh;
+            border-radius: 10px;
+            width: 100vw;
+        }
+
+        .footer ul {
+            list-style-type: none;
+            display: flex;
+        }
+
+        .footer ul li {
+            width: 100px;
+            margin: 5px;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <ul>
+            <li>
+                <i class="fa fa-home"></i>
+            </li>
+            <li>Acceuil</li>
+            <li>À propos</li>
+            <li>Formation initiale</li>
+            <li>Formation continue</li>
+            <li>Éspace stagiaire</li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <div class="container">
+            <form action="">
+                    <h1>Connexion</h1>
+                    <label for="Email">Email:</label>
+                    <input id="Email" type="text" name="email" required>
+                    <label for="Password">Mot de passe:</label>
+                    <input type="text" name="password" >
+                    <button>Connexion</button>
+                    <p>besion d'un compte? <a href="">S'inscrire</a></p>
+                    <p><a href="">Mot de passe oublié</a></p>
+            </form>
+        </div>
+
+        <div class="container">
+            <h1>DDOAM</h1>
+            <p>Développement option <br> applications mobiles</p>
+            <button>Objectifs de la formation</button>
+            <button>Compétences</button>
+            <button>Débouches</button>
+            <button>Employeurs</button>
+        </div>
+
+        <div class="container">
+            <h1>DDOARV/RA</h1>
+            <p>Développement option applications RV/RA</p>
+            <button>Objectifs de la formation</button>
+            <button>Compétences</button>
+            <button>Débouches</button>
+            <button>Employeurs</button>
+        </div>
+
+        <div class="container">
+            <h1>DDOWFS</h1>
+            <p>Développement option Web Full Stack</p>
+            <button>Objectifs de la formation</button>
+            <button>Compétences</button>
+            <button>Débouches</button>
+            <button>Employeurs</button>
+        </div>
+    </div>
+    <div class="footer">
+        <ul>
+            <li>Plan du site</li>
+            <li>Contact</li>
+        </ul>
+    </div>
+</body>
+</html>

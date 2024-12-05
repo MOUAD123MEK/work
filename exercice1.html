@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"  />
+    <style type="text/css">
+        .container{
+            background-color: rgb(243, 243, 231);
+            padding:10px;
+            color:#FFF;
+            position: relative;
+            height:900px;
+       
+        }
+          ul.header{
+             width: auto;
+             position:absolute;
+             border:2px solid #fff;
+             padding:20px;
+            
+             top:5px;
+             left:15px;
+             right:15px;
+             background-color: #000;
+             border-radius: 15px;
+             
+
+          }
+          li{
+
+                float:left;
+                list-style-type: none;
+                width: 180px;
+                padding:10px;
+                margin-inline:25px;
+                border-radius: 30%;
+              /*  text-align: center;*/
+              display: flex;
+              justify-content: center;
+              transition-property: all;
+              transition-duration:3s;
+              transition-timing-function: ease;/*ease-in ; ease-out ; ease-in-out*/
+              transition-delay: 1s;
+             /* transition: background-color 3s;*/
+
+            }
+              li:hover{
+
+                      background-color: #635e5e;
+
+                      font-size: 1.2em;/*currentFontSize+currentFontize*20% */
+                      transform: rotate(360deg);
+            }
+            .section{
+               position:absolute;
+               top:120px;
+               left:15px;
+               right:15px;
+               padding-left:50px;
+            }
+           .items{
+
+             width:23%;
+             height:65vh;
+             border:2px solid black;
+             border-radius:15px;
+             float:left;
+             margin-right:25px;
+      
+
+
+
+
+
+
+           }
+
+           .footer{
+            position:absolute;
+            top:80vh;
+            left:15px;
+            right:15px;
+            width:auto;
+            background-color: #000;
+            border-radius: 15px;
+            padding:20px;
+
+           }
+           
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <ul class="header">
+       <li><i class="fa-solid fa-house"></i></li>
+       <li>Lorem.</li>
+       <li>Optio!</li>
+       <li>Soluta!</li>
+       <li>Libero.</li>
+
+
+
+        </ul>
+        <div class="section">
+            <div class="items"></div>
+            <div class="items"></div>
+            <div class="items"></div>
+            <div class="items"></div>
+
+
+
+
+
+
+        </div>
+       <ul class="footer">
+        <li>Lorem.</li>
+        <li>Accusantium.</li>
+       </ul>
+
+
+
+
+    </div>
+
+
+
+
+    
+</body>
+</html>

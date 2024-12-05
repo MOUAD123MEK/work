@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>exercice</title>
+    <style type="text/css">
+        
+        .rating {
+  display: flex;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.rating label:hover,
+.rating input:checked + label,
+.rating input:checked ~ label {
+  color: gold;
+}
+.cont{
+    display: flex;
+    justify-content: space-between;
+    width: 70vw;
+    border: 2px solid black;
+    margin: auto;
+    padding: 10px;
+    border-radius: 20px;
+    background: linear-gradient(to right, rgb(55, 114, 55), #7cbebb);
+
+}
+.image{
+    width: 40%;
+    height: 110%;
+    border: 2px solid black;
+}
+img{
+    width: 100%;
+    height: 100%;
+}
+.input{
+    display: flex;
+    justify-content: space-around;
+}
+select{
+    width: 50px;
+    background-color: #41dfd7;
+}
+input{
+    background-color: #41dfd7;
+    accent-color: #41dfd7;
+}
+button{
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: #41dfd7;
+}
+h1{
+    font-size: 2em;
+    font-family: Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+}
+li{
+    list-style-type: none;
+    padding: auto;
+    color:rgb(245,140,210) ;
+    font-style: italic;
+}
+@media(max-width: 1300px){
+}
+    .cont{
+        flex-direction: column;
+    }
+    .image{
+        margin: auto;
+    }
+}
+</style>
+</head>
+<body>
+    <div class="cont">
+        <div class="image">
+            <img src="shirt.jpg" alt="shirt">
+        </div>
+        <div class="form">
+            <form action="res.html" method="get">
+                <h1>Black T-shirt for men</h1>
+                <div class="rating">
+                    <input type="radio" name="rating" id="star5" value="5">
+                    <label for="star5">&#9733;</label>
+                    <input type="radio" name="rating" id="star4" value="4">
+                    <label for="star4">&#9733;</label>
+                    <input type="radio" name="rating" id="star3" value="3">
+                    <label for="star3">&#9733;</label>
+                    <input type="radio" name="rating" id="star2" value="2">
+                    <label for="star2">&#9733;</label>
+                    <input type="radio" name="rating" id="star1" value="1">
+                    <label for="star1">&#9733;</label>
+                  </div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia qui rem temporibus totam quis sequi incidunt doloribus, perferendis cupiditate rerum, corporis expedita quidem! Sed perferendis impedit doloremque consectetur ipsam aut.</p>
+                  <ul>
+                    <li>Lorem, ipsum dolor.</li>
+                    <li>Eius, pariatur in!</li>
+                    <li>Animi, ipsa ad?</li>
+                    <li>Praesentium, mollitia cum.</li>
+                    <li>Pariatur, corrupti ipsa.</li>
+                    <li>Dicta, autem aperiam?</li>
+                  </ul>
+                  <p>Current price: <span>10DH</span></p>
+                  <div class="input">
+                    <div class="q">
+                        <label for="q">Quantity : </label>
+                        <select name="q" id="q"><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select>
+                    </div>
+                    <div class="size">
+                        <label for="size">Size : </label>
+                        <input type="radio" name="size">S<input type="radio" name="size">M<input type="radio" name="size">XL
+                    </div>
+                </div>
+                <button type="submit">Add to cart</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+
