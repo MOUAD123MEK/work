@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compteur d'éléments</title>
+  <style>
+    button {
+      margin: 10px;
+      padding: 5px 10px;
+      background-color: green;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color:violet;
+    }
+  </style>
+</head>
+<body>
+  <button id="addParagraphButton">Ajouter un paragraphe</button>
+  <button id="deleteAllButton">Supprimer tout</button>
+  <div id="container"></div>
+  <p id="counter">Nombre d'éléments : 0</p>
+
+  <script>
+    let paragraphCount = 1;
+
+    // Fonction pour mettre à jour le compteur
+    function updateCounter() {
+      const container = document.getElementById("container");
+      const counter = document.getElementById("counter");
+      const numberOfParagraphs = container.getElementsByTagName("p").length;
+      counter.textContent = `Nombre d'éléments : ${numberOfParagraphs}`;
+    }
+
+    // Ajouter un paragraphe
+    document.getElementById("addParagraphButton").addEventListener("click", function() {
+      const container = document.getElementById("container");
+      const newParagraph = document.createElement("p");
+      newParagraph.textContent = `Paragraphe ${paragraphCount}`;
+
+      // Événement pour supprimer le paragraphe et mettre à jour le compteur
+      newParagraph.addEventListener("click", function() {
+        container.removeChild(newParagraph);
+        updateCounter();
+      });
+
+      container.appendChild(newParagraph);
+      paragraphCount++;
+      updateCounter();
+    });
+
+    // Supprimer tous les éléments
+    document.getElementById("deleteAllButton").addEventListener("click", function() {
+      document.getElementById("container").innerHTML = "";
+      updateCounter();
+    });
+
+   
+  </script>
+</body>
+</html>

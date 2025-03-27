@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+      <link rel="stylesheet" href="bootstrap.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+      <style type="text/css">
+            body{
+                  font-family: Arial, sans-serif;
+                  align-items: center;
+                  padding: 20px;
+                  background-color: #f4f4f4;
+                  color: #333;
+            }
+
+            h1{
+                  text-align: center;
+                  margin-top: 50px;
+            }
+
+            #taskInput{
+                  width: 50%;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                  margin-right: 10px;
+            }
+
+            #addButton{
+                  padding: 10px 20px;
+                  background-color: #007bff;
+                  color: #fff;
+                  border: none;
+                  border-radius: 5px;
+                  cursor: pointer;
+            }
+
+            #addButton:hover{
+                  background-color:greenyellow;
+            }
+
+            #taskList{
+                  list-style-type: none;
+                  padding: 0;
+            }
+
+            #taskList li{
+                  padding: 10px;
+                  border-bottom: 1px solid #ccc;
+                  display: flex;
+                  justify-content: space-between;
+            }
+
+            .fa-check{
+                  color: green;
+                  cursor: pointer;
+            }
+
+            .fa-xmark{
+                  color: red;
+                  cursor: pointer;
+            }
+
+      </style>
+</head>
+<body>
+      <h1 class="gestion" >Gestion des taches</h1>
+      <input type="text" id="taskInput" placeholder="Ajouter une tache">
+      <button id="addButton">Ajouter</button>
+      <ul id="taskList"></ul>
+
+
+      <script type="text/javascript">
+
+            let counter = 0;
+
+           let tasks = [];
+           let taskInput = document.getElementById("taskInput");
+           let addButton = document.getElementById("addButton");
+           let taskList = document.getElementById("taskList");
+           
+           function displayTask(task) {
+            taskList.innerHTML = "";
+            for (let i = 0; i < tasks.length; i++) {
+                 let li = document.createElement("li");
+                 li.innerHTML = ` 
+                       <span >${tasks[i]} </span>
+                       <div>
+                       <button onclick="checkTask(${tasks[i][0]})" style="margin-right: 10px;"><i class="fas fa-check"></i>
+                       <button onclick="deleteTask(${tasks[i][0]})" style="margin-right: 10px;"><i class="fas fa-xmark"></i>
+                           </div>
+                 `;
+                 taskList.appendChild(li);
+           }}
+
+           addButton.onclick = function() {
+                 let task = [counter,taskInput.value];
+                 if (task !== "") {
+                       tasks.push(task);
+                       taskInput.value = "";
+                        displayTask(task);
+                        counter++;
+                 }
+           }
+
+
+      </script>
+</body>
+</html>

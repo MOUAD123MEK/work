@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Formulaire de Réservation de Billets
+      </title>
+      <style>
+            
+            body{
+                  text-align: center;
+                  border-radius: 1px solid #ccc;
+                  margin: 0 auto;
+            }
+
+            form{
+                  display: inline-block;
+                  text-align: left;
+                  border-radius: 1px solid #ccc;
+                  padding: 20px;
+                  margin: 0 auto;
+                  border: #4CAF50 2px solid;
+            }
+            h2{
+                  text-align: center;
+            }
+
+            input[type="text"], input[type="number"], select{
+                  width: 100%;
+                  padding: 10px;
+                  margin: 5px 0;
+                  display: inline-block;
+                  border: 1px solid #ccc;
+                  box-sizing: border-box;
+            }
+            input[type="radio"]{
+                  margin: 5px;
+            }
+            button{
+                  background-color: #4CAF50;
+                  color: white;
+                  padding: 14px 20px;
+                  margin: 8px 0;
+                  border: none;
+                  cursor: pointer;
+                  width: 100%;
+            }
+            button:hover{
+                  opacity: 0.8;
+            }
+
+            input[type="text"], input[type="number"], select, button{
+                  width: 100%;
+                  padding: 12px 20px;
+                  margin: 8px 0;
+                  display: inline-block;
+                  border: 1px solid #ccc;
+                  box-sizing: border-box;
+            };
+
+            input[type="text"]:focus, input[type="number"]:focus, select:focus{
+                  background-color: #ddd;
+                  outline: none;
+            }
+
+            input[type="text"]:disabled, input[type="number"]:disabled{
+                  background-color: #f9f9f9;
+            }
+
+            input[type="text"]:disabled{
+                  background-color: #f9f9f9;
+            }
+
+           
+      </style>
+</head>
+<body>
+
+
+    <form onsubmit="return validerForm()">
+
+      <h2>Formulaire de Réservation de Billets</h2>
+            <label>Nom Complet:</label>
+            <input type="text" id="nom"><br><br>
+      
+            <label>Ville de Départ:</label>
+            <input type="text" value="CASA" disabled><br><br>
+      
+            <label>Ville d'Arrivée:</label>
+            <select id="villeArrivee">
+                <option value="">--Choisir--</option>
+                <option value="Kenitra">Kenitra</option>
+                <option value="Meknes">Meknes</option>
+                <option value="Fes">Fes</option>
+                <option value="Oujda">Oujda</option>
+            </select><br><br>
+        
+            <label>Confort:</label>
+            <input type="radio" id="classe1" name="classe" value="1ere Classe">1ère Classe 
+            <input type="radio" id="classe2" name="classe" value="2eme Classe">2ème Classe<br><br>
+        
+            <label>Nombre de personnes:</label>
+            <input type="number" id="nombre"><br><br>
+        
+            <label>Total:</label><Wbr></Wbr>
+            <input type="text" id="total" disabled><br><br>
+        
+            <button type="button" onclick="calculer()">Calculer</button>
+            <button type="submit">Valider Formulaire</button>
+    </form>
+      
+
+    <script>
+      
+            function validerForm() {
+            let nom = document.getElementById("nom").value;
+            let villeArrivee = document.getElementById("villeArrivee").value;
+            let classe1 = document.getElementById("classe1").checked;
+            let classe2 = document.getElementById("classe2").checked;
+            let nombre = document.getElementById("nombre").value;
+
+            if (nom === "" || villeArrivee === "") {
+                alert("Tous les champs sont obligatoires.");
+                return false;
+            }
+            if (!classe1 && !classe2) {
+                alert("Veuillez choisir une classe de confort.");
+                return false;
+            }
+            if (nombre <= 0 || isNaN(nombre)) {
+                alert("Le nombre de personnes doit être un nombre strictement positif.");
+                return false;
+            }
+            alert("Formulaire validé avec succès !");
+            return true;
+        }
+
+        function calculer() {
+            let villeArrivee = document.getElementById("villeArrivee").value;
+            let classe1 = document.getElementById("classe1").checked;
+            let nombre = parseInt(document.getElementById("nombre").value);
+            
+            let tarifs = {
+                "Kenitra": 50,
+                "Meknes": 90,
+                "Fes": 120,
+                "Oujda": 180
+            };
+            
+            let prixBase = tarifs[villeArrivee] || 0;
+            let prixFinal = classe1 ? prixBase * 2 : prixBase;
+            
+            document.getElementById("total").value = prixFinal * nombre;
+        }
+    </script>
+
+     
+</body>
+</html>

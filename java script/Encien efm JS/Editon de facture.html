@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire TVA</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: brown;
+            width: 100%;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        select {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .total {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+
+        
+
+    </style>
+</head>
+<body>
+    <form action="#" method="post">
+
+        <label for="Code article">Code article :</label>
+        <input type="number" id="montantHT" name="montantHT" placeholder="2" required>
+        <br><br>
+     
+        <label for="Libeleté">Libeleté :</label>
+        <input type="text" id="Libeleté" name="Libeleté" placeholder="Produit2" required>
+        <br><br>
+
+        <label for="Quantité">Quantité :</label>
+        <input type="number" id="Quantité" name="Quantité" placeholder="4" required>
+        <br><br>
+
+        <label for="Prix unitaire">Prix unitaire:</label>
+        <input type="number" id="Prix unitaire" name="Prix unitaire" placeholder="20DH" ></label>
+        <br><br>
+
+
+        <label for="tva">Taux de TVA :</label>
+        <select id="tva" name="tva" required>
+            <option value="20">20%</option>
+            <option value="10">10%</option>
+            <option value="14">14%</option>
+        </select>
+        <br><br>
+
+        <button onclick="Calculer()" type="button">Calculer le total </button>
+        <button onclick="Ajouter()" type="button">Ajouter</button>
+
+
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Code article</th>
+                    <th>Libeleté</th>
+                    <th>Quantité</th>
+                    <th>Prix unitaire</th>
+                    <th>Total HT</th>
+                    <th>Total TTC</th>
+                </tr>
+            </thead>
+        </table>
+
+                
+                
+
+        <label class="total" for="Total HT">Total HT:</label>
+        <input type="text" id="Total HT" name="Total HT" placeholder="200.00DH">
+        <br><br>
+
+        <label class="total" for="Total TTC">Total TTC:</label>
+        <input type="text" id="Total TTC" name="Total TTC" placeholder="240.00DH">
+        <br><br> 
+            
+ 
+    </form>
+
+    <script>
+
+        function verifierTVA() {
+            var tva = document.getElementById("tva").value;
+            var montantHT = parseFloat(prompt("Entrez le montant hors taxe :"));
+            var montantTTC = montantHT * (1 + tva / 100);
+            alert("Le montant TTC est de : " + montantTTC.toFixed(2));
+        }
+
+        function Calculer() {
+            var tva = document.getElementById("tva").value;
+            var montantHT = parseFloat(prompt("Entrez le montant hors taxe :"));
+            var montantTTC = montantHT * (1 + tva / 100);
+            alert("Le montant TTC est de : " + montantTTC.toFixed(2));
+        }
+
+        function Ajouter() {
+            var tva = document.getElementById("tva").value;
+            var montantHT = parseFloat(prompt("Entrez le montant hors taxe :"));
+            var montantTTC = montantHT * (1 + tva / 100);
+            alert("Le montant TTC est de : " + montantTTC.toFixed(2));
+        }
+
+    </script>
+    
+</body>
+</html>

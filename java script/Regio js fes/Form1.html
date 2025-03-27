@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation et Affichage des Données</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+        #result {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Formulaire de Validation</h2>
+
+    <form id="myForm" enctype="multipart/form-data">
+        <label>Nom :</label>
+        <input type="text" id="name" name="name">
+        <span class="error" id="nameError"></span><br><br>
+
+        <label>Email :</label>
+        <input type="email" id="email" name="email">
+        <span class="error" id="emailError"></span>
+        <span ></span>
+        <br><br>
+
+        <label>Mot de passe :</label>
+        <input type="password" id="password" name="password">
+        <span class="error" id="passwordError"></span><br><br>
+
+        <label>Âge :</label>
+        <input type="number" id="age" name="age">
+        <span class="error" id="ageError"></span><br><br>
+
+        <label>Date de naissance :</label>
+        <input type="date" id="dob" name="dob">
+        <span class="error" id="dobError"></span><br><br>
+
+        <label>Genre :</label>
+        <input type="radio" name="gender" value="Homme"> Homme
+        <input type="radio" name="gender" value="Femme"> Femme
+        <span class="error" id="genderError"></span><br><br>
+
+        <label>Pays :</label>
+        <select id="country">
+            <option value="">-- Sélectionner --</option>
+            <option value="France">France</option>
+            <option value="Canada">Canada</option>
+            <option value="USA">USA</option>
+        </select>
+        <span class="error" id="countryError"></span><br><br>
+
+        <label>Accepter les conditions :</label>
+        <input type="checkbox" id="terms">
+        <span class="error" id="termsError"></span><br><br>
+
+        <label>Photo de profil :</label>
+        <input type="file" id="profilePic">
+        <span class="error" id="profilePicError"></span><br><br>
+
+        <button type="submit">Soumettre</button>
+    </form>
+
+    <!-- Zone où afficher les résultats -->
+    <div id="result">
+        <h3>Données du formulaire :</h3>
+        <p><strong>Nom :</strong> <span id="resName"></span></p>
+        <p><strong>Email :</strong> <span id="resEmail"></span></p>
+        <p><strong>Mot de passe :</strong> <span id="resPassword"></span></p>
+        <p><strong>Âge :</strong> <span id="resAge"></span></p>
+        <p><strong>Date de naissance :</strong> <span id="resDob"></span></p>
+        <p><strong>Genre :</strong> <span id="resGender"></span></p>
+        <p><strong>Pays :</strong> <span id="resCountry"></span></p>
+        <p><strong>Photo de profil :</strong> <img id="resProfilePic" src="" alt="Aucune image" width="100"></p>
+    </div>
+
+    <script>
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Empêche l'envoi du formulaire
+
+            let isValid = true;
+
+            // Réinitialisation des erreurs
+            document.querySelectorAll(".error").forEach(el => el.textContent = "");
+
+            // Récupération des valeurs
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value.trim();
+            let age = document.getElementById("age").value;
+            let dob = document.getElementById("dob").value;
+            let genderChecked = document.querySelector('input[name="gender"]:checked');
+            let gender = genderChecked ? genderChecked.value : "";
+            let country = document.getElementById("country").value;
+            let termsChecked = document.getElementById("terms").checked;
+            let profilePic = document.getElementById("profilePic").files[0];
+
+            // Validation des champs
+            if (name === "") {
+                document.getElementById("nameError").textContent = "Le nom est requis.";
+                isValid = false;
+            }
+
+            let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;//emailPattern est un regex
+            if (!emailPattern.test(email)) {
+                document.getElementById("emailError").textContent = "Email invalide.";
+                isValid = false;
+            }
+
+            if (password.length < 6) {
+                document.getElementById("passwordError").textContent = "Le mot de passe doit contenir au moins 6 caractères.";
+                isValid = false;
+            }
+
+            if (age === "" || age < 18) {
+                document.getElementById("ageError").textContent = "Vous devez avoir au moins 18 ans.";
+                isValid = false;
+            }
+
+            if (dob === "") {
+                document.getElementById("dobError").textContent = "Veuillez sélectionner une date.";
+                isValid = false;
+            }
+
+            if (!gender) {
+                document.getElementById("genderError").textContent = "Veuillez sélectionner un genre.";
+                isValid = false;
+            }
+
+            if (country === "") {
+                document.getElementById("countryError").textContent = "Veuillez sélectionner un pays.";
+                isValid = false;
+            }
+
+            if (!termsChecked) {
+                document.getElementById("termsError").textContent = "Vous devez accepter les conditions.";
+                isValid = false;
+            }
+
+            if (!profilePic) {
+                document.getElementById("profilePicError").textContent = "Veuillez télécharger une image.";
+                isValid = false;
+            
+            }
+
+            // Si tout est valide, afficher les données dans le div
+            if (isValid) {
+                document.getElementById("resName").textContent = name;
+                document.getElementById("resEmail").textContent = email;
+                document.getElementById("resPassword").textContent = password;
+                document.getElementById("resAge").textContent = age;
+                document.getElementById("resDob").textContent = dob;
+                document.getElementById("resGender").textContent = gender;
+                document.getElementById("resCountry").textContent = country;
+
+                // Affichage de l'image sélectionnée
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("resProfilePic").src = e.target.result;
+                    // document.getElementById("resProfilePic").setAttribute('src',e.target.result);
+                };
+                reader.readAsDataURL(profilePic);
+
+                document.getElementById("result").style.display = "block";
+            }
+        });
+    </script>
+
+</body>
+</html>

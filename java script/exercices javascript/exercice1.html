@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice 1: Calcul du Prix TTC</title>
+    
+</head>
+<body>
+    <h1>Calcul du Prix TTC</h1>
+    <form name="frmPrixTTC">
+        <fieldset>
+            <legend>Calcul du Prix TTC</legend>
+            <label for="prixHT">Prix Hors taxe :</label>
+            <input type="number" name="prixHT" id="prixHT">
+            <br>
+            <label for="tauxTVA">Taux TVA :</label>
+            <input type="number" name="tauxTVA" id="tauxTVA">
+            <br>
+            <label for="resultat">Résultat :</label>
+            <input type="number" name="resultat" id="resultat" readonly>
+            <br>
+            <input type="button" name="btnCalculer" value="Calculer">
+            <input type="button" name="btnInitialiser" value="Initialiser">
+        </fieldset>
+    </form>
+ 
+ 
+    <script>
+        const frmPrixTTC = document.forms['frmPrixTTC'];
+        const btnInitialiser = frmPrixTTC.btnInitialiser;
+        const btnCalculer = frmPrixTTC.btnCalculer;
+        const prixHT = frmPrixTTC.prixHT;
+        const tauxTVA = frmPrixTTC.tauxTVA;
+        const resultat = frmPrixTTC.resultat;
+ 
+ 
+         btnInitialiser.onclick = function(event) {
+            event.preventDefault();
+            prixHT.value = '';
+            tauxTVA.value = '';
+            resultat.value = '';
+            prixHT.focus();
+        };
+ 
+       
+        btnCalculer.onclick = function(event) {
+            event.preventDefault();
+ 
+           
+            if (!prixHT.value || !tauxTVA.value) {
+                if (!prixHT.value) {
+                    prixHT.classList.add('error');
+                    alert('Veuillez remplir le champ Prix Hors taxe.');
+                   
+                }
+                if (!tauxTVA.value) {
+                    tauxTVA.classList.add('error');
+                    alert('Veuillez remplir le champ Taux TVA.');
+                    tauxTVA.focus();
+                }
+                return;
+            }
+ 
+            const prixTTC = parseFloat(prixHT.value) * (1 + parseFloat(tauxTVA.value) / 100);
+            resultat.value = prixTTC.toFixed(2);
+        };
+    </script>
+</body>
+</html>
+ 

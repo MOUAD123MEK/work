@@ -1,0 +1,83 @@
+<script>
+
+// products.json (Fichier JSON des produits)
+[
+      { "id": 1, "intitule": "Produit 1", "description": "Description du produit 1", "image": "img1.jpg", "categorie": "Catégorie A" },
+      { "id": 2, "intitule": "Produit 2", "description": "Description du produit 2", "image": "img2.jpg", "categorie": "Catégorie B" }
+    ]
+    
+    // App.js (Application principale en React)
+    import React, { useEffect, useState } from 'react';
+    
+    function App() {
+      const [products, setProducts] = useState([]);
+      const [cart, setCart] = useState([]);
+      const [search, setSearch] = useState('');
+      const [category, setCategory] = useState('');
+    
+      useEffect(() => {
+        fetch('products.json')
+          .then(response => response.json())
+          .then(data => setProducts(data));
+      }, []);
+    
+      const addToCart = (product) => {
+        setCart([...cart, product]);
+      };
+    
+      const filteredProducts = products.filter(product =>
+        product.intitule.toLowerCase().includes(search.toLowerCase()) &&
+        (category === '' || product.categorie === category)
+      );
+    
+      return (
+        <div>
+          <header>
+            <input type="text" placeholder="Rechercher..." onChange={(e) => setSearch(e.target.value)} />
+            <select onChange={(e) => setCategory(e.target.value)}>
+              <option value="">Toutes catégories</option>
+              <option value="Catégorie A">Catégorie A</option>
+              <option value="Catégorie B">Catégorie B</option>
+            </select>
+            <button onClick={() => window.location.href = 'cart.html'}>
+              🛒 ({cart.length})
+            </button>
+          </header>
+          <div>
+            {filteredProducts.map(product => (
+              <div key={product.id}>
+                <img src={product.image} alt={product.intitule} />
+                <h3>{product.intitule}</h3>
+                <p>{product.description}</p>
+                <button onClick={() => addToCart(product)}>Ajouter au panier</button>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    
+    export default App;
+    
+    // cart.html (Gestion du panier)
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Panier</title>
+    </head>
+    <body>
+      <h1>Votre Panier</h1>
+      <div id="cart-items"></div>
+      <script>
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        document.getElementById('cart-items').innerHTML = cart.map(item => `
+          <div>
+            <h3>${item.intitule}</h3>
+            <p>${item.description}</p>
+          </div>
+        `).join('');
+      </script>
+    </body>
+    </html>
+    

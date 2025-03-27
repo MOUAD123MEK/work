@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constituer votre PC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+             background-color: brown;
+        }
+        .container {
+            width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+            border: 5px solid blue;
+        }
+        h2 {
+            color: blue;
+            text-decoration: underline;
+        }
+        label {
+            font-weight: bold;
+            color: green;
+        }
+        select, input[type="text"], button {
+            margin-top: 10px;
+        }
+        .section {
+            margin-top: 15px;
+            text-align: left;
+        }
+
+      
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Constituer votre PC</h2>
+
+    <div class="section">
+        <label>Carte mère :</label>
+        <select id="carteMere">
+            <option value="0">Choisir une Carte mère</option>
+            <option value="700">Carte Assus  700DH</option>
+            <option value="600">Carte Via  600DH</option>
+            <option value="500">Carte sis  500DH</option>
+        </select>
+    </div>
+
+    <div class="section">
+        <label>Ecran :</label><br>
+        <input type="radio" name="taille" value="100"> Plat
+        <input type="radio" name="taille" value="80"> Cathodique <br>
+        <input type="radio" name="type" value="150"> 15"
+        <input type="radio" name="type" value="200"> 17"
+    </div>
+
+    <div class="section">
+        <label>Options :</label><br>
+        <input type="checkbox" class="option" value="50"> Carte Satellite <br>
+        <input type="checkbox" class="option" value="80"> Imprimante <br>
+        <input type="checkbox" class="option" value="100"> Scanner
+    </div>
+
+    <div class="section">
+        <label>Catégorie :</label>
+        <select id="categorie">
+            <option value="0">Choisir une Catégorie</option>
+            <option value="0.2">Étudiant  20%</option>
+            <option value="0.10">Autres  10% </option>
+        </select>
+    </div>
+
+    <div class="section">
+        <label>Taux de réduction correspondant :</label>
+        <input type="text" id="reduction" readonly>
+    </div>
+
+    <button onclick="calculerPrix">Calculer prix</button>
+
+    <div class="section">
+        <label>Ce PC vous coûtera :</label>
+        <input type="text" id="prixFinal" readonly>
+    </div>
+</div>
+
+<script>
+    function calculerPrix() {
+        let total = 0;
+
+        let carteMere = document.getElementById("carteMere").value;
+        total += parseInt(carteMere);
+
+        let taille = document.querySelector('input[name="taille"]:checked');
+        let type = document.querySelector('input[name="type"]:checked');
+
+        if (taille) total += parseInt(taille.value);
+        if (type) total += parseInt(type.value);
+
+        let options = document.querySelectorAll('.option:checked');
+        options.forEach(option => {
+            total += parseInt(option.value);
+        });
+
+        let categorie = document.getElementById("categorie").value;
+        document.getElementById("reduction").value = (parseFloat(categorie) * 100) + "%";
+
+      
+        let reduction = total * parseFloat(categorie);
+        let prixFinal = total - reduction;
+
+        document.getElementById("prixFinal").value = prixFinal.toFixed(2) + " €";
+    }
+</script>
+
+</body>
+</html>
+
+

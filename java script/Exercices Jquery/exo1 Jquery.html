@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculatrice Simple</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .button-group button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            color: white;
+            cursor: pointer;
+        }
+        .add {
+            background-color: #007bff;
+        }
+        .subtract {
+            background-color: #dc3545;
+        }
+        .multiply {
+            background-color: #ffc107;
+            color: black !important;
+        }
+        .divide {
+            background-color: #28a745;
+        }
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculatrice Simple</h1>
+    
+    <input type="number" id="num1" placeholder="Premier nombre">
+    <input type="number" id="num2" placeholder="Deuxième nombre">
+    
+    <div class="button-group">
+        <button class="add">+</button>
+        <button class="subtract">-</button>
+        <button class="multiply">*</button>
+        <button class="divide">/</button>
+    </div>
+    
+    <div class="result">Résultat : <span id="result">0</span></div>
+
+    <script>
+        $(document).ready(function() {
+            // Add operation
+            $('.add').click(function() {
+                calculate('+');
+            });
+            
+            // Subtract operation
+            $('.subtract').click(function() {
+                calculate('-');
+            });
+            
+            // Multiply operation
+            $('.multiply').click(function() {
+                calculate('*');
+            });
+            
+            // Divide operation
+            $('.divide').click(function() {
+                calculate('/');
+            });
+            
+            function calculate(operation) {
+                // Get input values
+                const num1 = parseFloat($('#num1').val()) || 0;
+                const num2 = parseFloat($('#num2').val()) || 0;
+                
+                let result = 0;
+                
+                // Perform calculation based on operation
+                switch(operation) {
+                    case '+':
+                        result = num1 + num2;
+                        break;
+                    case '-':
+                        result = num1 - num2;
+                        break;
+                    case '*':
+                        result = num1 * num2;
+                        break;
+                    case '/':
+                        // Check for division by zero
+                        if(num2 === 0) {
+                            alert("Division par zéro impossible!");
+                            return;
+                        }
+                        result = num1 / num2;
+                        break;
+                }
+                
+                // Display the result (rounded to 1 decimal place if needed)
+                $('#result').text(Math.round(result * 10) / 10);
+            }
+        });
+    </script>
+</body>
+</html>

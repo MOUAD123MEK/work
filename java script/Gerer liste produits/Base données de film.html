@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Film Page</title>
+  <style>
+
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f8f8f8;
+    }
+    select, button, input {
+      margin: 10px 0;
+      padding: 5px;
+    }
+    .film-details {
+      margin-top: 20px;
+      display: flex;
+        align-items: center;
+    }
+      .film-details p {
+        margin: 5px 0;
+      }
+      
+      #panier {
+        list-style-type: none;
+        padding: 0;
+      }
+      #panier li {
+        margin: 5px 0;
+      }
+      #totalPrix {
+        font-weight: bold;
+      }
+
+      #imageFilm {
+        width: 100px;
+        height: 150px;
+        margin-right: 20px;
+      }
+
+
+      button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color:violet;
+      }
+
+      h1, h2 {
+        text-align: center;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+      }
+
+      label, select, input {
+        margin: 5px 0;
+        padding: 5px;
+        width: 200px;
+        background-color: aquamarine;
+      }
+
+      input[type="text"] {
+        width: 100%;
+      }
+
+      input[type="number"] {
+        width: 50px;
+        text-align: right;
+      }
+    
+  </style>
+
+</head>
+<body>
+
+
+  <h1>Commandez des Films</h1>
+  <label for="filmList">Choisissez un film :</label>
+  <select id="filmList" onchange="afficher()"></select>
+  
+  <div class="film-details" id="filmDetails">
+    <img id="imageFilm" src="film.png" alt="Film Image">
+    <p><strong>Titre : </strong><span id="titreFilm"></span></p>
+    <p><strong>Prix : </strong><span id="prixFilm"></span> Dhs</p>
+  </div>
+
+  <button onclick="ajouter()">Ajouter au Panier</button>
+  <h2>Panier :</h2>
+  <ul id="panier"></ul>
+  <p><strong>Total à payer : </strong><span id="totalPrix">0</span> Dhs</p>
+  <button onclick="retirer()">Retirer du Panier</button>
+  
+
+  <script>
+    const films = [
+      { "ID": "001", "titre": "Inception", "image": "inception.jpg", "prix": 10 },
+      { "ID": "002", "titre": "Interstellar", "image": "interstellar.jpg", "prix": 15 },
+      { "ID": "003", "titre": "Dunkirk", "image": "dunkirk.jpg", "prix": 12 }
+    ];
+
+    let panier = [];
+    function charger() {
+      const filmList = document.getElementById("filmList");
+      films.forEach(film => {
+        const option = document.createElement("option");
+        option.value = film.ID;
+        option.textContent = film.titre;
+        filmList.appendChild(option);
+      });
+    }
+
+    function afficher() {
+      const selectedID = document.getElementById("filmList").value;
+      const film = films.find(f => f.ID === selectedID);
+      if (film) {
+        document.getElementById("titreFilm").textContent = film.titre;
+        document.getElementById("prixFilm").textContent = film.prix;
+        document.getElementById("imageFilm").src = film.image;
+      }
+    }
+
+    function ajouter() {
+      const selectedID = document.getElementById("filmList").value;
+      const film = films.find(f => f.ID === selectedID);
+      if (film) {
+        panier.push(film);
+        mettreAJourPanier();
+      }
+    }
+
+    function retirer() {
+      if (panier.length > 0) {
+        panier.pop();
+        mettreAJourPanier();
+      }
+    }
+
+    function mettreAJourPanier() {
+      const panierList = document.getElementById("panier");
+      panierList.innerHTML = "";
+      let totalPrix = 0;
+      panier.forEach(film => {
+        const li = document.createElement("li");
+        li.textContent = `${film.titre} - ${film.prix} Dhs`;
+        panierList.appendChild(li);
+        totalPrix += film.prix;
+      });
+      document.getElementById("totalPrix").textContent = totalPrix;
+    }
+
+    window.onload = charger;
+
+  </script>
+
+</body>
+</html>

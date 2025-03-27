@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>produit</title>
+      <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            h1 { text-align: center; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid black; padding: 8px; text-align: center; background-color:burlywood; }
+            th { background-color: #4CAF50; color: white; }
+            button { margin: 5px; padding: 5px 10px; background-color: green; color: white; border: none; cursor: pointer; }
+            button:hover { background-color: violet; }
+            .container { display: flex; justify-content: center; margin-top: 20px; }
+            .card { width: 300px; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 10px; background-color: chocolate;}
+            .form-control { margin-bottom: 10px; }
+            
+      </style>
+</head>
+<body>
+      <h1>Gestion des produits</h1>
+      <div class="container">
+            <div class="card">
+                  <div class="card-body">
+                        <label for="produit">Nom du produit </label>
+                        <input type="text" id="produit" class="form-control" placeholder="Entrez le nom du produit" required><br>
+                        <label for="prix">Prix (€)</label>
+                        <input type="number" id="prix" class="form-control" placeholder="Entrez le prix du produit" required><br>
+                        <button type="button" id="ajouterSupprimer" >Supprimer/Ajouter</button>
+                  </div>
+            </div>
+      </div>
+
+      <table>
+            <thead>
+                  <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Prix</th>
+                        <th>Actions</th>
+                  </tr>
+            </thead>
+
+            <tbody>
+                  <tr>
+                        <td>1</td>
+                        <td>Ordinateur</td>
+                        <td>1200€</td>
+                        <td><button>Modifier</button><button>Supprimer</button></td>
+                  </tr>
+
+                  <tr>
+                        <td>2</td>
+                        <td>Téléphone</td>
+                        <td>800€</td>
+                        <td><button>Modifier</button><button>Supprimer</button></td>
+                  </tr>
+
+                  <tr>
+                        <td>3</td>
+                        <td>Tablette</td>
+                        <td>500€</td>
+                        <td><button>Modifier</button><button>Supprimer</button></td>
+                  </tr>
+            </tbody>
+      </table>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Échanger Premier et Dernier</title>
+</head>
+<body>
+  <ul id="List">
+    <li>Élément 1</li>
+    <li>Élément 2</li>
+    <li>Élément 3</li>
+    <li>Élément 4</li>
+  </ul>
+  <button id="swapButton">Échanger Premier et Dernier</button>
+
+  <script>
+    document.getElementById("swapButton").addEventListener("click", function() {
+      const list = document.getElementById("List");
+      const items = list.getElementsByTagName("li");
+
+      if (items.length < 2) return; 
+
+      const firstItem = items[0];
+      const lastItem = items[items.length - 1];
+
+      const firstClone = firstItem.cloneNode(true);
+      const lastClone = lastItem.cloneNode(true);
+
+      list.replaceChild(lastClone, firstItem);
+      list.replaceChild(firstClone, lastItem);
+    });
+
+    
+  </script>
+</body>
+</html>

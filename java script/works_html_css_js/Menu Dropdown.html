@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Menu Dropdown</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+            @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+:root {
+    --header-height: 3rem;
+
+    --first-color: #5B65F5;
+    --first-color-light: #C4C7F5;
+    --dark-color: #0E1026;
+    --white-color: #FBFBFB;
+
+    --body-font: 'Open Sans', sans-serif;
+    --nav-name-font-size: 1.5rem;
+    --normal-font-size: .938rem;
+
+    --z-fixed: 100;
+}
+
+@media screen and (min-width: 768px) {
+    :root {
+        --nav-name-font-size: 1rem;
+        --normal-font-size: 1rem;
+    }
+}
+
+*,::before,::after { box-sizing: border-box; }
+body { 
+    margin: var(--header-height) 0 0 0; 
+    font-family: var(--body-font); 
+    font-size: var(--normal-font-size); 
+    height: 100vh;
+    width: 100%;
+    font-weight: 600; 
+    background: url('https://i.postimg.cc/vmx4Lq0w/bg1.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+ul { margin: 0; padding: 0; list-style: none; }
+a { text-decoration: none; }
+.bd-grid { max-width: 1024px; display: grid; grid-template-columns: 100%; margin-left: 1.5rem; margin-right: 1.5rem; }
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    padding: 0 1rem;
+    background-color: #FFFFFF;
+    z-index: var(--z-fixed);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+}
+.header-logo { color: var(--dark-color); }
+.header-toggle { font-size: 1.7rem; cursor: pointer; }
+
+@media screen and (max-width: 768px) {
+    .nav {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        background: url('https://i.postimg.cc/rmWWDgCp/background.jpg') no-repeat;
+        background-size: cover;
+        background-position: center;
+        width: 80%;
+        height: 100vh;
+        padding: 2rem 0;
+        z-index: var(--z-fixed);
+        transition: .5s;
+        overflow-y: auto;
+    }
+
+    .show { left: 0; }
+}
+
+.nav-content { display: flex; flex-direction: column; }
+.nav-perfil { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 3rem; }
+.nav-img { display: flex; justify-content: center; width: 60px; height: 60px; border-radius: 50%; overflow: hidden; margin-bottom: 1rem; }
+    .nav-img img { width: 70px; }
+.nav-name { display: block; font-size: var(--nav-name-font-size); color: var(--white-color); }
+.nav-item { margin-bottom: 2rem; }
+.nav-link { color: var(--first-color-light); }
+.nav-link:hover { color: var(--white-color); }
+.active { color: var(--white-color); }
+
+.dropdown-link { display: flex; align-items: center; justify-content: space-between; }
+.dropdown-icon { font-size: 1.3rem; transition: .5s; }
+    .dropdown:hover .dropdown-icon { transform: rotate(180deg); }
+.dropdown-menu { margin: 1rem 0 0 1rem; display: none; }
+    .dropdown:hover > .dropdown-menu { display: block; }
+.dropdown-item { margin: 1rem 0; }
+
+@media screen and (min-width: 576px) {
+    .nav { width: 288px; }
+}
+
+@media screen and (min-width: 768px) {
+    body { margin: 0; }
+    .header { height: calc(var(--header-height) + 1rem); }
+    .header-logo, .header-toggle { display: none; }
+
+    .nav { width: 100%; }
+    .nav-content { flex-direction: row; justify-content: space-between; align-items: center; }
+    .nav-perfil { flex-direction: row; text-align: initial; margin-bottom: 0; }
+    .nav-img { width: 40px; height: 40px; margin-right: 0.5rem; margin-bottom: 0; }
+        .nav-img img { width: 46px; }
+    .nav-name { color: var(--dark-color); }
+    .nav-list { display: flex; align-items: center; }
+    .nav-item { margin: 0 1.5rem; padding: 1.4rem 0; }
+    .nav-link { color: var(--dark-color); }
+        .nav-link:hover { color: var(--first-color); }
+    .active { color: var(--first-color); }
+
+    .dropdown { position: relative; }
+    .dropdown-menu { position: fixed; margin: 0; top: calc(var(--header-height) + 1rem); padding: 0.5rem 1.5rem; box-shadow: 0 2px 4px rgba(0, 0, 0, .1); border-radius: .5rem; }
+}
+
+@media screen and (min-width: 1024px) {
+    .bd-grid { margin-left: auto; margin-right: auto; }
+}
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="#" class="header-logo">Clay</a>
+
+        <div class="header-toggle">
+            <i class="bx bx-menu" id="header-toggle"></i>
+        </div>
+
+        <nav class="nav" id="nav-menu">
+            <div class="nav-content bd-grid">
+                <a href="#" class="nav-perfil">
+                    <div class="nav-img">
+                        <img src="https://i.postimg.cc/Z5VcmyV0/perfil.jpg" alt="">
+                    </div>
+
+                    <div>
+                        <span class="nav-name">Clay</span>
+                        <span class="nav-name">Mitchell</span>
+                    </div>
+                </a>
+
+                <div class="nav-menu">
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="#" class="nav-link active">Home</a></li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-link">About <i class="bx bx-chevron-down dropdown-icon"></i></a>
+
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-item"><a href="#" class="nav-link">About me</a></li>
+                                <li class="dropdown-item"><a href="#" class="nav-link">Location</a></li>
+                                <li class="dropdown-item"><a href="#" class="nav-link">Studies</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a href="#" class="nav-link ">Skills</a></li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-link">Works <i class="bx bx-chevron-down dropdown-icon"></i></a>
+
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-item"><a href="#" class="nav-link">Recent Jobs</a></li>
+                                <li class="dropdown-item"><a href="#" class="nav-link">Best Jobs</a></li>
+                                <li class="dropdown-item"><a href="#" class="nav-link">Work Awards</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a href="#" class="nav-link ">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <script src="main.js">
+            // Activating Lateral Menu
+
+const showMenu = (toggleId, navId) => {
+    const toggle =  document.getElementById(toggleId);
+    const nav = document.getElementById(navId);
+
+    if(toggle && nav){
+        toggle.addEventListener('click', () => {
+            nav.classList.toggle('show');
+            toggle.classList.toggle('bx-x');
+        })
+    }
+}
+
+showMenu('header-toggle', 'nav-menu');
+
+// Changing Active Link
+
+const navLink = document.querySelectorAll('.nav-link');
+function linkAction(){
+    navLink.forEach(n => n.classList.remove('active'));
+    this.classList.add('active');
+}
+
+navLink.forEach(n => n.addEventListener('click', linkAction));
+    </script>
+</body>
+</html>

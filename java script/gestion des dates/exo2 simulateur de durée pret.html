@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+      <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            label{ display: flex; margin: 20px;; justify-content: center;} 
+            fieldset { border: 3px solid peachpuff;  border-radius: 20px; color: green; background-color: rgb(255, 239, 149); display: flex; flex-direction: column; justify-content: center; align-items: center; }
+      </style>
+</head>
+<body>
+      <fieldset>
+            <h1>Simulateur de durée pret</h1>
+                  <label for="date">Date de début
+                        <input type="date" id="date de début">
+                  </label>
+                  <label for="durée">Durée (en mois):
+                        <input type="number" id="durée" max="12" min="1">
+                        <button onclick="calculerDatedefin()">Calculer date de fin</button>
+                  </label>
+            <p id="ageResult"></p>
+      </fieldset>
+</body>
+</html>

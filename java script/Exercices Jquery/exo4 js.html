@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcul du nombre de jours entre deux dates</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+        }
+        .date-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #6b0f0f;
+        }
+        input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+        .result {
+            font-weight: bold;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calcul du nombre de jours entre deux dates</h1>
+    
+    <div class="date-group">
+        <label for="date1">Date 1 :</label>
+        <input type="date" id="date1">
+    </div>
+    
+    <div class="date-group">
+        <label for="date2">Date 2 :</label>
+        <input type="date" id="date2">
+    </div>
+    
+    <button id="calculateBtn">Calculer</button>
+    
+    <div class="result" id="result">Résultat : <span id="days">0</span> jours</div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default dates (today and a week from today)
+            const today = new Date();
+            const nextWeek = new Date();
+            nextWeek.setDate(today.getDate() + 7);
+            
+            // Format dates for input fields (YYYY-MM-DD)
+            document.getElementById('date1').value = formatDate(today);
+            document.getElementById('date2').value = formatDate(nextWeek);
+            
+            // Add event listener to calculate button
+            document.getElementById('calculateBtn').addEventListener('click', calculateDays);
+            
+            // Function to calculate days between dates
+            function calculateDays() {
+                const date1 = new Date(document.getElementById('date1').value);
+                const date2 = new Date(document.getElementById('date2').value);
+                
+                // Calculate difference in milliseconds
+                const diffTime = Math.abs(date2 - date1);
+                
+                // Convert to days
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                // Display result
+                document.getElementById('days').textContent = diffDays;
+            }
+            
+            // Helper function to format date as YYYY-MM-DD
+            function formatDate(date) {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+            
+            // Calculate initial days difference
+            calculateDays();
+        });
+    </script>
+</body>
+</html>

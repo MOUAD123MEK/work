@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<body>
+    
+    <p><input type="checkbox" value="400">Ecan(400DH)</p>
+    <p><input type="checkbox" value="150">Clavier(150DH)</p>
+    <p><input type="checkbox" value="400">Ecan(400DH)</p>
+    <p><input type="checkbox" value="100">Souris(100DH)</p>
+    <p><input type="checkbox" value="400">Ecan(400DH)</p>
+    <p><button id="btn1">Calculer</button></p>
+<p><span id="result"></span></p>
+
+
+
+<script type="text/javascript">
+
+          $('#btn1').click(function(){
+             let montant=0;
+             $('input[type="checkbox"]').each(function(pos,item){
+                  if($(item).prop('checked')){
+                    montant+=parseFloat($(item).val());
+                  }
+
+            });//fin each
+             $('#result').html(`${montant.toFixed('2')} DH`);
+
+          })
+
+
+
+
+
+
+
+/*
+
+    document.querySelector('#btn1').onclick=function(){
+    let allEqs=document.querySelectorAll('input[type="checkbox"]');
+    let montant=0;
+    allEqs.forEach(function(item,pos){
+
+      if(item.checked){
+        montant+=parseFloat(item.value);
+      }
+
+    });
+    document.getElementById('result').innerHTML=`${montant.toFixed('2')} DH`;
+
+
+    }
+
+*/
+
+
+</script>
+
+
+
+
+</body>
+</html>

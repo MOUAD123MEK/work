@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li>HTML</li>
+        <li>Javascript</li>
+        <li>ASP</li>
+    </ul>
+    
+    <button onclick="trier()">Trier</button>
+
+    <script type="text/javascript">
+       function trier(){
+        //transformer la liste en un tableau Javascript
+       //let lngs=Array.from(document.querySelectorAll('li')).map((item)=>item.innerHTML);
+       let lngs=[...document.querySelectorAll('li')].map((item)=>item.innerHTML);
+       //ecrire [...document.querySelectorAll('li')] autrement =>
+       /*let emptyArray=[]
+       document.querySelectorAll('li').forEach((item,pos)=>{
+        emptyArray.push(item);
+       })*/
+      // let lngs=[...document.querySelectorAll('li')].map((item)=>item.innerHTML);
+     /* let lngs=new Array();
+      emptyArray.forEach((ele,pos)=>{
+        lngs.push(ele.innerHTML);
+      })*/
+     
+     lngs.sort();
+     //operation inverse
+     document.querySelector('ul').innerHTML=lngs.map((item)=>`<li>${item}</li>`).join('');
+     //lngs.map((item)=>`<li>${item}</li>`)
+   /*let myTable=[]
+   lngs.forEach((item,pos)=>{
+       myTable.push(`<li>${item}</li>`);
+
+   });
+   //lngs.map((item)=>`<li>${item}</li>`).join('');  convertir le tableau en chaine de caracteres
+   let myStr=myTable.join('');
+   document.querySelector('ul').innerHTML=myStr;*/
+     
+       }
+
+
+
+
+    </script>
+</body>
+</html>

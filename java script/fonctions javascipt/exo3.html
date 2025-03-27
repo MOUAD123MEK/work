@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+</head>
+<body>
+      <script>
+
+            function trouverMax(tab) {
+                  let max = tab[0];
+                  for (let i = 1; i < tab.length; i++) {
+                        if (tab[i] > max) {
+                              max = tab[i];
+                        }
+                  }
+                  return max;
+            }
+
+            let tab = [1, 2, 3, 4, 5];
+            console.log(trouverMax(tab));
+
+            let tab2 = [1, 2, 3, 4, 5];
+            console.log(Math.max(...tab2));
+
+
+      </script>
+</body>
+</html>

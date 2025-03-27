@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disparition Progressive</title>
+  <style>
+    p {
+      cursor: pointer;
+      transition: opacity 0.5s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <button id="addParagraphButton">Ajouter un paragraphe</button>
+  <div id="container"></div>
+
+  <script>
+    let paragraphCount = 1;
+
+    // Fonction pour ajouter un paragraphe
+    document.getElementById("addParagraphButton").addEventListener("click", function() {
+      const container = document.getElementById("container");
+      const newParagraph = document.createElement("p");
+      newParagraph.textContent = `Paragraphe ${paragraphCount}`;
+
+      // Événement pour faire disparaître progressivement
+      newParagraph.addEventListener("click", function() {
+        let opacity = 1;
+
+        // Utilisation de setInterval pour réduire progressivement l'opacité
+        const fadeOut = setInterval(function() {
+          if (opacity <= 0) {
+            clearInterval(fadeOut);
+            container.removeChild(newParagraph);
+          } else {
+            opacity -= 0.1;
+            newParagraph.style.opacity = opacity;
+          }
+        }, 100); // Réduction toutes les 100ms
+      });
+
+      container.appendChild(newParagraph);
+      paragraphCount++;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulateur de Prêt Bancaire</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+     <style>
+
+
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: normal;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0069d9;
+        }
+        .result {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <h1>Simulateur de Prêt Bancaire</h1>
+    
+    <div class="form-group">
+        <label for="montant">Montant du prêt (€)</label>
+        <input type="number" id="montant" >
+    </div>
+    
+    <div class="form-group">
+        <label for="taux">Taux d'intérêt (%)</label>
+        <input type="number" id="taux" value="10" step="0.01" min="0">
+    </div>
+    
+    <div class="form-group">
+        <label for="duree">Durée (années)</label>
+        <input type="number" id="duree" value="5" min="1">
+    </div>
+    
+    <button id="calculer">Calculer</button>
+    
+    <div class="result">Mensualité : <span id="mensualite">212.47</span> €</div>
+    
+   
+
+    <script>
+
+        $(document).ready(function() {
+            // Calculate loan payment on button click
+            $("#calculer").click(function() {
+                calculateLoanPayment();
+            });
+            
+            // Also calculate when inputs change
+            $("#montant, #taux, #duree").on("change", function() {
+                calculateLoanPayment();
+            });
+            
+            // Function to calculate the monthly payment
+            function calculateLoanPayment() {
+                // Get input values
+                const montant = parseFloat($("#montant").val());
+                const tauxAnnuel = parseFloat($("#taux").val());
+                const dureeAnnees = parseInt($("#duree").val());
+                
+                // Validate inputs
+                if (isNaN(montant) || isNaN(tauxAnnuel) || isNaN(dureeAnnees)) {
+                    alert("Veuillez entrer des valeurs numériques valides.");
+                    return;
+                }
+                
+                if (montant <= 0 || dureeAnnees <= 0) {
+                    alert("Le montant et la durée doivent être supérieurs à zéro.");
+                    return;
+                }
+                
+                // Calculate monthly interest rate
+                const tauxMensuel = tauxAnnuel / 100 / 12;
+                
+                // Calculate number of payments
+                const nombrePaiements = dureeAnnees * 12;
+                
+                // Calculate monthly payment
+                // Formula: M = P * [r(1+r)^n] / [(1+r)^n - 1]
+                let mensualite = 0;
+                
+                if (tauxAnnuel === 0) {
+                    // If interest rate is 0, simple division
+                    mensualite = montant / nombrePaiements;
+                } else {
+                    // Standard formula
+                    mensualite = montant * tauxMensuel * Math.pow(1 + tauxMensuel, nombrePaiements) 
+                                / (Math.pow(1 + tauxMensuel, nombrePaiements) - 1);
+                }
+                
+                // Display the result (rounded to 2 decimal places)
+                $("#mensualite").text(mensualite.toFixed(2));
+            }
+            
+            // Calculate initially
+            calculateLoanPayment();
+        });
+    </script>
+
+    
+</body>
+</html>

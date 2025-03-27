@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Fruit Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+        
+        .button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 2px;
+        }
+        
+        .button-add {
+            background-color: #4CAF50;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .button-edit {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        .button-delete {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        .button-cancel {
+            background-color: #ccc;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color:blanchedalmond;
+        }
+        
+        
+        tr:hover {
+            background-color: burlywood;
+        }
+        
+        .fruit-image {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            width: 70%;
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .footer {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .actions {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Fruit Collection</h1>
+    
+    <button id="addFruitBtn" class="button button-add">Add New Fruit</button>
+    
+    <table id="fruitsTable">
+        <thead>
+            <tr>
+                <th><input type="checkbox" id="selectAll"></th>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Photo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="fruitsList">
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6">
+                    <button id="deleteSelectedBtn" class="button button-delete">Delete Selected</button>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h2>Edit Fruit</h2>
+            <form id="editForm">
+                <div class="form-group">
+                    <label for="editCode">Code:</label>
+                    <input type="text" id="editCode" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="editName">Name:</label>
+                    <input type="text" id="editName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editPrice">Price:</label>
+                    <input type="text" id="editPrice" required>
+                </div>
+                <div class="form-group">
+                    <label for="editPhoto">Photo URL:</label>
+                    <input type="text" id="editPhoto" required>
+                </div>
+                <div class="footer">
+                    <button type="button" class="button button-cancel" onclick="closeEditModal()">Cancel</button>
+                    <button type="submit" class="button button-edit">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Add Modal -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <h2>Add New Fruit</h2>
+            <form id="addForm">
+                <div class="form-group">
+                    <label for="addName">Name:</label>
+                    <input type="text" id="addName" required>
+                </div>
+                <div class="form-group">
+                    <label for="addPrice">Price:</label>
+                    <input type="text" id="addPrice" required>
+                </div>
+                <div class="form-group">
+                    <label for="addPhoto">Photo URL:</label>
+                    <input type="text" id="addPhoto" required>
+                </div>
+                <div class="footer">
+                    <button type="button" class="button button-cancel" onclick="closeAddModal()">Cancel</button>
+                    <button type="submit" class="button button-add">Add Fruit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <h2>Delete Fruit</h2>
+            <p id="deleteMessage">Are you sure you want to delete this fruit?</p>
+            <div class="footer">
+                <button class="button button-cancel" onclick="closeDeleteModal()">Cancel</button>
+                <button id="confirmDeleteBtn" class="button button-delete">Delete</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Our fruit data
+        let fruits = [
+            {codeF: 1, nom: "Banane", prix: "10.00DH", photo: "fruits.banane.png"},
+            {codeF: 2, nom: "Orange", prix: "30.00DH", photo: "fruits.orange.png"},
+            {codeF: 3, nom: "Grapes", prix: "15.00DH", photo: "fruits.grapes.png"},
+        ];
+        
+        // Selected fruit for editing or deleting
+        let selectedFruit = null;
+        
+        // Selected fruits for bulk delete
+        let selectedFruits = [];
+        
+        // Display fruits in the table
+        function displayFruits() {
+            const fruitsList = document.getElementById('fruitsList');
+            fruitsList.innerHTML = '';
+            
+            fruits.forEach(fruit => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td><input type="checkbox" class="fruit-checkbox" data-id="${fruit.codeF}"></td>
+                    <td>${fruit.codeF}</td>
+                    <td>${fruit.nom}</td>
+                    <td>${fruit.prix}</td>
+                    <td><img src="${fruit.photo}" alt="${fruit.nom}" class="fruit-image"></td>
+                    <td class="actions">
+                        <button class="button button-edit" onclick="editFruit(${fruit.codeF})">Edit</button>
+                        <button class="button button-delete" onclick="deleteFruit(${fruit.codeF})">Delete</button>
+                    </td>
+                `;
+                
+                fruitsList.appendChild(row);
+            });
+            
+            // Add event listeners to checkboxes
+            document.querySelectorAll('.fruit-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', handleCheckboxChange);
+            });
+        }
+        
+        // Handle individual checkbox changes
+        function handleCheckboxChange(e) {
+            const id = parseInt(e.target.dataset.id);
+            
+            if (e.target.checked) {
+                selectedFruits.push(id);
+            } else {
+                selectedFruits = selectedFruits.filter(item => item !== id);
+                document.getElementById('selectAll').checked = false;
+            }
+            
+            updateDeleteSelectedButton();
+        }
+        
+        // Update Delete Selected button state
+        function updateDeleteSelectedButton() {
+            const deleteBtn = document.getElementById('deleteSelectedBtn');
+            deleteBtn.disabled = selectedFruits.length === 0;
+            deleteBtn.style.opacity = selectedFruits.length === 0 ? '0.5' : '1';
+        }
+        
+        // Handle "Select All" checkbox
+        document.getElementById('selectAll').addEventListener('change', function(e) {
+            const isChecked = e.target.checked;
+            
+            document.querySelectorAll('.fruit-checkbox').forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+            
+            if (isChecked) {
+                selectedFruits = fruits.map(fruit => fruit.codeF);
+            } else {
+                selectedFruits = [];
+            }
+            
+            updateDeleteSelectedButton();
+        });
+        
+        // Open edit modal
+        function editFruit(id) {
+            selectedFruit = fruits.find(fruit => fruit.codeF === id);
+            
+            document.getElementById('editCode').value = selectedFruit.codeF;
+            document.getElementById('editName').value = selectedFruit.nom;
+            document.getElementById('editPrice').value = selectedFruit.prix;
+            document.getElementById('editPhoto').value = selectedFruit.photo;
+            
+            document.getElementById('editModal').style.display = 'block';
+        }
+        
+        // Close edit modal
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+        
+        // Handle edit form submission
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Update fruit data
+            const index = fruits.findIndex(fruit => fruit.codeF === selectedFruit.codeF);
+            
+            fruits[index].nom = document.getElementById('editName').value;
+            fruits[index].prix = document.getElementById('editPrice').value;
+            fruits[index].photo = document.getElementById('editPhoto').value;
+            
+            // Refresh display and close modal
+            displayFruits();
+            closeEditModal();
+        });
+        
+        // Open add modal
+        document.getElementById('addFruitBtn').addEventListener('click', function() {
+            document.getElementById('addName').value = '';
+            document.getElementById('addPrice').value = '';
+            document.getElementById('addPhoto').value = '';
+            
+            document.getElementById('addModal').style.display = 'block';
+        });
+        
+        // Close add modal
+        function closeAddModal() {
+            document.getElementById('addModal').style.display = 'none';
+        }
+        
+        // Handle add form submission
+        document.getElementById('addForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Create new fruit
+            const newFruit = {
+                codeF: Math.max(...fruits.map(f => f.codeF)) + 1,
+                nom: document.getElementById('addName').value,
+                prix: document.getElementById('addPrice').value,
+                photo: document.getElementById('addPhoto').value
+            };
+            
+            // Add to array
+            fruits.push(newFruit);
+            
+            // Refresh display and close modal
+            displayFruits();
+            closeAddModal();
+        });
+        
+        // Open delete confirmation
+        function deleteFruit(id) {
+            selectedFruit = fruits.find(fruit => fruit.codeF === id);
+            
+            document.getElementById('deleteMessage').textContent = 
+                `Are you sure you want to delete "${selectedFruit.nom}"?`;
+            
+            document.getElementById('deleteModal').style.display = 'block';
+        }
+        
+        // Close delete modal
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+        }
+        
+        // Confirm deletion
+        document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+            // Remove from array
+            fruits = fruits.filter(fruit => fruit.codeF !== selectedFruit.codeF);
+            
+            // Also remove from selected fruits if present
+            selectedFruits = selectedFruits.filter(id => id !== selectedFruit.codeF);
+            
+            // Refresh display and close modal
+            displayFruits();
+            closeDeleteModal();
+            updateDeleteSelectedButton();
+        });
+        
+        // Delete selected fruits
+        document.getElementById('deleteSelectedBtn').addEventListener('click', function() {
+            if (selectedFruits.length === 0) return;
+            
+            document.getElementById('deleteMessage').textContent = 
+                `Are you sure you want to delete ${selectedFruits.length} fruits?`;
+            
+            document.getElementById('confirmDeleteBtn').onclick = function() {
+                // Remove selected fruits
+                fruits = fruits.filter(fruit => !selectedFruits.includes(fruit.codeF));
+                
+                // Clear selection
+                selectedFruits = [];
+                document.getElementById('selectAll').checked = false;
+                
+                // Refresh display and close modal
+                displayFruits();
+                closeDeleteModal();
+                updateDeleteSelectedButton();
+            };
+            
+            document.getElementById('deleteModal').style.display = 'block';
+        });
+        
+        // Initial display
+        displayFruits();
+        updateDeleteSelectedButton();
+
+    </script>
+    
+</body>
+</html>

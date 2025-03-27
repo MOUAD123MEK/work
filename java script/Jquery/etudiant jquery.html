@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Étudiants</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 25%;
+            background: #ffffff;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .content {
+            width: 75%;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            max-width: 500px;
+            margin: 0 auto 20px;
+        }
+
+        input, select {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #007bff;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .edit-btn {
+            background: #ffc107;
+        }
+
+        .edit-btn:hover {
+            background: #e0a800;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+        }
+
+        @media (max-width: 800px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                box-shadow: none;
+            }
+
+            .content {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+
+
+<body>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>Filtrer par Filière</h2>
+            <select id="filterFiliere">
+                <option value="">Toutes les Filières</option>
+            </select>
+            <button onclick="filterStudents()">Filtrer</button>
+        </div>
+
+        <div class="content">
+            <h1>Gestion des Étudiants</h1>
+
+            <form id="studentForm">
+                <input type="text" id="cef" placeholder="CEF" required>
+                <input type="text" id="fullName" placeholder="Nom complet" required>
+                <input type="text" id="filiere" placeholder="Filière" required>
+                <input type="text" id="image" placeholder="URL de l'image" required>
+                <button type="submit" id="submitButton">Ajouter</button>
+            </form>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Photo</th>
+                        <th>CEF</th>
+                        <th>Nom complet</th>
+                        <th>Filière</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="studentTable">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const studentTable = document.getElementById("studentTable");
+            const studentForm = document.getElementById("studentForm");
+            const filterFiliere = document.getElementById("filterFiliere");
+            const submitButton = document.getElementById("submitButton");
+
+            let students = JSON.parse(localStorage.getItem("students")) || [];
+            let editIndex = -1;
+
+
+
+            function updateFilterOptions() {
+                const filieres = [...new Set(students.map(s => s.filiere))];
+                filterFiliere.innerHTML = '<option value="">Toutes les Filières</option>';
+                filieres.forEach(filiere => {
+                    filterFiliere.innerHTML += `<option value="${filiere}">${filiere}</option>`;
+                });
+            }
+
+
+
+            function displayStudents(filter = "") {
+                studentTable.innerHTML = "";
+                students
+                    .filter(student => filter === "" || student.filiere === filter)
+                    .forEach((student, index) => {
+                        let row = `
+                            <tr>
+                                <td><img src="${student.image}" alt="Photo"></td>
+                                <td>${student.cef}</td>
+                                <td>${student.fullName}</td>
+                                <td>${student.filiere}</td>
+                                <td>
+                                    <button class="edit-btn" onclick="editStudent(${index})">✏️ Modifier</button>
+                                    <button class="delete-btn" onclick="deleteStudent(${index})">❌ Supprimer</button>
+                                </td>
+                            </tr>
+                        `;
+                        studentTable.innerHTML += row;
+                    });
+            }
+
+
+
+            studentForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+                const cef = document.getElementById("cef").value.trim();
+                const fullName = document.getElementById("fullName").value.trim();
+                const filiere = document.getElementById("filiere").value.trim();
+                const image = document.getElementById("image").value.trim();
+
+                if (!cef || !fullName || !filiere || !image) {
+                    alert("Veuillez remplir tous les champs.");
+                    return;
+                }
+
+                if (editIndex === -1) {
+                    students.push({ cef, fullName, filiere, image });
+                } else {
+                    students[editIndex] = { cef, fullName, filiere, image };
+                    editIndex = -1;
+                    submitButton.textContent = "Ajouter";
+                }
+
+                localStorage.setItem("students", JSON.stringify(students));
+                updateFilterOptions();
+                displayStudents();
+                studentForm.reset();
+            });
+
+
+
+            window.deleteStudent = function (index) {
+                students.splice(index, 1);
+                localStorage.setItem("students", JSON.stringify(students));
+                updateFilterOptions();
+                displayStudents();
+            };
+
+            window.filterStudents = function () {
+                displayStudents(filterFiliere.value);
+            };
+
+            updateFilterOptions();
+            displayStudents();
+        });
+    </script>
+
+</body>
+</html>

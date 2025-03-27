@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulateur de Panier de Shopping</title>
+  <style>
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+
+     
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    
+
+    th:hover {
+      background-color: orangered;
+    }
+
+    th:first-child, td:first-child {
+      text-align: left;
+    }
+
+      tr:nth-child(even) {
+      background-color: #f2f2f2;
+      }
+
+      tr:hover {
+            background-color: violet;
+      }
+
+      input[type="number"] {
+        width: 50px;
+        text-align: center;
+      }
+
+      button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            text-align: center;
+            display: inline-block;
+            font-size: 12px;
+            margin: 4px 2px;
+            cursor: pointer;
+      }
+
+      button:hover {
+            background-color: greenyellow;
+            color: white;
+      }
+
+      #total-panier {
+        font-weight: bold;
+        margin-top: 10px;
+      }
+
+
+    .header {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      padding: 10px;
+      color: #0044cc;
+    }
+
+    
+    
+  </style>
+
+</head>
+<body>
+
+  <div class="header">Simulateur de Panier de Shopping</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Produit</th>
+        <th>Prix Unitaire (HT)</th>
+        <th>Quantité</th>
+        <th>Total</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+
+    <tbody id="cart-body">
+
+      <tr>
+        <td>ProduitA</td>
+        <td>10.00 €</td>
+        <td><input type="number" value="1" min="1" max="10"></td>
+        <td>10.00 €</td>
+        <td><button>Supprimer</button></td>
+      </tr>
+
+      <tr>
+        <td>ProduitB</td>
+        <td>20.00 €</td>
+        <td><input type="number" value="1" min="1" max="20"></td>
+        <td>20.00 €</td>
+        <td><button>Supprimer</button></td>
+      </tr>
+
+      <tr>
+        <td>ProduitC</td>
+        <td>30.00 €</td>
+        <td><input type="number" value="1" min="1" max="30"></td>
+        <td>30.00 €</td>
+        <td><button>Supprimer</button></td>
+      </tr>
+
+    </tbody>
+  </table>
+  <p id="total-panier">Total Panier (HT) :  €</p>
+
+  
+
+</body>
+</html>

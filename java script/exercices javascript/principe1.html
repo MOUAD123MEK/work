@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+</head>
+<body>
+      
+      <h1>Formulaire</h1>
+      <form name="form1">
+            <label for="input1">Nom :</label>
+            <input type="text" id="input1" name="nom" />
+            <button type="submit">Envoyer</button>
+      </form>
+
+      <form name="form2">
+            <label for="input2">Age :</label>
+            <input type="age" id="input2" name="Age" />
+            <button type="submit">Envoyer</button>
+      </form>
+
+      <script>
+            let tousLesElements = monFormulaire.elements;
+            console.log("Tous les éléments :", tousLesElements);
+
+            let unElementparIndex = monFormulaire.elements[index];
+            console.log("Un élément par index :", unElementparIndex);
+
+            let unElementparNom = monFormulaire.elements["nom"];
+            console.log("Un élément par nom :", unElementparNom);
+
+           let unElementByName = monFormulaire.elements["nomElement"];
+           console.log("Un élément par name :", unElementByName);
+      </script>
+</body>
+</html>
+
+
+
+
+

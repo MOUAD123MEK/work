@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vérifier si une date est un week-end</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+        }
+        .date-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+        .result {
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        .weekend {
+            color: #28a745;
+        }
+        .weekday {
+            color: #dc3545;
+        }
+    </style>
+    <!-- Include jQuery from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Vérifier si une date est un week-end</h1>
+    
+    <div class="date-group">
+        <label for="selectedDate">Sélectionnez une date :</label>
+        <input type="date" id="selectedDate">
+    </div>
+    
+    <button id="checkBtn">Vérifier</button>
+    
+    <div class="result" id="result">Résultat : </div>
+    
+    <script>
+        $(document).ready(function() {
+            // Function to format date as YYYY-MM-DD
+            function formatDate(date) {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+            
+            // Set default date to today
+            const today = new Date();
+            $('#selectedDate').val(formatDate(today));
+            
+            // Function to check if date is weekend
+            function checkWeekend() {
+                const selectedDate = new Date($('#selectedDate').val());
+                const day = selectedDate.getDay();
+                
+                // 0 is Sunday, 6 is Saturday
+                const isWeekend = (day === 0 || day === 6);
+                
+                if (isWeekend) {
+                    $('#result').html('Résultat : <span class="weekend">Oui, c\'est un week-end !</span>');
+                } else {
+                    $('#result').html('Résultat : <span class="weekday">Non, ce n\'est pas un week-end.</span>');
+                }
+            }
+            
+            // Add event listener to check button
+            $('#checkBtn').click(checkWeekend);
+            
+            // Check on date change too
+            $('#selectedDate').change(checkWeekend);
+            
+            // Initial check
+            checkWeekend();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionnaire de Produits</title>
+    <style>
+
+        body { font-family: Arial, sans-serif;
+            text-align: center; 
+        }
+
+        input, button { margin: 5px;
+            padding: 10px;
+        }
+
+        .product-list { display: flex; 
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .product-card {
+            border: 1px solid #ddd; 
+            padding: 10px; 
+            margin: 10px; 
+            text-align: center;
+            width: 200px; 
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .product-card img { width: 100px;
+            height: 100px; 
+            object-fit: cover; 
+        }
+
+        .btn { padding: 8px;
+            border: none;
+            cursor: pointer; 
+            color: white; 
+        }
+
+        .btn-edit { background-color: orange; 
+        }
+
+        .btn-delete { background-color: red;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <h1>Gestionnaire de Produits</h1>
+    <label for="productName">Nom de produit:</label>
+    <input type="text" id="productName" placeholder="Nom du produit"><br><br>
+    <label for="productPrice">Prix:</label>
+    <input type="number" id="productPrice" placeholder="Prix"><br><br>
+    <button id="addProduct" class="btn" style="background: blue;">Ajouter</button>
+
+    <div class="product-list" id="productList"></div>
+
+<script>
+    
+    // Sélection des éléments HTML
+        const productName = document.getElementById("productName");
+        const productPrice = document.getElementById("productPrice");
+        const productImage = document.getElementById("productImage");
+        const addProductBtn = document.getElementById("addProduct");
+        const productList = document.getElementById("productList");
+
+        let products = JSON.parse(localStorage.getItem("products")) || [];
+        let editIndex = -1;  // Pour suivre quel produit est en train d'être modifié
+
+        // 🏠 Charger les produits au démarrage
+        function loadProducts() {
+            productList.innerHTML = "";
+            products.forEach((product, index) => {
+                const productCard = document.createElement("div");
+                productCard.classList.add("product-card");
+            
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>${product.price} €</p>
+                    <button class="btn btn-edit" onclick="editProduct(${index})">Modifier</button>
+                    <button class="btn btn-delete" onclick="deleteProduct(${index})">Supprimer</button>
+                    
+                `;
+            
+                productList.appendChild(productCard);
+            });
+        
+            localStorage.setItem("products", JSON.stringify(products));
+        }
+
+        // ➕ Ajouter ou modifier un produit
+        addProductBtn.addEventListener("click", function() {
+            const name = productName.value.trim();
+            const price = productPrice.value.trim();
+            const imageFile = productImage.files[0];
+        
+            if (!name || !price || !imageFile) {
+                alert("Tous les champs sont obligatoires !");
+                return;
+            }
+        
+            const reader = new FileReader();
+            reader.readAsDataURL(imageFile);
+            reader.onload = function(event) {
+                const imageURL = event.target.result;
+            
+                if (editIndex === -1) {
+                    // Ajouter un nouveau produit
+                    const newProduct = { id: Date.now(), name, price, image: imageURL };
+                    products.push(newProduct);
+                } else {
+                    // Modifier un produit existant
+                    products[editIndex] = { ...products[editIndex], name, price, image: imageURL };
+                    editIndex = -1;
+                    addProductBtn.textContent = "Ajouter";
+                }
+            
+                localStorage.setItem("products", JSON.stringify(products));
+                loadProducts();
+                resetForm();
+            };
+        });
+
+        // ✏️ Modifier un produit
+        function editProduct(index) {
+            const product = products[index];
+            productName.value = product.name;
+            productPrice.value = product.price;
+            editIndex = index;
+            addProductBtn.textContent = "Modifier";
+        }
+
+        // ❌ Supprimer un produit
+        function deleteProduct(index) {
+            if (confirm("Voulez-vous supprimer ce produit ?")) {
+                products.splice(index, 1);
+                localStorage.setItem("products", JSON.stringify(products));
+                loadProducts();
+            }
+        }
+
+        // 🔄 Réinitialiser le formulaire
+        function resetForm() {
+            productName.value = "";
+            productPrice.value = "";
+            productImage.value = "";
+        }
+
+        // Charger les produits au démarrage
+        loadProducts();
+
+
+</script>
+
+
+</body>
+</html>

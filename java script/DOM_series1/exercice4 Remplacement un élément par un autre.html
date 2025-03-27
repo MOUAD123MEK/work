@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Remplacement un élément par un autre</title>
+</head>
+<body>
+      <div id="container">
+            <button id="addParagraphButton">Ajouter un paragraphe</button>
+      
+      </div>
+      <button id="deleteAllButton">Supprimer tout</button>
+
+
+     
+      <script>
+            let paragraphCount = 1;
+        
+            // Ajout d'un paragraphe
+            document.getElementById("addParagraphButton").addEventListener("click", function() {
+              const container = document.getElementById("container");
+              const newParagraph = document.createElement("p");
+              newParagraph.textContent = `Cliquez pour transformer en H2 - ${paragraphCount}`;
+        
+              // Événement pour supprimer le paragraphe spécifique
+              newParagraph.addEventListener("click", function() {
+                container.removeChild(newParagraph);
+              });
+        
+              container.appendChild(newParagraph);
+              paragraphCount++;
+            });
+        
+            // Suppression de tous les paragraphes
+            document.getElementById("deleteAllButton").addEventListener("click", function() {
+              const newHeading = document.createElement("h2");
+              newHeading.textContent = "Tous les paragraphes ont été supprimés";
+              container.appendChild(newHeading);
+            });
+
+
+          </script>
+
+</body>
+</html>
+
+
+
+
+

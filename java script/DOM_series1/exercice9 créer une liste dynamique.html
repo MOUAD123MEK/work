@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste Dynamique</title>
+</head>
+<body>
+ 
+    <input type="text" id="inputText" placeholder="Ajouter un élément">
+    <button id="addButton">Ajouter</button>
+    <ul id="list"></ul>
+ 
+    <script>
+        let input = document.getElementById('inputText');
+        let button = document.getElementById('addButton');
+        let ul = document.getElementById('list');
+ 
+        button.addEventListener('click', function() {
+            let text = input.value.trim();
+ 
+            if (text !== '') {
+                let li = document.createElement('li');
+                li.textContent = text + ' ';
+ 
+                let deleteButton = document.createElement('button');
+                deleteButton.textContent = '❌';
+                deleteButton.style.marginLeft = '10px';
+ 
+                deleteButton.addEventListener('click', function() {
+                    ul.removeChild(li);
+                });
+ 
+                li.appendChild(deleteButton);
+                ul.appendChild(li);
+ 
+                input.value = '';
+            } else {
+                alert("Veuillez entrer un texte !");
+            }
+        });
+    </script>
+ 
+</body>
+</html>
+ 

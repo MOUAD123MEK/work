@@ -1,0 +1,63 @@
+kkiki<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+
+    <form action="" id="myForm">
+      <select name="skills" id="skills">
+            <option selected value="">Selectionner une compétence.....</option>
+            <option value="1">PHP</option>
+            <option value="2">Javascript</option>
+            <option value="3">Bootsrtap</option>
+      </select>
+      <button type="submit">Envoyer</button>
+    </form>
+
+<script type="text/javascript">
+   /* document.querySelector('#myForm').onsubmit=((event)=>{
+                  if(document.querySelector('#skills').value===""){
+
+                    window.alert('vous devez faire un choix !!!!');
+                    return false;
+                   
+                  }
+
+                  else{
+                    return true;
+                  }
+
+
+
+    });*/
+
+   $('#myForm').submit(function(event){
+                  if($('#skills').val()===""){
+
+                    window.alert('vous devez faire un choix !!!!');
+                    return false;
+                   
+                  }
+
+                  else{
+                    return true;
+                  }
+
+
+
+    });
+
+
+
+
+
+</script>
+
+    
+    
+</body>
+</html>

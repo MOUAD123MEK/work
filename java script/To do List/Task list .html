@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task List</title>
+  <style>
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+    button {
+      margin-left: 5px;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #saveButton {
+      background-color: green;
+      color: white;
+    }
+    .deleteButton {
+      background-color: red;
+      color: white;
+    }
+  </style>
+
+</head>
+<body>
+
+  <h1 style="color: pink;">Task List</h1>
+  <input type="text" id="taskInput" placeholder="Enter item" />
+  <button id="saveButton">Save</button>
+  <div id="taskList"></div>
+
+  <script src="script.js">
+      const addButton = document.getElementById("saveButton");
+const taskInput = document.getElementById("taskInput");
+const taskList = document.getElementById("taskList");
+
+saveButton.addEventListener("click", function () {
+  if (taskInput.value.trim() !== "") {
+    // Create a container for the task
+    const taskDiv = document.createElement("div");
+
+    // Create an input field for editing (hidden by default)
+    const inputBox = document.createElement("input");
+    inputBox.type = "text";
+    inputBox.style.display = "none";
+
+    // Create a label to display the task
+    const taskLabel = document.createElement("span");
+    taskLabel.textContent = taskInput.value;
+
+    // Create a "Delete" button
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.className = "deleteButton";
+
+    // Add event listener to delete the task
+    deleteButton.addEventListener("click", function () {
+      taskList.removeChild(taskDiv);
+    });
+
+    // Add label, input, and buttons to the task container
+    taskDiv.appendChild(taskLabel);
+    taskDiv.appendChild(inputBox);
+    taskDiv.appendChild(deleteButton);
+
+    // Add the task to the task list
+    taskList.appendChild(taskDiv);
+
+    // Clear the input field
+    taskInput.value = "";
+  }
+});
+
+  </script>
+</body>
+</html>

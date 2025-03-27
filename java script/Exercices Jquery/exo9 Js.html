@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcul du nombre de mois</title>
+</head>
+<body>
+    <h2>Calcul du nombre de mois entre deux dates</h2>
+    <label for="date1">Date de début :</label>
+    <input type="date" id="date1">
+    
+    <label for="date2">Date de fin :</label>
+    <input type="date" id="date2">
+    
+    <button onclick="calculerMois()">Calculer</button>
+    
+    <p id="resultat"></p>
+
+    <script>
+        function calculerMois() {
+            let date1 = new Date(document.getElementById("date1").value);
+            let date2 = new Date(document.getElementById("date2").value);
+            
+            if (isNaN(date1) || isNaN(date2)) {
+                document.getElementById("resultat").innerText = "Veuillez sélectionner deux dates valides.";
+                return;
+            }
+            
+            let anneeDiff = date2.getFullYear() - date1.getFullYear();
+            let moisDiff = date2.getMonth() - date1.getMonth();
+            
+            let totalMois = anneeDiff * 12 + moisDiff;
+            
+            document.getElementById("resultat").innerText = "Nombre de mois entre les deux dates : " + totalMois;
+        }ç
+    </script>
+</body>
+</html>

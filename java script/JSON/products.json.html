@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de Panier</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+ 
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;aq: ;
+        }
+ 
+        #cart-icon {
+            cursor: pointer;
+        }
+ 
+        #cart-count {
+            background-color: red;
+            padding: 2px 6px;
+            border-radius: 50%;
+            font-size: 12px;
+        }
+ 
+        main {
+            padding: 20px;
+        }
+ 
+        .product-card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+        }
+ 
+        .cart-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+ 
+        #cart-page {
+            display: none;
+        }
+ 
+        #cart-items {
+            display: flex;
+            flex-direction: column;
+        }
+ 
+        #total-amount {
+            font-weight: bold;
+        }
+ 
+        #filter-smartphone, #filter-tv {
+            margin-right: 10px;
+        } 
+
+        #search {
+            padding: 10px;
+            margin: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <header>
+        <h1>Boutique en Ligne</h1>
+        <div id="cart-icon">
+            🛒 <span id="cart-count">0</span>
+        </div>
+    </header>
+ 
+    <main id="main-page">
+        <input type="text" id="search" placeholder="Rechercher un produit...">
+        <button id="filter-smartphone">Smartphones</button>
+        <button id="filter-tv">TVs</button>
+ 
+        <div id="product-list"></div>
+    </main>
+ 
+ 
+    <div id="cart-page">
+        <header>
+            <h1>Votre Panier</h1>
+            <button onclick="showMainPage()">Retour à la boutique</button>
+        </header>
+ 
+        <main>
+            <div id="cart-items"></div>
+            <p>Total: <span id="total-amount">0</span> €</p>
+        </main>
+    </div>
+ 
+    
+<script>
+  const products = [
+    {
+      "id": 1,
+      "title": "iPhone 15 Pro",
+      "description": "The latest iPhone with A17 Pro chip, 6.1-inch Super Retina XDR display, and triple-camera system.",
+      "price": 999,
+      "image": "https://example.com/iphone15pro.png",
+      "category": "smartphone"
+    },
+
+    {
+      "id": 2,
+      "title": "Samsung Galaxy S23 Ultra",
+      "description": "A premium Android phone with a 200MP camera, 6.8-inch Dynamic AMOLED display, and S Pen support.",
+      "price": 1199,
+      "image": "https://example.com/s23ultra.png",
+      "category": "smartphone"
+    },
+
+    {
+      "id": 3,
+      "title": "Google Pixel 8 Pro",
+      "description": "Google's flagship phone with Tensor G3 chip, 6.7-inch OLED display, and advanced AI features.",
+      "price": 899,
+      "image": "https://example.com/pixel8pro.png",
+      "category": "smartphone"
+    },
+
+    {
+      "id": 4,
+      "title": "OnePlus 11",
+      "description": "A powerful Android phone with Snapdragon 8 Gen 2, 6.7-inch AMOLED display, and Hasselblad camera.",
+      "price": 699,
+      "image": "https://example.com/oneplus11.png",
+      "category": "smartphone"
+    },
+
+    {
+      "id": 5,
+      "title": "Sony Bravia XR A80L",
+      "description": "A 55-inch 4K OLED TV with Cognitive Processor XR, Dolby Vision, and Acoustic Surface Audio.",
+      "price": 1799,
+      "image": "https://example.com/sonya80l.png",
+      "category": "tv"
+    },
+
+    {
+      "id": 6,
+      "title": "LG C3 OLED",
+      "description": "A 65-inch 4K OLED TV with α9 Gen 6 AI Processor, Dolby Atmos, and webOS smart platform.",
+      "price": 1999,
+      "image": "https://example.com/lgc3.png",
+      "category": "tv"
+    },
+
+    {
+      "id": 7,
+      "title": "Samsung QN90B Neo QLED",
+      "description": "A 75-inch 4K QLED TV with Neo Quantum Processor, Mini-LED backlight, and Object Tracking Sound.",
+      "price": 2499,
+      "image": "https://example.com/qn90b.png",
+      "category": "tv"
+    },
+
+    {
+      "id": 8,
+      "title": "TCL 6-Series Roku TV",
+      "description": "A 65-inch 4K QLED TV with Dolby Vision, HDR Pro+, and built-in Roku streaming platform.",
+      "price": 899,
+      "image": "https://example.com/tcl6series.png",
+      "category": "tv"
+    },
+
+    {
+      "id": 9,
+      "title": "Apple AirPods Pro (2nd Gen)",
+      "description": "Wireless earbuds with Active Noise Cancellation, Adaptive Audio, and MagSafe charging case.",
+      "price": 249,
+      "image": "https://example.com/airpodspro2.png",
+      "category": "accessory"
+    },
+
+    {
+      "id": 10,
+      "title": "Samsung Galaxy Buds2 Pro",
+      "description": "Premium wireless earbuds with Intelligent ANC, 24-bit Hi-Fi audio, and 360 Audio.",
+      "price": 229,
+      "image": "https://example.com/buds2pro.png",
+      "category": "accessory"
+    },
+
+    {
+      "id": 11,
+      "title": "Anker PowerCore 26800mAh",
+      "description": "A high-capacity portable charger with USB-C and dual USB-A ports for fast charging.",
+      "price": 59,
+      "image": "https://example.com/ankerpowercore.png",
+      "category": "accessory"
+    },
+
+    {
+      "id": 12,
+      "title": "Belkin BoostCharge Pro 3-in-1",
+      "description": "A wireless charging pad for iPhone, Apple Watch, and AirPods with MagSafe compatibility.",
+      "price": 149,
+      "image": "https://example.com/belkin3in1.png",
+      "category": "accessory"
+    },
+
+    {
+      "id": 13,
+      "title": "iPhone 14 Plus",
+      "description": "A large-screen iPhone with A15 Bionic chip, 6.7-inch Super Retina XDR display, and dual-camera system.",
+      "price": 899,
+      "image": "https://example.com/iphone14plus.png",
+      "category": "smartphone"
+    },
+
+    {
+      "id": 14,
+      "title": "Xiaomi 13 Pro",
+      "description": "A flagship Android phone with Snapdragon 8 Gen 2, 6.73-inch AMOLED display, and Leica camera.",
+      "price": 999,
+      "image": "https://example.com/xiaomi13pro.png",
+      "category": "smartphone"
+    },
+
+    {
+      "id": 15,
+      "title": "Sony A95L QD-OLED",
+      "description": "A 65-inch 4K QD-OLED TV with Cognitive Processor XR, Triluminos Max, and Acoustic Surface Audio+.",
+      "price": 3499,
+      "image": "https://example.com/sonya95l.png",
+      "category": "tv"
+    },
+    
+    {
+      "id": 16,
+      "title": "Hisense U8K Mini-LED",
+      "description": "A 75-inch 4K Mini-LED TV with Quantum Dot, Dolby Vision IQ, and IMAX Enhanced.",
+      "price": 1499,
+      "image": "https://example.com/hisenseu8k.png",
+      "category": "tv"
+    },
+
+
+    {
+      "id": 17,
+      "title": "Spigen Tough Armor Case",
+      "description": "A durable phone case with Air Cushion Technology and kickstand for iPhone 15 Pro.",
+      "price": 25,
+      "image": "https://example.com/spigencase.png",
+      "category": "accessory"
+    },
+
+
+    {
+      "id": 18,
+      "title": "Logitech MX Keys Mini",
+      "description": "A compact wireless keyboard with backlit keys, multi-device connectivity, and smart backlighting.",
+      "price": 99,
+      "image": "https://example.com/mxkeysmini.png",
+      "category": "accessory"
+    },
+
+
+    {
+      "id": 19,
+      "title": "Razer BlackShark V2 Pro",
+      "description": "A wireless gaming headset with THX 7.1 surround sound, 50mm drivers, and noise-canceling mic.",
+      "price": 179,
+      "image": "https://example.com/blacksharkv2pro.png",
+      "category": "accessory"
+    },
+
+
+    {
+      "id": 20,
+      "title": "Samsung 980 Pro SSD 1TB",
+      "description": "A high-performance NVMe M.2 SSD with read speeds up to 7000 MB/s for gaming and content creation.",
+      "price": 99,
+      "image": "https://example.com/980pro.png",
+      "category": "accessory"
+    }  
+  ]
+  
+
+</script>

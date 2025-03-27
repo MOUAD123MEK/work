@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <title>Contacts List</title>
+</head>
+<body>
+    <div class="container my-5">
+        <div class="d-flex flex-column gap-2 my-4">
+            <h3 class="text-center">Contacts List</h3>
+            <div class="row">
+                <!-- contact name -->
+                <div class="col">
+                    <input type="text" name="" id="contactName" class="form-control" placeholder="Contact Name">
+                </div>
+
+
+               
+            </div>
+
+            
+            <div class="row">
+                <!-- contact number -->
+                <div class="col">
+                    <input type="tel" name="" id="phone" class="form-control" placeholder="Phone Number" '>
+                </div>
+
+                <!-- contact email -->
+                <div class="col">
+                    <input type="text" name="" id="email" class="form-control" placeholder="E-mail adress" >
+                </div>
+            </div>
+
+
+            <!-- contact photo -->
+            <input type="file" name="" id="photo" class="form-control">
+
+
+            <!-- add button -->
+            <button class="btn btn-primary " id="saveContact" onclick="addContact()"><i class="fa-solid fa-floppy-disk fs-4"></i></button>
+           
+           
+
+            
+
+           
+          
+        </div>
+
+        <div class="d-flex flex-column gap-3 p-2 border border-1 border-primary rounded" id="contactsList">
+            <!-- search bar -->
+            <div class="" id="searchContainer">
+                <input type="text" name="" id="search" class="form-control" placeholder="Search Contacts">
+            </div>
+
+            <!-- contact list -->
+            <div class="d-flex gap-3 flex-wrap" id="contactsContainer">
+                
+            </div>
+
+            
+        </div>
+
+    </div>
+
+    <!-- <div class="card border border-2 w-auto">
+        <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+            <div class="">
+                <img src="" alt="" class="rounded-pill img-fluid">
+            </div>
+            <div class="card-title">asdf</div>
+
+            <div class="card-text">
+                <div class="fw-bold">Phone number</div>
+                <div class="">email</div>
+            </div>
+            <div class="">
+                <button class="btn btn-dark" id="editBtn"><i class="fa-solid fa-pencil"></i></button>
+                <button class="btn btn-danger" id="deleteBtn"><i class="fa-regular fa-trash-can"></i></button>
+            
+            </div>
+        </div>
+    </div> -->
+
+
+    <script src="./contactList.js">
+        // the inputs
+var nameC = document.querySelector('#contactName');
+var phone = document.querySelector('#phone');
+var emailInput = document.querySelector('#email');
+var photo = document.querySelector('#photo');
+var searchBar = document.querySelector('#search');
+
+
+// the buttons
+var  saveBtn = document.querySelector('#saveContact');
+var  editBtn = document.querySelector('#editBtn');
+var  deleteBtn = document.querySelector("#deleteBtn");
+// contact container
+var  contactsList = document.querySelector("#contactsList");
+var  contactsContainer = document.querySelector('#contactsContainer');
+
+// declaring the contacts list
+let contacts = localStorage.getItem('contacts')? JSON.parse(localStorage.getItem('contacts')) : [];
+
+// functions ------------------------------------------------
+
+let displayContacts = () => {
+    if (contacts.length == 0) {
+        contactsList.classList.add('d-none');
+        return;
+    };
+
+
+
+    contactsList.classList.remove('d-none');
+
+    // contactsContainer.innerHTML = contacts.map((contact, i)=>`<div class="d-flex gap-3 flex-wrap" id="contactsContainer">
+    //                                     <div class="card border border-2 w-auto">
+    //                                         <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+    //                                             <div class="">
+    //                                                 <img src="${contact.photo?contact.photo:''}" alt="" class="rounded-pill img-fluid">
+    //                                             </div>
+    //                                             <div class="card-title">${contact.name}</div>
+
+    //                                             <div class="card-text">
+    //                                                 <div class="fw-bold">${contact.phone} </div>
+    //                                                 <div class="">${contact.email} </div>
+    //                                             </div>
+    //                                             <div class="">
+    //                                                 <button class="btn btn-dark" id="editBtn"><i class="fa-solid fa-pencil"></i></button>
+    //                                                 <button class="btn btn-danger" id="deleteBtn"><i class="fa-regular fa-trash-can"></i></button>
+                                                
+    //                                             </div>
+    //                                         </div>
+    //                                     </div>
+    //         </div>`).join('');
+    
+
+    contactsContainer.innerHTML = '';
+    for (let contact of contacts) {
+        contactsContainer.innerHTML += `<div class="d-flex gap-3 flex-wrap" id="contactsContainer">
+                                        <div class="card border border-2 w-auto">
+                                            <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                                                <div class="">
+                                                    <img src="${contact.photo?contact.photo:''}" alt="" class="rounded-pill img-fluid">
+                                                </div>
+                                                <div class="card-title">${contact.name}</div>
+
+                                                <div class="card-text">
+                                                    <div class="fw-bold">${contact.phone} </div>
+                                                    <div class="">${contact.email} </div>
+                                                </div>
+                                                <div class="">
+                                                    <button class="btn btn-dark" id="editBtn"><i class="fa-solid fa-pencil"></i></button>
+                                                    <button class="btn btn-danger" id="deleteBtn"><i class="fa-regular fa-trash-can"></i></button>
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
+            </div>`
+
+
+    };
+};
+
+
+let addContact = () => {
+    let contactName = nameC.value.trim();
+    let contactPhone = phone.value.trim();
+    let contactEmail = email.value.trim();
+    let contactPhoto = photo.value;
+    if(contactName =="" || contactPhone == ""  || contactEmail == "") {
+        alert('Please fill out the required fields.');
+        return;
+    }
+    // creating the contact
+    // use uuid for unique id
+    let contact = {name: contactName, phone: contactPhone, email: contactEmail, photo:contactPhoto?contactPhoto:null};
+    // adding it to the contacts list
+    contacts.push(contact);
+    // updating the local storage
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+    displayContacts();
+};
+
+
+
+
+
+
+displayContacts();
+
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

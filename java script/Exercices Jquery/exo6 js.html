@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chiffrement César</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            font-size: 28px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .result-text {
+            color: #d63031;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chiffrement César</h1>
+    
+    <div class="form-group">
+        <label for="inputText">Entrez un texte :</label>
+        <input type="text" id="inputText" value="bonjour">
+    </div>
+    
+    <div class="form-group">
+        <label for="shift">Décalage :</label>
+        <input type="number" id="shift" value="3" min="1" max="25">
+    </div>
+    
+    <button id="encryptBtn">Chiffrer</button>
+    
+    <div class="result">
+        <div>Texte chiffré : <span id="outputText" class="result-text">erqmrxu</span></div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get elements
+            const inputText = document.getElementById('inputText');
+            const shift = document.getElementById('shift');
+            const encryptBtn = document.getElementById('encryptBtn');
+            const outputText = document.getElementById('outputText');
+            
+            // Add event listener to button
+            encryptBtn.addEventListener('click', encrypt);
+            
+            // Caesar cipher encryption function
+            function encrypt() {
+                const text = inputText.value;
+                const shiftValue = parseInt(shift.value);
+                
+                if (!text) {
+                    outputText.textContent = "";
+                    return;
+                }
+                
+                let result = "";
+                
+                for (let i = 0; i < text.length; i++) {
+                    let char = text[i];
+                    
+                    // Handle lowercase letters
+                    if (char.match(/[a-z]/)) {
+                        // Get ASCII code, apply shift, and handle wrapping (a-z: 97-122)
+                        let code = char.charCodeAt(0);
+                        code = ((code - 97 + shiftValue) % 26) + 97;
+                        result += String.fromCharCode(code);
+                    } 
+                    // Handle uppercase letters
+                    else if (char.match(/[A-Z]/)) {
+                        // Get ASCII code, apply shift, and handle wrapping (A-Z: 65-90)
+                        let code = char.charCodeAt(0);
+                        code = ((code - 65 + shiftValue) % 26) + 65;
+                        result += String.fromCharCode(code);
+                    } 
+                    // Keep non-alphabetic characters unchanged
+                    else {
+                        result += char;
+                    }
+                }
+                
+                outputText.textContent = result;
+            }
+            
+            // Initial encryption
+            encrypt();
+        });
+    </script>
+</body>
+</html>

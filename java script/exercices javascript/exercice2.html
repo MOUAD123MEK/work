@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Calculatrice</title>
+</head>
+<body>
+      <h1>Calculatrice</h1>
+      <form name="Calculatrice">
+            <fieldset>
+                  <legend>Calculatrice</legend>
+                  <input type="valeur1"  name="valeur" placeholder="valeur1" />
+                  <br>
+                  <label for="text">Operation :</label>
+                  <input type="radio" name="operation" value="+" />+<input type="radio" name="operation" value="-" />-<input type="radio" name="operation" value="*" />*<input type="radio" name="operation" value="/" />">
+                  <br>
+                  <button type="submit">Calculer</button>
+                  <input type="button" value="effacer">
+                  <br>
+                  <input type="resultat"  name="resultat" placeholder="resultat" />
+                  <br>
+                  
+            </fieldset>
+      </form>
+
+      <script>
+
+      const showValueButton = document.getElementById('showValue');
+    const resultParagraph = document.getElementById('result');
+
+    // Add event listener to the button
+    showValueButton.addEventListener('click', () => {
+      // Get all radio buttons in the group
+      const radios = document.getElementsByName('options');
+      let selectedValue = '';
+      
+      // Check which radio button is selected
+      radios.forEach(radio => {
+        if (radio.checked) {
+          selectedValue = radio.value;
+        }
+      });
+
+      // Display the selected value
+      resultParagraph.textContent = selectedValue
+        ? `You selected: ${selectedValue}`
+        : 'No option selected.';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+      
+      <style>
+      *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+      }
+
+      body{
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+      }
+
+      nav{
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+      }
+
+      nav a{
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2em;
+      }
+
+      nav a:hover{
+            color: #f4f4f4;
+      }
+
+      main{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+      }
+
+      .blog-card{
+            background-color: #fff;
+            margin: 10px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 30%;
+            text-align: center;
+      }
+
+      .blog-card img{
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+      }
+
+      .blog-card h2{
+            font-size: 1.5em;
+            margin-bottom: 10px;
+      }
+
+      .blog-card p{
+            font-size: 1.2em;
+            margin-bottom: 10px;
+      }
+
+      .blog-card p span{
+            font-weight: bold;
+      }
+
+      .blog-card a{
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 10px;
+      }
+
+      .blog-card a:hover{
+            background-color: #555;       
+      }
+
+      .search-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+      }
+
+      #search-input{
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-right: 10px;
+            width: 300px;
+      }
+
+      #search-button{
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+      }
+
+      #search-button:hover{
+            background-color: #555;
+      }
+
+      #blog-container{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+      }
+
+      #blog-container h2{
+            font-size: 2em;
+            margin-bottom: 20px;
+      }
+
+      #blog-container .blog-card{
+            width: 30%;
+      }
+
+
+      </style>
+</head>
+<body>
+
+<nav>
+      <div class="navbar">
+            <a href="index.html">News</a>
+      <div class="search-container">
+            <input type="text" placeholder="Search news here...." id="search-input">
+            <button id="search-button">Search</button>
+      </div>
+      </div>
+</nav>
+
+
+<main id="blog-container">
+
+      <div class="blog-card">
+            <h2>Teen Wolf</h2>
+            <img src="teen wolf.jpg" alt="movies">
+            <p>Author: <span>Author Name</span></p>
+      </div>
+
+      <div class="blog-card">
+            <h2>Prison Break</h2>
+            <img src="prison break.jpg" alt="">
+            <p>Author: <span>Author Name</span></p>
+      </div>
+
+      <div class="blog-card">
+            <h2>Breaking Bad</h2>
+            <img src="breaking bad.jpg" alt="">
+            <p>Author: <span>Author Name</span></p>
+      </div>
+
+      <div class="blog-card">
+            <h2>Game of Thrones</h2>
+            <img src="game of thrones.jpg" alt="">
+            <p>Author: <span>Author Name</span></p>
+      </div>
+
+      <div class="blog-card">
+            <h2>The Originals</h2>
+            <img src="the originals.jpg" alt="">
+            <p>Author: <span>Author Name</span></p>
+      </div>
+
+      <div class="blog-card">
+            <h2>The Vampire Diaries</h2>
+            <img src="the vampire diaries.jpg" alt="">
+            <p>Author: <span>Author Name</span></p>
+      </div>
+
+      <div class="blog-card">
+            <h2>Arrow</h2>
+            <img src="arrow.jpg" alt="">
+            <p>Author: <span>Author Name</span></p>
+      </div>
+
+      <div class="blog-card">
+            <h2>Money Heist</h2>
+            <img src="money heist.jpg" alt="">
+            <p>Author: <span>Author Name</span></p>
+      </div>
+
+      <div class="blog-card">
+            <h2>The Flash</h2>
+            <img src="the flash.jpg" alt="">
+            <p>Author: <span>Author Name</span></p>
+      </div>
+
+</main>
+
+      <script>
+            document.getElementById('search-button').addEventListener('click', function() {
+            let searchValue = document.getElementById('search-input').value.toLowerCase();
+            let cards = document.querySelectorAll('.blog-card');
+
+            cards.forEach(card => {
+                  let title = card.getAttribute('data-title').toLowerCase();
+                  if (title.includes(searchValue)) {
+                        card.style.display = 'block';
+                  } else {
+                        card.style.display = 'none';
+                  }
+            });
+      });
+      
+      </script>
+
+</body>
+</html>

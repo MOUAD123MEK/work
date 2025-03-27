@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulateur de Crédit Bancaire</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input{ width: 100%;  }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background-color: #4CAF50; color: white; }
+    </style>
+</head>
+<body>
+    <h2>Simulateur de Crédit Bancaire</h2>
+    
+    <label for="loanAmount">Montant du prêt (€) :</label><br>
+    <input type="number" id="loanAmount"><br>
+    
+    <label for="loanTerm">Durée du prêt (mois) :</label><br>
+    <input type="number" id="loanTerm"><br>
+    
+    <label for="interestRate">Taux d'intérêt (%) :</label><br>
+    <input type="number" id="interestRate" step="0.01"><br>
+    
+    <label for="startDate">Date de début du prêt :</label><br>
+    <input type="date" id="startDate"><br>
+    
+    <button onclick="calculateLoan()">Calculer</button>
+    
+    <h3>Résultats :</h3>
+    <p>Mensualité : <span id="monthlyPayment"></span> €</p>
+    <p>Date de fin du prêt : <span id="endDate"></span></p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Mois</th>
+                <th>Date</th>
+                <th>Montant Mensuel (€)</th>
+                <th>Capital Remboursé (€)</th>
+                <th>Intérêts (€)</th>
+                <th>Solde Restant (€)</th>
+            </tr>
+        </thead>
+        <tbody id="scheduleBody"></tbody>
+    </table>
+    
+    <script>
+      
+       function calculateLoan() {
+    let amount = parseFloat(document.getElementById('loanAmount').value);
+    let months = parseInt(document.getElementById('loanTerm').value, 10);
+    let annualRate = parseFloat(document.getElementById('interestRate').value) / 100;
+    let startDate = new Date(document.getElementById('startDate').value);
+    
+    if (isNaN(amount) || isNaN(months) || isNaN(annualRate) || isNaN(startDate)) {
+        alert("Veuillez entrer des valeurs valides.");
+        return;
+    }
+    
+    let monthlyRate = annualRate / 12;
+    let monthlyPayment = (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -months));
+    document.getElementById('monthlyPayment').innerText = monthlyPayment.toFixed(2);
+    
+    let balance = amount;
+    let scheduleBody = document.getElementById('scheduleBody');
+    scheduleBody.innerHTML = "";
+
+    for (let i = 1; i <= months; i++) {
+        let interest = balance * monthlyRate;
+        let principal = monthlyPayment - interest;
+        balance -= principal;
+        
+        // Create a new date object instead of modifying startDate
+        let paymentDate = new Date(startDate);
+        paymentDate.setMonth(startDate.getMonth() + i);
+
+        let row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${i}</td>
+            <td>${paymentDate.toISOString().split('T')[0]}</td>
+            <td>${monthlyPayment.toFixed(2)}</td>
+            <td>${principal.toFixed(2)}</td>
+            <td>${interest.toFixed(2)}</td>
+            <td>${balance.toFixed(2)}</td>
+        `;
+        scheduleBody.appendChild(row);
+    }
+
+    let endDate = new Date(startDate);
+    endDate.setMonth(startDate.getMonth() + months);
+    document.getElementById('endDate').innerText = endDate.toISOString().split('T')[0];
+}
+
+    </script>
+</body>
+</html>

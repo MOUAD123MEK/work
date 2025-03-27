@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire de validation</title>
+    <style type="text/css">
+        #result {
+            display: none;/*masqué*/
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+    </style>
+  
+</head>
+<body>
+
+<h2>Formulaire de validation</h2>
+
+<form id="myForm" enctype="multipart/form-data">
+    <label for="name">Nom :</label>
+    <input type="text" id="name" name="name">
+    <span id="nameError" class="error"></span><br><br>
+
+    <label for="email">Email :</label>
+    <input type="text" id="email" name="email">
+    <span id="emailError" class="error"></span><br><br>
+
+    <label>Sexe :</label>
+    <input type="radio" id="male" name="gender" value="male"> Homme
+    <input type="radio" id="female" name="gender" value="female"> Femme
+    <span id="genderError" class="error"></span><br><br>
+
+    <label>Centres d'intérêt :</label>
+    <input type="checkbox" id="sports" name="interests" value="sports"> Sports
+    <input type="checkbox" id="music" name="interests" value="music"> Musique
+    <input type="checkbox" id="reading" name="interests" value="reading"> Lecture
+    <span id="interestsError" class="error"></span><br><br>
+
+    <label for="hobbies">Hobbies :</label>
+    <select id="hobbies" name="hobbies" multiple>
+        <option value="cinema">Cinéma</option>
+        <option value="voyage">Voyage</option>
+        <option value="cuisine">Cuisine</option>
+    </select>
+    <span id="hobbiesError" class="error"></span><br><br>
+
+    <label for="message">Message :</label><br>
+    <textarea id="message" name="message"></textarea>
+    <span id="messageError" class="error"></span><br><br>
+
+    <label for="country">Pays :</label>
+    <select id="country" name="country">
+        <option value="">Sélectionner un pays</option>
+        <option value="france">France</option>
+        <option value="usa">États-Unis</option>
+        <option value="canada">Canada</option>
+    </select>
+    <span id="countryError" class="error"></span><br><br>
+
+    <label for="file">Photo :</label>
+    <input type="file" id="file" name="file">
+    <span id="fileError" class="error"></span><br><br>
+
+    <input type="submit" value="Soumettre">
+</form>
+<div id="result">
+    <h3>Données du formulaire :</h3>
+    <p><strong>Nom :</strong> <span id="resName"></span></p>
+    <p><strong>Email :</strong> <span id="resEmail"></span></p>
+    <p><strong>Genre :</strong> <span id="resGender"></span></p>
+    <p><strong>Interets :</strong> <span id="resInterests"></span></p>
+  
+    <p><strong>Photo de profil :</strong> <img id="resProfilePic" src="" alt="Aucune image" width="100" height="100"></p>
+</div>
+
+<script type="text/javascript">
+
+    const form = document.getElementById("myForm");
+    isValid=true;
+
+    form.addEventListener("change", function (event) {
+        const target = event.target;
+        if (target.id === "name") validateField(target, "nameError", value => value.trim().length >= 3, "Minimum 3 caractères");
+        if (target.id === "email") validateField(target, "emailError", value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value), "Email invalide");
+        if (target.name === "gender") validateRadio("genderError");
+        if (target.name === "interests") validateCheckbox("interestsError");
+        if (target.id === "message") validateField(target, "messageError", value => value.trim().length >= 10, "Minimum 10 caractères");
+        if (target.id === "country") validateField(target, "countryError", value => value !== "", "Sélectionnez un pays");
+        if (target.id === "file") validateFile(target, "fileError");
+    });
+
+    function validateField(input, errorId, condition, errorMessage) {
+        const errorSpan = document.getElementById(errorId);
+        if (condition(input.value)) {
+            errorSpan.textContent = "✔ Valide";
+            errorSpan.style.color = "green";
+            isValid=true;
+        } else {
+            errorSpan.textContent = `✖ ${errorMessage}`;
+            errorSpan.style.color = "red";
+            isValid=false;
+        }
+    }
+
+    function validateRadio(errorId) {
+        const checked = document.querySelector('input[name="gender"]:checked');
+        updateMessage(errorId, checked, "Sélectionnez un sexe");
+    }
+
+    function validateCheckbox(errorId) {
+        const checked = document.querySelectorAll('input[name="interests"]:checked').length > 0;
+        updateMessage(errorId, checked, "Sélectionnez au moins un centre d'intérêt");
+    }
+
+    function validateFile(input, errorId) {
+        const file = input.files[0];
+        const validExtensions = ["jpg", "jpeg", "png", "gif"];
+        const isValid = file && validExtensions.includes(file.name.split('.').pop().toLowerCase());
+        updateMessage(errorId, isValid, "Format invalide (jpg, jpeg, png, gif seulement)");
+    }
+
+    function updateMessage(errorId, isValid, errorMessage) {
+        const errorSpan = document.getElementById(errorId);
+        if (isValid) {
+            errorSpan.textContent = "✔ Valide";
+            errorSpan.style.color = "green";
+            isValid=true;
+        } else {
+            errorSpan.textContent = `✖ ${errorMessage}`;
+            errorSpan.style.color = "red";
+            isValid=false;
+        }
+    }
+   //gérer l'event submit
+   //si tout va bien afficher les informations au niveau d'un div 
+    document.querySelector('#myForm').addEventListener('submit',function(e){
+  e.preventDefault();
+       if(isValid){
+         let name=document.getElementById('name').value.trim();
+         let email=document.getElementById('email').value.trim();
+         let gender=document.querySelector('input[name="gender"]:checked').value;
+         let interests=[...document.querySelectorAll('input[name="interests"]:checked')].map(elt=>elt.value).join(',');
+         let profilePic=document.querySelector('#file').files[0];
+        
+         document.getElementById("resName").textContent = name;
+                document.getElementById("resEmail").textContent = email;
+                document.getElementById("resGender").textContent = gender;
+                document.getElementById("resInterests").textContent = interests;
+         
+
+                // Affichage de l'image sélectionnée
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("resProfilePic").src = e.target.result;
+                    // document.getElementById("resProfilePic").setAttribute('src',e.target.result);
+                };
+                reader.readAsDataURL(profilePic);
+
+                document.getElementById("result").style.display = "block";
+
+                document.querySelector('#myForm').reset();
+
+       }
+
+
+
+
+
+
+    })
+
+
+
+</script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire de Validation</title>
+    <link rel="stylesheet" href="styles.css">
+    <style type="text/css">
+      body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.error {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
+    display: block;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.checkbox-group, .radio-group {
+    display: flex;
+    gap: 10px;
+}
+
+.result-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e9ecef;
+    border-radius: 4px;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="registrationForm">
+            <h2>Formulaire d'Inscription</h2>
+            
+            <div class="form-group">
+                <label for="nom">Nom *</label>
+                <input type="text" id="nom" name="nom" required>
+                <span class="error" id="nomError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="prenom">Prénom *</label>
+                <input type="text" id="prenom" name="prenom" required>
+                <span class="error" id="prenomError"></span>
+                
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+                <span class="error" id="emailError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="website">Site Web *</label>
+                <input type="url" id="website" name="website" required>
+                <span class="error" id="websiteError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de Passe *</label>
+                <input type="password" id="password" name="password" required>
+                <span class="error" id="passwordError"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Compétences * (Cochez au moins une) :</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="html" name="skills" value="html">
+                    <label for="html">HTML</label>
+                    <input type="checkbox" id="javascript" name="skills" value="javascript">
+                    <label for="javascript">JavaScript</label>
+                    <input type="checkbox" id="nodejs" name="skills" value="nodejs">
+                    <label for="nodejs">Node.js</label>
+                    <input type="checkbox" id="laravel" name="skills" value="laravel">
+                    <label for="laravel">Laravel</label>
+                </div>
+                <span class="error" id="skillsError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="country">Pays *</label>
+                <select id="country" name="country" required>
+                    <option value="">Sélectionnez un pays</option>
+                    <option value="france">France</option>
+                    <option value="canada">Canada</option>
+                    <option value="belgique">Belgique</option>
+                    <option value="suisse">Suisse</option>
+                </select>
+                <span class="error" id="countryError"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Genre *</label>
+                <div class="radio-group">
+                    <input type="radio" id="male" name="gender" value="male" required>
+                    <label for="male">Homme</label>
+                    <input type="radio" id="female" name="gender" value="female" required>
+                    <label for="female">Femme</label>
+                </div>
+                <span class="error" id="genderError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="comment">Commentaire *</label>
+                <textarea id="comment" name="comment" required></textarea>
+                <span class="error" id="commentError"></span>
+            </div>
+
+            <button type="submit">Soumettre</button>
+        </form>
+
+        <div id="resultContainer" class="result-container"></div>
+    </div>
+
+
+    <script type="text/javascript">
+    
+    const form = document.getElementById("registrationForm");
+    const resultContainer = document.getElementById("resultContainer");
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        let isValid = true;
+
+        isValid &= validateField("nom", "nomError", value => value.trim().length >= 3, "Minimum 3 caractères");
+        isValid &= validateField("prenom", "prenomError", value => value.trim().length >= 3, "Minimum 3 caractères");
+        isValid &= validateField("email", "emailError", value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value), "Email invalide");
+        isValid &= validateField("website", "websiteError", value => /^https?:\/\/\S+$/.test(value), "URL invalide");
+        isValid &= validateField("password", "passwordError", value => value.trim().length >= 8, "Minimum 8 caractères");
+        isValid &= validateCheckbox("skillsError", "skills");
+        isValid &= validateField("country", "countryError", value => value !== "", "Sélectionnez un pays");
+        isValid &= validateRadio("genderError", "gender");
+        isValid &= validateField("comment", "commentError", value => value.trim().length >= 10, "Minimum 10 caractères");
+
+        if (isValid) {
+            displayResults();
+        }
+    });
+
+    function validateField(id, errorId, validationFunc, errorMessage) {
+        const input = document.getElementById(id);
+        const errorSpan = document.getElementById(errorId);
+        if (validationFunc(input.value)) {
+            errorSpan.innerHTML = '✔ Valide';
+            errorSpan.style.color = 'green';
+            return true;
+        } else {
+            errorSpan.innerHTML = `✖ ${errorMessage}`;
+            errorSpan.style.color = 'red';
+            return false;
+        }
+    }
+
+    function validateCheckbox(errorId, name) {
+        const checkboxes = document.querySelectorAll(`input[name="${name}"]:checked`);
+        const errorSpan = document.getElementById(errorId);
+        if (checkboxes.length > 0) {
+            errorSpan.innerHTML = '✔ Valide';
+            errorSpan.style.color = 'green';
+            return true;
+        } else {
+            errorSpan.innerHTML = '✖ Cochez au moins une compétence';
+            errorSpan.style.color = 'red';
+            return false;
+        }
+    }
+
+    function validateRadio(errorId, name) {
+        const checked = document.querySelector(`input[name="${name}"]:checked`);
+        const errorSpan = document.getElementById(errorId);
+        if (checked) {
+            errorSpan.innerHTML = '✔ Valide';
+            errorSpan.style.color = 'green';
+            return true;
+        } else {
+            errorSpan.innerHTML = '✖ Sélectionnez un genre';
+            errorSpan.style.color = 'red';
+            return false;
+        }
+    }
+
+    function displayResults() {
+        const formData = new FormData(form);
+        let resultHTML = "<h3>Données du formulaire :</h3>";
+        for (let [key, value] of formData.entries()) {
+            resultHTML += `<strong>${key} :</strong> ${value} <br>`;
+      }
+        resultContainer.innerHTML = resultHTML;
+        resultContainer.style.border = "1px solid #ccc";
+        resultContainer.style.padding = "10px";
+        resultContainer.style.backgroundColor = "#e9ecef";
+    }
+
+    
+                                      
+    </script>
+
+</body>
+</html

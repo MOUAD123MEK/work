@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+      <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            .container{ display: flex;  justify-content: center; align-items: center; padding: 10px; justify-content: space-between;}
+            label, input, select, button { display: grid; margin: 10px 0;}
+            fieldset { border: 3px solid peachpuff;  border-radius: 400px; color: green; background-color: rgb(255, 239, 149); justify-content: center; align-items: center; }
+
+      </style>
+</head>
+<body>
+      <fieldset>
+            <h1>Simulateur age</h1>
+            <div class="container">
+                  <label for="dateNaissance">Entrer votre date de Naissance</label>
+                  <input type="date" id="dateNaissance">
+                  <button onclick="calculerAge()">Calculer age</button>
+            </div>
+            <p id="ageResult"></p>
+
+      </fieldset>
+      
+
+
+      <script type="text/javascript">
+            function calculerAge() {
+                  let dateNaissance = new Date(document.getElementById("dateNaissance").value);
+                  if (isNaN(dateNaissance.getTime())) {
+                        alert("Veuillez entrer une date valide.");
+                        return;
+                  }
+
+                  let maintenant = new Date();
+                  let diff = maintenant - dateNaissance; // Calculate the difference in milliseconds
+
+                  // Calculate days, hours, minutes, and seconds
+                  let jours = Math.floor(diff / (1000 * 60 * 60 * 24));
+                  let heures = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                  let minutes = Math.floor((diff / (1000 * 60)) % 60);
+                  let secondes = Math.floor((diff / 1000) % 60);
+
+                  // Display the result
+                  document.getElementById('ageResult').innerText = `Vous avez ${jours} jours, ${heures} heures, ${minutes} minutes et ${secondes} secondes.`;
+            }
+      </script>
+</body>
+</html>

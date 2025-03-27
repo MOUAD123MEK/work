@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Café Fictif</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f8f8f8;
+    }
+    h1 {
+      text-align: center;
+      color: #4CAF50;
+      margin-bottom: 20px;
+      font-size: 36px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      font-family: "Arial Black", sans-serif;
+      letter-spacing: 2px;
+    }
+
+    form {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 500px;
+      margin: 0 auto;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    label, select, input {
+      margin: 5px 0;
+    }
+
+    input[type="text"] {
+      width: 100px;
+      text-align: right;
+    }
+
+    .total-section {
+      font-weight: bold;
+    }
+
+    .total-section span {
+      margin-left: 10px;
+    }
+
+      button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 10px 20px;
+        border-radius: 5px;
+      }
+
+      button:hover {
+        background-color: violet;
+      }
+
+      button + button {
+        margin-left: 10px;
+        padding: 10px 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: blue;
+      }
+
+      option {
+        background-color:violet;
+        color: white;
+      }
+
+  </style>
+
+</head>
+<body>
+
+
+  <h1>Bienvenue au Café Fictif</h1>
+  <form id="cafeForm">
+    <div>
+      <h3>Liste des boissons :</h3>
+      <div class="row">
+        <label>Boisson :</label>
+        <select class="boisson" onchange="updatePrice(this)">
+          <option value="0">Choisir une boisson</option>
+          <option value="500">Café noir - 500 cm</option>
+          <option value="400">Café et lait - 400 cm</option>
+          <option value="650">Jus orange - 650 cm</option>
+        </select>
+        <input type="text" placeholder="Prix" readonly>
+        <input type="number" class="boissonQty" min="0" value="0">
+      </div>
+    </div>
+
+    <div>
+      <h3>Liste des pâtisseries :</h3>
+      <div class="row">
+        <label>Pâtisserie :</label>
+        <select class="patisserie" onchange="updatePrice(this)">
+          <option value="0">Choisir une pâtisserie</option>
+          <option value="350">Croissant - 350 cm</option>
+          <option value="400">Gâteau - 400 cm</option>
+        </select>
+        <input type="text" placeholder="Prix" readonly>
+        <input type="number" class="patisserieQty" min="0" value="0">
+      </div>
+    </div>
+
+    <h3>Liste des Serveurs :</h3>
+    <div>
+      <label><input type="radio" name="serveur" value="1"> Serveur 1</label>
+      <label><input type="radio" name="serveur" value="2"> Serveur 2</label>
+      <label><input type="radio" name="serveur" value="3"> Serveur 3</label>
+    </div>
+
+    <div class="total-section">
+      <p>Total Boissons (en Dhs) : <input type="number"  id="totalBoissons" readonly></p>
+      <p>Total Pâtisseries (en Dhs) : <input type="text" id="totalPatisseries" readonly></p>
+      <p>Total Consommation (en Dhs) : <input type="text" id="totalConsommation" readonly></p>
+    </div>
+
+    <button type="button" onclick="calculateTotal()">Calculer</button>
+    <button type="button" onclick="validateOrder()">Valider</button>
+  </form>
+
+  <script>
+    function updatePrice(selectElement) {
+      const priceField = selectElement.nextElementSibling;
+      priceField.value = selectElement.value;
+    }
+
+    function calculateTotal() {
+      let totalBoissons = 0;
+      let totalPatisseries = 0;
+
+      document.querySelectorAll('.boisson').forEach((boisson, index) => {
+        const price = parseInt(boisson.value);
+        const qty = parseInt(document.querySelectorAll('.boissonQty')[index].value);
+        totalBoissons += price * qty;
+      });
+
+      document.querySelectorAll('.patisserie').forEach((patisserie, index) => {
+        const price = parseInt(patisserie.value);
+        const qty = parseInt(document.querySelectorAll('.patisserieQty')[index].value);
+        totalPatisseries += price * qty;
+      });
+
+      document.getElementById('totalBoissons').value = totalBoissons;
+      document.getElementById('totalPatisseries').value = totalPatisseries;
+      document.getElementById('totalConsommation').value = totalBoissons + totalPatisseries;
+    }
+
+    function validateOrder() {
+      const totalBoissons = parseInt(document.getElementById('totalBoissons').value) || 0;
+      const totalPatisseries = parseInt(document.getElementById('totalPatisseries').value) || 0;
+      const serveur = document.querySelector('input[name="serveur"]:checked');
+
+      if (totalBoissons + totalPatisseries === 0) {
+        alert('Veuillez sélectionner au moins une boisson ou une pâtisserie.');
+        return;
+      }
+
+      if (!serveur) {
+        alert('Veuillez choisir un serveur.');
+        return;
+      }
+
+      alert(`Serveur ${serveur.value} a été choisi. Nombre de boissons: ${totalBoissons}, Nombre de pâtisseries: ${totalPatisseries}`);
+      // Simulate form submission to "Ajout.aspx"
+      window.location.href = 'Ajout.aspx';
+    }
+  </script>
+
+</body>
+</html>

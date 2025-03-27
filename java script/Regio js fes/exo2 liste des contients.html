@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Continents</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: blueviolet;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: black;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px 10px 0;
+        }
+        button:hover {
+            background-color: bisque;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .action-btn {
+            padding: 5px 10px;
+            margin-right: 5px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .delete-btn {
+            background-color: #f44336;
+        }
+        .action-btn:hover {
+            opacity: 0.8;
+        }
+        #addForm {
+            display: none;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        #addForm label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        #addForm input, #addForm select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        #addForm button {
+            margin-top: 10px;
+        }
+        .checkbox-container {
+            margin: 5px 0;
+        }
+        ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+    </style>
+
+
+</head>
+<body>
+    
+    <h1>Liste des Continents</h1>
+    
+    <button id="afficherContinents">Afficher Continents</button>
+    <button id="ajouterContinent">Ajouter Nouveau</button>
+    
+    <div id="addForm">
+        <h3>Ajouter un nouveau continent</h3>
+        <label for="codeContinent">Code du continent:</label>
+        <input type="text" id="codeContinent" required>
+        
+        <label for="nomContinent">Nom du continent:</label>
+        <input type="text" id="nomContinent" required>
+        
+        <label>Sélectionner les pays:</label>
+        <div id="paysOptions">
+            <div class="checkbox-container">
+                <input type="checkbox" id="pays1" value="France">
+                <label for="pays1">France</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="pays2" value="Allemagne">
+                <label for="pays2">Allemagne</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="pays3" value="Italie">
+                <label for="pays3">Italie</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="pays4" value="Espagne">
+                <label for="pays4">Espagne</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="pays5" value="Portugal">
+                <label for="pays5">Portugal</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="pays6" value="Maroc">
+                <label for="pays6">Maroc</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="pays7" value="Égypte">
+                <label for="pays7">Égypte</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="pays8" value="Japon">
+                <label for="pays8">Japon</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="pays9" value="Chine">
+                <label for="pays9">Chine</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="pays10" value="États-Unis">
+                <label for="pays10">États-Unis</label>
+            </div>
+        </div>
+        
+        <button id="saveContinent">Enregistrer</button>
+        <button id="cancelAdd">Annuler</button>
+    </div>
+    
+    <div id="continentsContainer">
+        <table id="continentsTable" style="display: none;">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="selectAll"></th>
+                    <th>Code</th>
+                    <th>Nom</th>
+                    <th>Pays</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="continentsBody">
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <button id="deleteMany" class="delete-btn">Supprimer sélection</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+
+    <script>
+
+        var lesContinents = [ 
+            {"code": "AF", "nom": "Afrique", "pays": ["maroc", "Tunisie", "Egypt"]},
+            {"code": "ER", "nom": "Europe", "pays": ["France", "Espagne", "Suisse"]},
+            {"code": "AM", "nom": "Amerique", "pays": ["US", "Canada", "Mexique"]},
+            {"code": "AS", "nom": "Asie", "pays": ["Japon", "Chine", "Malysie"]},
+            {"code": "Aus", "nom": "Australie", "pays": ["Australie", "Nouvelle-Guinée", "New Zealand"]}
+        ];
+
+        function displayContinents() {
+            const table = document.getElementById('continentsTable');
+            const tbody = document.getElementById('continentsBody');
+            tbody.innerHTML = '';
+            
+            lesContinents.forEach(continent => {
+                const row = document.createElement('tr');
+                
+                const checkboxCell = document.createElement('td');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'continent-checkbox';
+                checkbox.dataset.code = continent.code;
+                checkboxCell.appendChild(checkbox);
+                row.appendChild(checkboxCell);
+                
+                const codeCell = document.createElement('td');
+                codeCell.textContent = continent.code;
+                row.appendChild(codeCell);
+                
+                const nomCell = document.createElement('td');
+                nomCell.textContent = continent.nom;
+                row.appendChild(nomCell);
+                
+                const paysCell = document.createElement('td');
+                const paysList = document.createElement('ul');
+                continent.pays.forEach(pays => {
+                    const paysItem = document.createElement('li');
+                    paysItem.textContent = pays;
+                    paysList.appendChild(paysItem);
+                });
+                paysCell.appendChild(paysList);
+                row.appendChild(paysCell);
+                
+                const actionsCell = document.createElement('td');
+                const editBtn = document.createElement('button');
+                editBtn.textContent = 'Modifier';
+                editBtn.className = 'action-btn';
+                editBtn.addEventListener('click', () => editContinent(continent.code));
+
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Supprimer';
+                deleteBtn.className = 'action-btn delete-btn';
+                deleteBtn.addEventListener('click', () => deleteContinent(continent.code));
+                
+                actionsCell.appendChild(editBtn);
+                actionsCell.appendChild(deleteBtn);
+                row.appendChild(actionsCell);
+                
+                tbody.appendChild(row);
+            });
+            
+            table.style.display = 'table';
+        }
+
+        function deleteContinent(code) {
+            if (confirm(`Êtes-vous sûr de vouloir supprimer le continent avec le code ${code}?`)) {
+                lesContinents = lesContinents.filter(continent => continent.code !== code);
+                displayContinents();
+            }
+        }
+
+        function editContinent(code) {
+            const continent = lesContinents.find(c => c.code === code);
+            if (!continent) return;
+            
+            document.getElementById('codeContinent').value = continent.code;
+            document.getElementById('nomContinent').value = continent.nom;
+            
+            const checkboxes = document.querySelectorAll('#paysOptions input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = continent.pays.includes(checkbox.value);
+            });
+            
+            document.getElementById('addForm').style.display = 'block';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            document.getElementById('afficherContinents').addEventListener('click', displayContinents);
+            
+            document.getElementById('ajouterContinent').addEventListener('click', function() {
+                document.getElementById('codeContinent').value = '';
+                document.getElementById('nomContinent').value = '';
+                
+                const checkboxes = document.querySelectorAll('#paysOptions input[type="checkbox"]');
+                checkboxes.forEach(checkbox => checkbox.checked = false);
+                
+                document.getElementById('addForm').style.display = 'block';
+            });
+            
+            document.getElementById('saveContinent').addEventListener('click', function() {
+                const code = document.getElementById('codeContinent').value.trim();
+                const nom = document.getElementById('nomContinent').value.trim();
+                
+                if (!code || !nom) {
+                    alert('Veuillez remplir tous les champs obligatoires!');
+                    return;
+                }
+                
+                const selectedPays = [];
+                const checkboxes = document.querySelectorAll('#paysOptions input[type="checkbox"]:checked');
+                checkboxes.forEach(checkbox => selectedPays.push(checkbox.value));
+                
+                if (selectedPays.length === 0) {
+                    alert('Veuillez sélectionner au moins un pays!');
+                    return;
+                }
+                
+                const existingIndex = lesContinents.findIndex(c => c.code === code);
+                if (existingIndex !== -1) {
+
+                    lesContinents[existingIndex] = { code, nom, pays: selectedPays };
+                } else {
+
+                    lesContinents.push({ code, nom, pays: selectedPays });
+                }
+                
+                document.getElementById('addForm').style.display = 'none';
+                displayContinents();
+            });
+            
+            document.getElementById('cancelAdd').addEventListener('click', function() {
+                document.getElementById('addForm').style.display = 'none';
+            });
+            
+            document.getElementById('selectAll').addEventListener('change', function() {
+                const isChecked = this.checked;
+                const checkboxes = document.querySelectorAll('.continent-checkbox');
+                checkboxes.forEach(checkbox => checkbox.checked = isChecked);
+            });
+            
+            document.getElementById('deleteMany').addEventListener('click', function() {
+                const selectedCheckboxes = document.querySelectorAll('.continent-checkbox:checked');
+                if (selectedCheckboxes.length === 0) {
+                    alert('Veuillez sélectionner au moins un continent à supprimer!');
+                    return;
+                }
+                
+                if (confirm(`Êtes-vous sûr de vouloir supprimer ${selectedCheckboxes.length} continent(s)?`)) {
+                    const codesToDelete = Array.from(selectedCheckboxes).map(checkbox => checkbox.dataset.code);
+                    lesContinents = lesContinents.filter(continent => !codesToDelete.includes(continent.code));
+                    displayContinents();
+                }
+            });
+        });
+        
+    </script>
+
+</body>
+</html>

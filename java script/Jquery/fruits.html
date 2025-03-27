@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body>
+   <div class="container m-4 p-4">
+    <div class="d-flex flex-end">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFruit">
+        Ajouter Fruit
+      </button> </div>
+    <table class=" table table-hover myTable">
+        <thead>
+            <tr><th>ID</th><th>Intitule</th><th>Prix</th><th>photo</th><th>Actions</th></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+   </div>
+    <!--modal ajouter fruit-->
+
+   <!-- Button trigger modal -->
+
+  
+  <!-- Modal -->
+  <div class="modal" id="addFruit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="">
+            <div>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="nameFruit" class="form-control" onchange="handelChange(event)"/>
+            </div>
+            <div>
+                <label for="price">Price</label>
+                <input type="number" step="0.01" id="price" name="PriceFruit" class="form-control" onchange="handelChange(event)"/>
+            </div>
+
+            <div>
+                <label for="image">image</label>
+                <input type="url" id="image" name="image" class="form-control" onchange="handelChange(event)"/>
+            </div>
+        
+        </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="addOrEditFruit()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--fin modal ajouter fruit --> 
+
+
+    <script type="text/javascript">
+        let data=[];
+        let newFruit={nameFruit:"",PriceFruit:0,image:""};
+        let fruitToEdit=-1;
+        //coder la fonction handelChange
+        const handelChange=(e)=>{
+           const {name,value} =e.target;
+           newFruit[name]=value;
+           console.log(newFruit);
+
+
+        }
+
+        //coder la fonction addFruit
+        const addOrEditFruit=()=>{
+          
+          for(let k in newFruit){
+            if(newFruit[k]==="" || newFruit[k]===0) 
+                    throw new Error('Tous les champs sont obligatoires !!!');
+          }
+          if(fruitToEdit==-1){
+          newFruit['codeFruit']=data.length>0?data.length:1;
+          data.push(newFruit);
+       
+          }else{
+            data[fruitToEdit]=newFruit;
+          }
+          //reset
+          newFruit={nameFruit:"",PriceFruit:0,image:""};
+          fruitToEdit=-1
+          display(data);
+          $('#name').val("");
+          $('#price').val(0);
+          $('#image').val("");
+          //reset
+          $('#addFruit').modal('hide');//show
+
+        
+    }
+//coder la fonction display data
+    const display=(data)=>{
+        $('.myTable tbody').empty();
+
+        $(data).each(function(index,fruit){
+                 
+                 $(`<tr><td>${fruit.codeFruit}</td><td>${fruit.nameFruit}</td><td>${fruit.PriceFruit}</td><td><img src="${fruit.image}" width="60px" height="60px"/></td>
+                  
+                  <td><button class="btn btn-sm-danger" onclick="deleteF(${index})">Delete</button>&nbsp;&nbsp;<button class="btn btn-sm-info" onclick="editF(${index})">Edit</button></td></tr>`).appendTo('.myTable tbody');
+
+
+                });
+
+
+       } 
+    //coder la fonction deleteFruit
+   const deleteF=(index)=>{
+   if(window.confirm('voulez vous vraiment supprimer ?')){
+           data.splice(index,1);
+           display(data);
+
+   }
+   }
+   //code la fonction edit
+   const editF=(index)=>{
+          let fruit=data[index];
+          fruitToEdit=index;
+         $('#name').val(fruit.nameFruit);
+         $('#price').val(fruit.PriceFruit);
+         $('#image').val(fruit.image);
+         $('#addFruit').modal('show');//show
+     
+         newFruit["codeFruit"]=fruit.codeFruit;
+          newFruit["nameFruit"]=fruit.nameFruit;
+          newFruit["PriceFruit"]=fruit.PriceFruit;
+          newFruit["image"]=fruit.image;
+
+
+
+
+   }
+
+
+
+
+        $.ajax({
+           url:"http://localhost:3003/fruits",
+           method:"get",
+           dataType:"json",
+           success:function(response){
+                   data=response;
+                    display(data);
+                
+
+           },
+           error:function(error){
+            console.log(error);
+           }
+
+        });
+
+     
+    </script>
+
+    
+</body>
+</html>

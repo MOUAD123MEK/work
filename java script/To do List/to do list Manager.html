@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List Manager</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+        .container { width: 80%; margin: 20px auto; background: white; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        h2 { text-align: center; }
+        input { display: block; width: 100%; margin: 10px 0; padding: 10px; }
+        button { background: green; color: white; border: none; padding: 10px; cursor: pointer; margin-right: 5px; }
+        button:hover { background: darkgreen; }
+        .delete-btn { background: red; }
+        .delete-btn:hover { background: darkred; }
+        .edit-btn { background: orange; }
+        .edit-btn:hover { background: darkorange; }
+        .achieved { text-decoration: line-through; color: gray; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        th { background: #333; color: white; }
+    </style>
+</head>
+<body>
+ 
+    <div class="container">
+        <h2>To-Do List Manager</h2>
+        <input type="text" id="taskID" placeholder="Task ID">
+        <input type="text" id="taskText" placeholder="Task Description">
+        <button onclick="addOrUpdateTask()">Add Task</button>
+    </div>
+ 
+    <div class="container">
+        <h2>Task List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Task</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="taskTable"></tbody>
+        </table>
+    </div>
+ 
+    <script>
+        let editingIndex = null;
+ 
+        document.addEventListener("DOMContentLoaded", loadTasks);
+ 
+        function addOrUpdateTask() {
+            let id = document.getElementById("taskID").value;
+            let text = document.getElementById("taskText").value;
+ 
+            if (!id || !text) {
+                alert("Please enter Task ID and Description!");
+                return;
+            }
+ 
+            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+ 
+            if (editingIndex !== null) {
+                // Update existing task
+                tasks[editingIndex] = { id, text, status: tasks[editingIndex].status };
+                editingIndex = null;
+            } else {
+                // Add new task
+                tasks.push({ id, text, status: "Not Achieved" });
+            }
+ 
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+            loadTasks();
+            clearForm();
+        }
+ 
+        function loadTasks() {
+            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            let table = document.getElementById("taskTable");
+ 
+            table.innerHTML = "";
+            tasks.forEach((task, index) => {
+                let row = `<tr>
+                    <td>${task.id}</td>
+                    <td class="${task.status === 'Achieved' ? 'achieved' : ''}">${task.text}</td>
+                    <td>${task.status}</td>
+                    <td>
+                        <button onclick="toggleStatus(${index})">Toggle Status</button>
+                        <button class="edit-btn" onclick="editTask(${index})">Edit</button>
+                        <button class="delete-btn" onclick="deleteTask(${index})">Delete</button>
+                    </td>
+                </tr>`;
+                table.innerHTML += row;
+            });
+        }
+ 
+        function toggleStatus(index) {
+            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            tasks[index].status = tasks[index].status === "Not Achieved" ? "Achieved" : "Not Achieved";
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+            loadTasks();
+        }
+ 
+        function editTask(index) {
+            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            let task = tasks[index];
+ 
+            document.getElementById("taskID").value = task.id;
+            document.getElementById("taskText").value = task.text;
+ 
+            editingIndex = index;
+        }
+ 
+        function deleteTask(index) {
+            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            tasks.splice(index, 1);
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+            loadTasks();
+        }
+ 
+        function clearForm() {
+            document.getElementById("taskID").value = "";
+            document.getElementById("taskText").value = "";
+        }
+    </script>
+ 
+</body>
+</html>

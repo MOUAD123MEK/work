@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Loan Calculator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 800px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .result-box {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .amortization-table {
+            margin-top: 30px;
+        }
+        .nav-tabs {
+            margin-bottom: 20px;
+        }
+        .password-strength-meter {
+            height: 10px;
+            width: 100%;
+            background-color: #e9ecef;
+            margin-top: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .password-strength-meter div {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s;
+        }
+        .feedback {
+            margin-top: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="loan-tab" data-bs-toggle="tab" data-bs-target="#loan-tab-pane" type="button" role="tab" aria-controls="loan-tab-pane" aria-selected="true">Loan Calculator</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="encrypt-tab" data-bs-toggle="tab" data-bs-target="#encrypt-tab-pane" type="button" role="tab" aria-controls="encrypt-tab-pane" aria-selected="false">Text Encryption</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password-tab-pane" type="button" role="tab" aria-controls="password-tab-pane" aria-selected="false">Password Checker</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <!-- Loan Calculator Tab -->
+            <div class="tab-pane fade show active" id="loan-tab-pane" role="tabpanel" aria-labelledby="loan-tab" tabindex="0">
+                <h2>Loan Calculator</h2>
+                <form id="loanForm">
+                    <div class="mb-3">
+                        <label for="loanAmount" class="form-label">Loan Amount (€)</label>
+                        <input type="number" class="form-control" id="loanAmount" required min="1000">
+                    </div>
+                    <div class="mb-3">
+                        <label for="interestRate" class="form-label">Annual Interest Rate (%)</label>
+                        <input type="number" class="form-control" id="interestRate" required min="0.1" step="0.1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="loanTerm" class="form-label">Loan Term (years)</label>
+                        <input type="number" class="form-control" id="loanTerm" required min="1" max="30">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Calculate</button>
+                </form>
+                
+                <div id="results" class="result-box d-none">
+                    <h3>Payment Summary</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Monthly Payment:</strong> <span id="monthlyPayment"></span></p>
+                            <p><strong>Total Payment:</strong> <span id="totalPayment"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Total Interest:</strong> <span id="totalInterest"></span></p>
+                            <p><strong>Effective Interest Rate:</strong> <span id="effectiveRate"></span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="amortizationSection" class="d-none">
+                    <h3 class="mt-4">Amortization Schedule</h3>
+                    <div class="table-responsive amortization-table">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Payment #</th>
+                                    <th>Payment Date</th>
+                                    <th>Payment</th>
+                                    <th>Principal</th>
+                                    <th>Interest</th>
+                                    <th>Remaining Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody id="amortizationBody">
+                                <!-- Amortization schedule will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text Encryption Tab -->
+            <div class="tab-pane fade" id="encrypt-tab-pane" role="tabpanel" aria-labelledby="encrypt-tab" tabindex="0">
+                <h2>Text Encryption/Decryption</h2>
+                <div class="mb-3">
+                    <label for="inputText" class="form-label">Text to Encrypt/Decrypt</label>
+                    <textarea class="form-control" id="inputText" rows="4"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="secretKey" class="form-label">Secret Key</label>
+                    <input type="password" class="form-control" id="secretKey">
+                </div>
+                <div class="mb-3">
+                    <button id="encryptBtn" class="btn btn-primary me-2">Encrypt</button>
+                    <button id="decryptBtn" class="btn btn-secondary">Decrypt</button>
+                </div>
+                <div class="mb-3">
+                    <label for="outputText" class="form-label">Result</label>
+                    <textarea class="form-control" id="outputText" rows="4" readonly></textarea>
+                </div>
+                <div class="mb-3">
+                    <button id="copyBtn" class="btn btn-outline-primary">Copy to Clipboard</button>
+                </div>
+            </div>
+
+            <!-- Password Checker Tab -->
+            <div class="tab-pane fade" id="password-tab-pane" role="tabpanel" aria-labelledby="password-tab" tabindex="0">
+                <h2>Password Strength Checker</h2>
+                <div class="mb-3">
+                    <label for="passwordInput" class="form-label">Enter Password</label>
+                    <input type="password" class="form-control" id="passwordInput">
+                    <div class="password-strength-meter">
+                        <div id="strengthMeter"></div>
+                    </div>
+                    <div id="passwordFeedback" class="feedback"></div>
+                </div>
+                <div id="passwordRequirements">
+                    <h4>Password Requirements:</h4>
+                    <ul>
+                        <li id="req-length">Length: Minimum 12 characters (ideally 14-20)</li>
+                        <li id="req-uppercase">Must contain uppercase letters (A-Z)</li>
+                        <li id="req-lowercase">Must contain lowercase letters (a-z)</li>
+                        <li id="req-numbers">Must contain numbers (0-9)</li>
+                        <li id="req-special">Must contain special characters (!@#$%^&*()_+-=[]{}|;:'",.<>?/)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Loan Calculator
+            $("#loanForm").on("submit", function(e) {
+                e.preventDefault();
+                calculateLoan();
+            });
+
+            function calculateLoan() {
+                // Get input values
+                const loanAmount = parseFloat($("#loanAmount").val());
+                const annualInterestRate = parseFloat($("#interestRate").val());
+                const loanTermYears = parseInt($("#loanTerm").val());
+                
+                // Calculate monthly interest rate and number of payments
+                const monthlyInterestRate = annualInterestRate / 100 / 12;
+                const totalPayments = loanTermYears * 12;
+                
+                // Calculate monthly payment
+                // Formula: M = C * T * (1 + T)^N / ((1 + T)^N - 1)
+                const monthlyPayment = loanAmount * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, totalPayments) / 
+                    (Math.pow(1 + monthlyInterestRate, totalPayments) - 1);
+                
+                // Calculate total payment and interest
+                const totalPayment = monthlyPayment * totalPayments;
+                const totalInterest = totalPayment - loanAmount;
+                
+                // Display results
+                $("#monthlyPayment").text("€" + monthlyPayment.toFixed(2));
+                $("#totalPayment").text("€" + totalPayment.toFixed(2));
+                $("#totalInterest").text("€" + totalInterest.toFixed(2));
+                $("#effectiveRate").text(annualInterestRate.toFixed(2) + "%");
+                
+                // Show results section
+                $("#results").removeClass("d-none");
+                
+                // Generate amortization schedule
+                generateAmortizationSchedule(loanAmount, monthlyInterestRate, monthlyPayment, totalPayments);
+            }
+
+            function generateAmortizationSchedule(principal, monthlyRate, monthlyPayment, totalPayments) {
+                let balance = principal;
+                let paymentDate = new Date();
+                let schedule = "";
+                
+                for (let i = 1; i <= totalPayments; i++) {
+                    // Calculate interest and principal for this payment
+                    const interest = balance * monthlyRate;
+                    const principalPaid = monthlyPayment - interest;
+                    balance -= principalPaid;
+                    
+                    // If last payment, ensure balance is exactly zero
+                    if (i === totalPayments) {
+                        balance = 0;
+                    }
+                    
+                    // Format payment date
+                    paymentDate.setMonth(paymentDate.getMonth() + 1);
+                    const formattedDate = paymentDate.toLocaleDateString();
+                    
+                    // Create row in amortization table
+                    schedule += `<tr>
+                        <td>${i}</td>
+                        <td>${formattedDate}</td>
+                        <td>€${monthlyPayment.toFixed(2)}</td>
+                        <td>€${principalPaid.toFixed(2)}</td>
+                        <td>€${interest.toFixed(2)}</td>
+                        <td>€${Math.abs(balance).toFixed(2)}</td>
+                    </tr>`;
+                }
+                
+                // Update the amortization table and show it
+                $("#amortizationBody").html(schedule);
+                $("#amortizationSection").removeClass("d-none");
+            }
+
+            // Text Encryption/Decryption
+            $("#encryptBtn").on("click", function() {
+                const text = $("#inputText").val();
+                const key = $("#secretKey").val();
+                
+                if (!text) {
+                    alert("Please enter text to encrypt");
+                    return;
+                }
+                
+                if (!key) {
+                    alert("Please enter a secret key");
+                    return;
+                }
+                
+                const encrypted = CryptoJS.AES.encrypt(text, key).toString();
+                $("#outputText").val(encrypted);
+            });
+            
+            $("#decryptBtn").on("click", function() {
+                const text = $("#inputText").val();
+                const key = $("#secretKey").val();
+                
+                if (!text) {
+                    alert("Please enter text to decrypt");
+                    return;
+                }
+                
+                if (!key) {
+                    alert("Please enter a secret key");
+                    return;
+                }
+                
+                try {
+                    const decrypted = CryptoJS.AES.decrypt(text, key).toString(CryptoJS.enc.Utf8);
+                    if (!decrypted) {
+                        throw new Error("Invalid key or encrypted text");
+                    }
+                    $("#outputText").val(decrypted);
+                } catch (error) {
+                    alert("Decryption failed. Please check your encrypted text and key.");
+                    console.error(error);
+                }
+            });
+            
+            $("#copyBtn").on("click", function() {
+                const outputText = $("#outputText");
+                outputText.select();
+                document.execCommand("copy");
+                $(this).text("Copied!").addClass("btn-success").removeClass("btn-outline-primary");
+                
+                setTimeout(() => {
+                    $(this).text("Copy to Clipboard").addClass("btn-outline-primary").removeClass("btn-success");
+                }, 2000);
+            });
+
+            // Password Strength Checker
+            $("#passwordInput").on("input", function() {
+                const password = $(this).val();
+                checkPasswordStrength(password);
+            });
+
+            function checkPasswordStrength(password) {
+                // Define criteria
+                const hasLength = password.length >= 12;
+                const hasUppercase = /[A-Z]/.test(password);
+                const hasLowercase = /[a-z]/.test(password);
+                const hasNumbers = /[0-9]/.test(password);
+                const hasSpecial = /[!@#$%^&*()_+\-=\[\]{}|;:'",.<>?/]/.test(password);
+                
+                // Update visual requirements
+                $("#req-length").toggleClass("text-success", hasLength).toggleClass("text-danger", !hasLength);
+                $("#req-uppercase").toggleClass("text-success", hasUppercase).toggleClass("text-danger", !hasUppercase);
+                $("#req-lowercase").toggleClass("text-success", hasLowercase).toggleClass("text-danger", !hasLowercase);
+                $("#req-numbers").toggleClass("text-success", hasNumbers).toggleClass("text-danger", !hasNumbers);
+                $("#req-special").toggleClass("text-success", hasSpecial).toggleClass("text-danger", !hasSpecial);
+                
+                // Calculate strength score (0-5)
+                let score = 0;
+                if (hasLength) score++;
+                if (hasUppercase) score++;
+                if (hasLowercase) score++;
+                if (hasNumbers) score++;
+                if (hasSpecial) score++;
+                
+                // Set strength meter color and width
+                const $meter = $("#strengthMeter");
+                $meter.css("width", (score * 20) + "%");
+                
+                // Set color based on score
+                if (score <= 2) {
+                    $meter.css("background-color", "#dc3545"); // red (weak)
+                    $("#passwordFeedback").text("Weak password").css("color", "#dc3545");
+                } else if (score <= 3) {
+                    $meter.css("background-color", "#ffc107"); // yellow (moderate)
+                    $("#passwordFeedback").text("Moderate password").css("color", "#ffc107");
+                } else if (score <= 4) {
+                    $meter.css("background-color", "#0dcaf0"); // light blue (good)
+                    $("#passwordFeedback").text("Good password").css("color", "#0dcaf0");
+                } else {
+                    $meter.css("background-color", "#198754"); // green (strong)
+                    $("#passwordFeedback").text("Strong password").css("color", "#198754");
+                }
+            }
+        });
+    </script>
+</body>
+</html>

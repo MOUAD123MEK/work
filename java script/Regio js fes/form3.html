@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire de validation</title>
+    <style type="text/css">
+        #result {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        .error {
+            margin-left: 10px;
+            font-size: 0.9em;
+        }
+        input[type="text"], input[type="password"], input[type="email"], input[type="url"],
+        textarea, select {
+            width: 300px;
+            padding: 8px;
+            margin: 5px 0;
+        }
+        textarea {
+            height: 100px;
+        }
+        fieldset {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        legend {
+            padding: 0 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+ 
+<h2>Formulaire de validation</h2>
+ 
+<form id="myForm">
+    <fieldset>
+        <legend>Informations personnelles</legend>
+       
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom">
+        <span id="nomError" class="error"></span><br><br>
+       
+        <label for="prenom">Prénom :</label>
+        <input type="text" id="prenom" name="prenom">
+        <span id="prenomError" class="error"></span><br><br>
+       
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email">
+        <span id="emailError" class="error"></span><br><br>
+       
+        <label for="site">Site web :</label>
+        <input type="url" id="site" name="site">
+        <span id="siteError" class="error"></span><br><br>
+       
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" name="password">
+        <span id="passwordError" class="error"></span><br><br>
+    </fieldset>
+   
+    <fieldset>
+        <legend>Compétences et préférences</legend>
+       
+        <label>Genre :</label>
+        <input type="radio" id="male" name="gender" value="male"> Homme
+        <input type="radio" id="female" name="gender" value="female"> Femme
+        <span id="genderError" class="error"></span><br><br>
+       
+        <label>Compétences :</label><br>
+        <input type="checkbox" id="html" name="skills" value="html"> HTML<br>
+        <input type="checkbox" id="javascript" name="skills" value="javascript"> JavaScript<br>
+        <input type="checkbox" id="nodejs" name="skills" value="nodejs"> Node JS<br>
+        <input type="checkbox" id="laravel" name="skills" value="laravel"> Laravel<br>
+        <span id="skillsError" class="error"></span><br><br>
+       
+        <label for="country">Pays :</label>
+        <select id="country" name="country">
+            <option value="">Sélectionner un pays</option>
+            <option value="france">France</option>
+            <option value="usa">États-Unis</option>
+            <option value="canada">Canada</option>
+        </select>
+        <span id="countryError" class="error"></span><br><br>
+       
+        <label for="commentaire">Commentaire :</label><br>
+        <textarea id="commentaire" name="commentaire"></textarea>
+        <span id="commentaireError" class="error"></span><br><br>
+    </fieldset>
+   
+    <input type="submit" value="Soumettre">
+</form>
+ 
+<div id="result">
+    <h3>Données du formulaire :</h3>
+    <p><strong>Nom :</strong> <span id="resNom"></span></p>
+    <p><strong>Prénom :</strong> <span id="resPrenom"></span></p>
+    <p><strong>Email :</strong> <span id="resEmail"></span></p>
+    <p><strong>Site web :</strong> <span id="resSite"></span></p>
+    <p><strong>Genre :</strong> <span id="resGender"></span></p>
+    <p><strong>Compétences :</strong> <span id="resSkills"></span></p>
+    <p><strong>Pays :</strong> <span id="resCountry"></span></p>
+    <p><strong>Commentaire :</strong> <span id="resCommentaire"></span></p>
+</div>
+ 
+ 
+ 
+<script type="text/javascript">
+    const form = document.getElementById("myForm");
+ 
+    form.addEventListener("change", function (event) {
+        const target = event.target;
+       
+        if (target.id === "nom") {
+            const majuscules = (target.value.match(/[A-Z]/g) || []).length;
+            validateField(target, "nomError",
+                () => majuscules >= 3,
+                "Doit contenir au moins 3 majuscules");
+        }
+           
+        if (target.id === "prenom") validateField(target, "prenomError",
+            value => /^[A-Z][a-z]{2,}$/.test(value),
+            "Doit commencer par une majuscule suivie d'au moins 2 minuscules");
+           
+        if (target.id === "email") validateField(target, "emailError",
+            value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value), "Email invalide");
+           
+        if (target.id === "site") validateField(target, "siteError",
+            value => /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(value),
+            "URL invalide");
+           
+        if (target.id === "password") validateField(target, "passwordError",
+            value => /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[*\-#]).{6,}$/.test(value),
+            "6+ caractères avec lettres, chiffres et *-#");
+           
+        if (target.name === "gender") validateRadio("genderError");
+        if (target.name === "skills") validateCheckbox("skillsError", "skills");
+        if (target.id === "country") validateField(target, "countryError",
+            value => value !== "", "Sélectionnez un pays");
+        if (target.id === "commentaire") validateField(target, "commentaireError",
+            value => /[A-Za-z ]{10,}/.test(value), "10+ caractères alphabétiques");
+    });
+ 
+    function validateField(input, errorId, condition, errorMessage) {
+        const errorSpan = document.getElementById(errorId);
+        if (condition(input.value)) {
+            errorSpan.textContent = "✔ Valide";
+            errorSpan.style.color = "green";
+        } else {
+            errorSpan.textContent = `✖ ${errorMessage}`;
+            errorSpan.style.color = "red";
+        }
+    }
+ 
+    function validateRadio(errorId) {
+        const checked = document.querySelector('input[name="gender"]:checked');
+        updateMessage(errorId, checked, "Sélectionnez un genre");
+    }
+ 
+    function validateCheckbox(errorId, name) {
+        const checked = document.querySelectorAll(`input[name="${name}"]:checked`).length > 0;
+        updateMessage(errorId, checked, `Sélectionnez au moins une compétence`);
+    }
+ 
+    function updateMessage(errorId, isValidCondition, errorMessage) {
+        const errorSpan = document.getElementById(errorId);
+        if (isValidCondition) {
+            errorSpan.textContent = "✔ Valide";
+            errorSpan.style.color = "green";
+        } else {
+            errorSpan.textContent = `✖ ${errorMessage}`;
+            errorSpan.style.color = "red";
+        }
+    }
+ 
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
+       
+        // Trigger validation for all fields
+        document.getElementById("nom").dispatchEvent(new Event('change'));
+        document.getElementById("prenom").dispatchEvent(new Event('change'));
+        document.getElementById("email").dispatchEvent(new Event('change'));
+        document.getElementById("site").dispatchEvent(new Event('change'));
+        document.getElementById("password").dispatchEvent(new Event('change'));
+        document.getElementById("country").dispatchEvent(new Event('change'));
+        document.getElementById("commentaire").dispatchEvent(new Event('change'));
+       
+        // Manually trigger radio and checkbox validation
+        validateRadio("genderError");
+        validateCheckbox("skillsError", "skills");
+       
+        // Check if all fields are valid
+        const errorSpans = document.querySelectorAll('.error');
+        let allValid = true;
+       
+        errorSpans.forEach(span => {
+            if (span.textContent.startsWith('✖')) {
+                allValid = false;
+            }
+        });
+ 
+        if (allValid) {
+            // Display results
+            document.getElementById("resNom").textContent = document.getElementById("nom").value;
+            document.getElementById("resPrenom").textContent = document.getElementById("prenom").value;
+            document.getElementById("resEmail").textContent = document.getElementById("email").value;
+            document.getElementById("resSite").textContent = document.getElementById("site").value;
+            document.getElementById("resGender").textContent =
+                document.querySelector('input[name="gender"]:checked').value === 'male' ? 'Homme' : 'Femme';
+            document.getElementById("resSkills").textContent =
+                Array.from(document.querySelectorAll('input[name="skills"]:checked'))
+                    .map(checkbox => checkbox.value).join(', ');
+            document.getElementById("resCountry").textContent =
+                document.getElementById("country").options[document.getElementById("country").selectedIndex].text;
+            document.getElementById("resCommentaire").textContent = document.getElementById("commentaire").value;
+           
+            document.getElementById("result").style.display = "block";
+        } else {
+            alert("Veuillez corriger les erreurs avant de soumettre le formulaire.");
+        }
+    });
+    
+</script>
+
+
+</body>
+</html>

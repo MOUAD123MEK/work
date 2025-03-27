@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+</head>
+<body>
+      <script>
+            let date = new Date();
+            let jour = date.getDate();
+            let mois = date.getMonth() + 1;
+            let annee = date.getFullYear();
+            let heure = date.getHours();
+            let minutes = date.getMinutes();
+            let secondes = date.getSeconds();
+            document.write("Nous sommes le " + jour + "/" + mois + "/" + annee + " et il est " + heure + "h" + minutes + "m" + secondes + "s");
+      </script>
+</body>
+</html>

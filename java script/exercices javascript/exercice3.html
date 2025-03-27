@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice 2: Convertisseur de Monnaie</title>
+   
+</head>
+<body>
+    <h1>Convertisseur de Monnaie</h1>
+    <form name="frmConvertisseur">
+        <fieldset>
+            <legend>Convertisseur de Monnaie</legend>
+            <label for="montantDH">Montant en DH :</label>
+            <input type="number" name="montantDH" id="montantDH">
+            <br>
+            <label for="monnaie">Convertir en :</label>
+            <select name="monnaie" id="monnaie">
+                <option value="EURO">EURO</option>
+                <option value="DOLLAR">YEN</option>
+                <option value="DOLLAR">DOLLAR</option>
+            </select>
+            <br>
+            <label for="resultat">Résultat :</label>
+            <input type="number" name="resultat" id="resultat" readonly>
+            <br>
+            <input type="button" name="btnCalculer" value="Calculer">
+            <input type="button" name="btnEffacer" value="Effacer">
+        </fieldset>
+    </form>
+ 
+    <script>
+ 
+        const frmConvertisseur = document.forms['frmConvertisseur'];
+        const btnEffacer = frmConvertisseur.btnEffacer;
+        const btnCalculer = frmConvertisseur.btnCalculer;
+        const montantDH = frmConvertisseur.montantDH;
+        const resultat = frmConvertisseur.resultat;
+ 
+        btnEffacer.onclick = function(event) {
+            event.preventDefault();
+            montantDH.value = '';
+            resultat.value = '';
+            montantDH.focus();
+        };
+ 
+        btnCalculer.onclick = function(event) {
+            event.preventDefault();
+ 
+         
+            if (!montantDH.value || isNaN(parseFloat(montantDH.value))) {
+                montantDH.classList.add('error');
+                alert('Veuillez remplir le champ Montant en DH avec un nombre décimal.');
+                montantDH.focus();
+                return;
+            }
+ 
+            const tauxEURO = 12;
+            const tauxDOLLAR = 8;
+ 
+            const monnaie = frmConvertisseur.monnaie.value;
+ 
+            let resultatConversion;
+            if (monnaie === 'EURO') {
+                resultatConversion = parseFloat(montantDH.value) / tauxEURO;
+            } else if (monnaie === 'DOLLAR') {
+                resultatConversion = parseFloat(montantDH.value) / tauxDOLLAR;
+            }
+ 
+            resultat.value = resultatConversion.toFixed(2);
+        };
+    </script>
+</body>
+</html>

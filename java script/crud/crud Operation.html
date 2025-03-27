@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Crud Operation</title>
+      <style>
+      body{
+            font-family: Arial, sans-serif;
+            align-items: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+      }
+      .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+      }
+
+      .form_container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+      }
+
+      form {
+            flex-direction: column;
+            margin-bottom: 20px;
+      }
+
+      input {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+      }
+
+      button {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+      }
+
+      button:hover {
+            background-color:burlywood ;
+      }
+
+      table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+      }
+
+      th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+      }
+
+      th {
+            background-color: #007bff;
+            color: white;
+      }
+
+      .data-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+      }
+
+      .data-table tr:hover {
+            background-color: #ddd;
+      }
+
+</style>
+
+     
+</head>
+<body onload="readALL ">
+
+
+<div class="container">
+      <div class="form_container">
+              
+      <form class="create_form"> 
+            <input type="text" class="name" placeholder="Enter name"> 
+            <input type="email" class="email" placeholder="Enter email"> 
+            <button type="button" onclick="add()" >create</button>
+      </form>
+
+      <form class="update_form">
+            <input type="text" class="name" placeholder="Enter name"> 
+            <input type="email" class="email" placeholder="Enter email"> 
+            <button type="button" onclick="update()" >update </button>
+      </form>
+
+      <div class="add_div">
+            <button onclick="create()">Add +</button>
+
+      </div>
+
+      <table>
+            <thead>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Action</th>
+            </thead>
+
+            <tbody class="data-table ">
+
+            </tbody>
+
+
+      </table>
+      </div>
+</div>
+  
+         
+      <script src="./crud JS" >
+
+            let data=[
+                  {id: 1, name: "Joen", email: "joen@gmail.com"},
+                  {id: 2, name: "John", email: "john@gmail.com"},
+                  {id: 3, name: "Sami", email: "Sami@gmail.com"},
+            ]
+
+            function readALL(){
+                  localStorage.setItem("object",data);
+                  var tabledata= document.querySelector(".data-table");
+
+                  var object= localStorage.getItem('object');
+                  var objectdata= JSON.parse(object);
+                  var elements= "";
+
+                  objectdata.map(record=> (
+                        elements += <tr>
+                        <td>${record.name}</td>
+                        <td>${record.email}</td>
+                        <td>
+                        <button class="edit" onclick={edit(${record.id})}>Edit</button>
+                        <button>Delete</button>
+                        </td>
+                        </tr>   
+                  ))
+            }
+
+
+            function create(){
+                  var form= document.querySelector(".create_form").style.display ="block";
+                  document.querySelector(".add_div").style.display ="none";
+            }
+
+
+            function add(){
+                  var name= document.querySelector(".name").value;
+                  var email= document.querySelector(".email").value;
+
+                  var newobj= {id: 3, name: name, email: email}; 
+                  data.push(newobj); 
+
+                  document.querySelector(".create_form").style.display ="none";
+                  document.querySelector(".add_div").style.display ="block";
+
+                  readALL();
+            }
+
+            function edit(id){
+                  document.querySelector('.update_ form').style.display ="block";    
+                  var obj= data.find(obj=> obj.id==id);
+                  document.querySelector(".name").value= obj.name;
+                  document.querySelector(".email").value= obj.email;
+                  document.querySelector(".id").value= obj.id ;
+            }
+
+            function update(){
+                  var name= document.querySelector(".name").value;
+                  var email= document.querySelector(".email").value;
+                  var id= document.querySelector(".id").value;
+
+                  var obj= data.find(obj=> obj.id==id);
+                  obj.name= name;
+                  obj.email= email;
+
+                  document.querySelector(".update_form").style.display ="none";
+                  readALL();
+            }
+
+      </script>
+
+</body>  
+</html>

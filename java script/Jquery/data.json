@@ -1,0 +1,7 @@
+{
+    "fruits":[
+        {"codeFruit":1,"nameFruit":"Banane","PriceFruit":"10","image":"https://cdn.pixabay.com/photo/2015/11/05/23/08/banana-1025109_1280.jpg"},
+        {"codeFruit":2,"nameFruit":"Pomme","PriceFruit":"15","image":"https://cdn.pixabay.com/photo/2015/11/05/23/08/banana-1025109_1280.jpg"},
+        {"codeFruit":3,"nameFruit":"Avocat","PriceFruit":"20","image":"https://cdn.futura-sciences.com/buildsv6/images/wide1920/7/0/d/70d405432a_50153534_avocats-fruits.jpg"}
+    ]
+}

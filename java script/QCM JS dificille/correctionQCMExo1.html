@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style type="text/css">
+        .active{
+            color:green;
+            font-weight:bold;
+        }
+
+    </style>
+
+    <script type="text/javascript">
+     
+
+ 
+
+           /* let allLis=document.querySelectorAll('li');//un array
+            //console.log(allLis.length);
+             allLis.forEach(function(ele){
+                  ele.onclick=function(e){
+                       allLis.forEach(function(element){
+                          if(element.classList.contains('active'))
+                                  element.classList.remove('active')
+                          e.target.classList.add('active');
+                          //this.classList.add('active');
+
+                       });
+                  }
+
+             });
+     */ 
+
+        //solution en Jquery
+
+         
+
+    </script>
+
+</head>
+<body>
+
+    <ul>
+        <li class="active">Lorem, ipsum dolor.</li>
+        <li>Quo, assumenda fugiat?</li>
+        <li>Nemo, repellendus veniam.</li>
+        <li>Asperiores, natus error.</li>
+    </ul>
+
+
+    <script type="text/javascript">
+         $(document).ready(function(){
+             let lis=$('li');
+             $('li').each(function(pos,ele){
+                 $(ele).click(function(e){
+                        
+                    $('li').each(function(index,element){
+                           $(element).removeClass('active');
+                           //element.classList.remove('active')
+
+
+                    });
+
+                   // e.target.classList.add('active');
+                    $(e.target).addClass('active');
+                   // $(this).addClass('active');
+
+                 });
+
+             });
+
+
+        });
+
+ 
+    </script>
+    
+</body>
+</html>

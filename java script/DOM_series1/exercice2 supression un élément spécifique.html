@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajout et suppression de paragraphes</title>
+</head>
+<body>
+      <div id="container">
+            <button id="addParagraphButton">Ajouter un paragraphe</button>
+
+      </div>
+
+
+  <script>
+    let paragraphCount = 1;
+
+    document.getElementById("addParagraphButton").addEventListener("click", function() {
+      const container = document.getElementById("container");
+      const newParagraph = document.createElement("p");
+
+      // Ajoute le texte au paragraphe
+      newParagraph.textContent = `Cliquez pour supprimer - ${paragraphCount}`;
+
+      // Ajoute un événement "click" pour supprimer le paragraphe
+      newParagraph.addEventListener("click", function() {
+        container.removeChild(newParagraph);
+      });
+
+      // Ajoute le paragraphe au conteneur
+      container.appendChild(newParagraph);
+      paragraphCount++;
+    });
+  </script>
+</body>
+</html>

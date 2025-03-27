@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajout en première position</title>
+
+  <style>
+    p {
+      cursor: pointer;
+    }
+
+    p:hover {
+      color: red;
+    }
+
+    h2 {
+      color: green;
+    }
+
+    button {
+      margin: 10px;
+      padding: 5px 10px;
+      background-color: green;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: lightblue;
+
+    }
+  </style>
+</head>
+<body>
+  <button id="addParagraphButton" >Ajouter un paragraphe</button>
+  <button id="addBeforeButton">Ajouter avant</button>
+  <button id="deleteAllButton">Supprimer tout</button>
+  <div id="container"></div>
+
+  <script>
+    let paragraphCount = 1;
+
+    // Ajouter un paragraphe à la fin
+    document.getElementById("addParagraphButton").addEventListener("click", function() {
+      const container = document.getElementById("container");
+      const newParagraph = document.createElement("p");
+      newParagraph.textContent = `Nouveau paragraphe ajouté en premier - ${paragraphCount}`;
+
+      // Événement pour remplacer le <p> par un <h2>
+      newParagraph.addEventListener("click", function() {
+        const newHeading = document.createElement("h2");
+        newHeading.textContent = newParagraph.textContent;
+        container.replaceChild(newHeading, newParagraph);
+      });
+
+      container.appendChild(newParagraph);
+      paragraphCount++;
+    });
+
+    // Ajouter un paragraphe en première position
+    document.getElementById("addBeforeButton").addEventListener("click", function() {
+      const container = document.getElementById("container");
+      const newParagraph = document.createElement("p");
+      newParagraph.textContent = `Nouveau paragraphe ajouté en premier`;
+
+      if (container.firstChild) {
+        container.insertBefore(newParagraph, container.firstChild);
+      } else {
+        container.appendChild(newParagraph);
+      }
+    });
+
+    // Supprimer tous les éléments
+    document.getElementById("deleteAllButton").addEventListener("click", function() {
+      document.getElementById("container").innerHTML = "";
+    });
+  </script>
+</body>
+</html>

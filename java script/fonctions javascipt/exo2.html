@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+</head>
+<body>
+      <script>
+            //Créer une fonction sommeTableau qui prend un tableau de nombres et retourne la somme de ses éléments sans utiliser reduce().
+            //Refaire l’exercice en utilisant reduce
+
+            function sommeTableau(tab){
+                  let somme = 0;
+                  for(let i = 0; i < tab.length; i++){
+                        somme += tab[i];
+                  }
+                  return somme;
+            }
+
+            let tab = [1,2,3,4,5];
+            console.log(sommeTableau(tab));
+
+
+            let tab2 = [1,2,3,4,5];
+            console.log(tab2.reduce((acc,cur) => acc + cur));
+
+
+
+
+      </script>
+</body>
+</html>

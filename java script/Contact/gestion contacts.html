@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Management</title>
+
+
+  <style>
+
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      background-color: aquamarine;
+    }
+
+    legend {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-align: center;
+      color: blue;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      background-color: bisque;
+      border: none;
+      border-radius: 25px;
+      box-sizing: border-box;
+      border: 2px solid black;
+    }
+
+    button {
+      background-color: blue;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .contact-list {
+      margin-top: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #333;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: violet;
+    }
+
+    
+    
+
+    .contact-details {
+      flex: 1;
+      margin-left: 10px;
+    }
+
+    .contact-actions button {
+      padding: 5px;
+      margin-left: 5px;
+    }
+
+    .edit-button {
+      background-color: orange;
+      color: white;
+    }
+
+    .delete-button {
+      background-color: red;
+      color: white;
+    }
+
+    img {
+      width: 80px;
+      height: 80px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <form id="contactForm" >
+      <fieldset>
+      <legend>Gestion des Contacts</legend>
+  <input type="text" id="name" placeholder="Nom">
+  <input type="email" id="email" placeholder="Email">
+  <input type="tel" id="phone" placeholder="Téléphone">
+  <input type="file" id="photo">
+  <button id="saveButton">Enregistrer</button>
+
+  <input type="text" id="search" placeholder="Rechercher un contact...">
+
+  <div id="contactList" class="contact-list"></div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>image</th>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Téléphone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="contactList"></tbody>
+                  <tr>
+                        <td><img src="john doe.png" alt="img"></td>
+                        <td>John Doe</td>
+                        <td>i0HsT@example.com</td>
+                        <td>1234567890</td>
+                        <td>
+                            <button class="edit-button">Modifier</button>
+                            <button class="delete-button">Supprimer</button>
+                        </td>
+                  </tr>
+
+                  <tr>
+                        <td><img src="jane doe.png" alt="img"></td>
+                        <td>Jane Doe</td>
+                        <td>3Tm2D@example.com</td>
+                        <td>9876543210</td>
+                        <td>
+                            <button class="edit-button">Modifier</button>
+                            <button class="delete-button">Supprimer</button>
+                        </td>
+                  </tr>
+
+                  <tr>
+                        <td><img src="john smith.png" alt="img"></td>
+                        <td>John Smith</td>
+                        <td>i0HsT@example.com</td>
+                        <td>1234567890</td>
+                        <td>
+                            <button class="edit-button">Modifier</button>
+                            <button class="delete-button">Supprimer</button>
+                        </td>
+                  </tr>
+
+
+
+                 
+            </table>
+
+      </fieldset>
+
+      </form>
+
+  <script src="script.js">
+const saveButton = document.getElementById("saveButton");
+const contactList = document.getElementById("contactList");
+const searchInput = document.getElementById("search");
+
+let contacts = [];
+
+saveButton.addEventListener("click", function () {
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const photoInput = document.getElementById("photo");
+
+  if (name === "" || email === "" || phone === "") {
+    alert("Veuillez remplir tous les champs !");
+    return;
+  }
+
+  // Handle photo upload
+  let photoURL = "https://via.placeholder.com/40"; // Default image
+  if (photoInput.files && photoInput.files[0]) {
+    const fileReader = new FileReader();
+    fileReader.onload = function (e) {
+      photoURL = e.target.result;
+      addContact(name, email, phone, photoURL);
+    };
+    fileReader.readAsDataURL(photoInput.files[0]);
+  } else {
+    addContact(name, email, phone, photoURL);
+  }
+
+  // Clear form fields
+  document.getElementById("name").value = "";
+  document.getElementById("email").value = "";
+  document.getElementById("phone").value = "";
+  document.getElementById("photo").value = "";
+});
+
+function addContact(name, email, phone, photoURL) {
+  const contact = { name, email, phone, photoURL };
+  contacts.push(contact);
+  renderContacts();
+}
+
+function renderContacts() {
+  contactList.innerHTML = "";
+
+  contacts.forEach((contact, index) => {
+    const contactCard = document.createElement("div");
+    contactCard.className = "contact-card";
+
+   
+
+    contactList.appendChild(contactCard);
+  });
+}
+
+function deleteContact(index) {
+  contacts.splice(index, 1);
+  renderContacts();
+}
+
+function editContact(index) {
+  const contact = contacts[index];
+  document.getElementById("name").value = contact.name;
+  document.getElementById("email").value = contact.email;
+  document.getElementById("phone").value = contact.phone;
+  deleteContact(index); // Remove the contact to avoid duplicates
+}
+
+searchInput.addEventListener("input", function () {
+  const query = searchInput.value.toLowerCase();
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(query) ||
+    contact.email.toLowerCase().includes(query) ||
+    contact.phone.includes(query)
+  );
+
+  contactList.innerHTML = "";
+  filteredContacts.forEach((contact, index) => {
+    const contactCard = document.createElement("div");
+    contactCard.className = "contact-card";
+
+    
+  });
+});
+
+  </script>
+</body>
+</html>

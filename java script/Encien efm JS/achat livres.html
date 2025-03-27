@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Achat de livres</title>
+      <style>
+            body{
+                  font-family: Arial, sans-serif;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  padding: 20px;
+                  background-color: aquamarine;
+                  color: #333;
+            }
+
+            h1{
+                  color: #af534c;
+            }
+
+            #achat-livres{
+                  border: 1px solid black;
+                  padding: 10px;
+                  width: 50%;
+                  margin: 0 auto;
+                  background-color: chocolate;
+            }
+
+            #achat-livres label{
+                  display: block;
+                  margin-bottom: 5px;
+            }
+
+            #achat-livres input[type="text"],
+            #achat-livres input[type="number"],
+            #achat-livres select{
+                  width: 100%;
+                  padding: 5px;
+                  margin-bottom: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 3px;
+                  background-color: violet;
+                  color: white;
+            }
+
+            #achat-livres input[type="submit"]{
+                  background-color: #4CAF50;
+                  color: white;
+                  padding: 10px 20px;
+                  border: none;
+                  border-radius: 3px;
+                  cursor: pointer;
+            }
+
+            #achat-livres input[type="submit"]:hover{
+                  background-color: #45a049;
+            }
+
+            #achat-livres table{
+                  width: 100%;
+                  border-collapse: collapse;
+                  margin-top: 10px;
+            }
+
+            #achat-livres th,
+            #achat-livres td{
+                  border: 1px solid #ddd;
+                  padding: 8px;
+                  text-align: left;
+                  background-color: blueviolet;
+            }
+
+            #achat-livres th{
+                  background-color: burlywood
+            }
+
+
+            #achat-livres #total{
+                  margin-top: 10px;
+                  font-size: 1.2em;
+                  font-weight: bold;
+            }
+
+           
+            #achat-livres img{
+                  display: block;
+                  width: 80px;
+                  height: 80px;
+                  margin-bottom: 10px;
+                  position: relative;
+            }
+
+            #achat-livres button{
+                  background-color: #4CAF50;
+                  color: white;
+                  padding: 10px 20px;
+                  border: none;
+                  border-radius: 3px;
+                  cursor: pointer;
+            }
+
+            #achat-livres button:hover{
+                  background-color: rgb(250, 215, 215);
+            }
+
+           
+
+      </style>
+</head>
+<body>
+      <h1>Achat de livres</h1>
+      <form id="achat-livres">
+            <label for="livre"><b>Choisir Votre Livre:</b></label><br>
+            <select name="livre" id="livre">Programation javascript
+                  <option value="Programation en javascript">Programation en javascript</option>
+                  <option value="Programation en java">Programation en java</option>
+                  <option value="Programation en python">Programation en python</option>
+                  <option value="Programation en c++">Programation en c++</option>
+                  <option value="Programation en c#">Programation en c#</option>
+            </select><br>
+           
+            <label for="livre">Titre :</label>
+            <input type="text" id="livre" name="livre" placeholder="Programation en javascript"><br>
+            <label for="auteur">Prix :</label>
+            <input type="number" id="prix" name="prix" min="1" max="500" value="250"><br>
+            <label for="Image">Image</label><br>
+            <img src="js.png" alt="Image">
+            <button onclick="ajouter()">Ajouter au Panier</button>
+            <button onclick="retirer()">Retirer le Panier</button>
+
+            <table>
+                  <thead>
+                        <tr>
+                              <th>Titre</th>
+                              <th>Prix</th>
+                        </tr>
+                  </thead>
+
+                  <tbody id="panier">
+                        <tr>
+                              <td>Langage C</td>
+                              <td>150</td>
+                        </tr>
+                        <tr>
+                              <td>Langage C++</td>
+                              <td>250</td>
+                        </tr>
+
+                  </tbody>
+            </table>
+
+            <div id="total"><b>Prix Total :</b></div>
+      </form>
+            
+      <script src="achat livres.js">
+            let total = 0;
+            let prixElement = document.getElementById('prix');
+            let livreElement = document.getElementById('livre');
+            let panier = document.getElementByid('panier');
+            let Elemement = document.getElementById('total');
+            
+
+      
+            function chargerLivres() {
+                  const livres = [
+                        { titre: 'Programation en javascript', prix: 250 },
+                        { titre: 'Programation en java', prix: 250 },
+                        { titre: 'Programation en python', prix: 250 },
+                        { titre: 'Programation en c++', prix: 250 },
+                        { titre: 'Programation en c#', prix: 250 }
+                  ];
+                  livres.forEach(livre => {
+                        const option = document.createElement('option');
+                        option.value = livre.titre;
+                        option.textContent = livre.titre;
+                        livreElement.appendChild(option);
+                  });
+            }
+            function afficherLivres() {
+                  const livres = [
+                        { titre: 'Programation en javascript', prix: 250 },
+                        { titre: 'Programation en java', prix: 250 },
+                        { titre: 'Programation en python', prix: 250 },
+                        { titre: 'Programation en c++', prix: 250 },
+                        { titre: 'Programation en c#', prix: 250 }
+                  ];
+                  livres.forEach(livre => {
+                        const option = document.createElement('option');
+                        option.value = livre.titre;
+                        option.textContent = livre.titre;
+                        livreElement.appendChild(option);
+                  });
+            }
+
+            function ajouter() {
+                  const livre = livreElement.value;
+                  const prix = prixElement.value;
+                  const tr = document.createElement('tr');
+                  const tdTitre = document.createElement('td');
+                  const tdPrix = document.createElement('td');
+                  tdTitre.textContent = livre;
+                  tdPrix.textContent = prix;
+                  tr.appendChild(tdTitre);
+                  tr.appendChild(tdPrix);
+                  panier.appendChild(tr);
+                  total += parseInt(prix);
+                  totalElement.textContent = `Prix Total : ${total}`;
+            }
+
+            function retirer() {    
+                  if (panier.children.length > 0) {
+                        const tr = panier.children[panier.children.length - 1];
+                        const prix = tr.children[1].textContent;
+                        panier.removeChild(tr);
+                        total -= parseInt(prix);
+                        totalElement.textContent = `Prix Total : ${total}`;
+                  }
+            }
+
+            chargerLivres();
+            afficherLivres();
+      </script>
+</body>
+</html>

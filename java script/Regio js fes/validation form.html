@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation de formulaire</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+      <style>
+            body {
+                  font-family: Arial, sans-serif;
+                  margin: 20px;
+                  border:1px solid black;
+                  background-color: bisque;
+
+            }
+
+            .form {
+                  width: 50%;
+                  margin: 0 auto;
+            }
+
+            label {
+                  font-weight: bold;
+                  display: block;
+                  margin-top: 10px;
+                  color: blueviolet;
+            }
+
+            h1 {
+                  text-align: center;
+                  color: blackyht;
+            }
+
+            input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"] {
+                  width: 100%;
+                  padding: 10px;
+                  margin-top: 5px;
+                  margin-bottom: 10px;
+                  border: 1px solid black;
+                  border-radius: 4px;
+                  box-sizing: border-box;
+
+            }
+
+            select {
+                  width: 100%;
+                  padding: 10px;
+                  margin-top: 5px;
+                  margin-bottom: 10px;
+                  border: 1px solid black;
+                  border-radius: 4px;
+                  box-sizing: border-box;
+            }
+
+            button{
+                  background-color: #4CAF50;
+                  color: white;
+                  padding: 10px 20px;
+                  margin: 8px 0;
+                  border: none;
+                  border-radius: 4px;
+                  cursor: pointer;
+            }
+
+            button:hover {
+                  background-color:brown;
+            }
+
+
+            .error, .validate {
+                  display: block;
+                  margin-top: 5px;
+            }
+
+
+            .error {
+                  color: red;
+                  font-size: 14px;
+            }
+            .validate {
+                  color: green;
+                  font-size: 14px;
+            }
+      </style>
+
+        
+    </style>
+</head>
+<body>
+
+    <form id="myForm">
+        <h1>Validation des formulaires</h1>
+
+        <label for="name">Nom:</label>
+        <input type="text" id="name">
+        <span class="error" id="nameError"></span>
+        <span class="validate" id="nameValidate"></span>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email">
+        <span class="error" id="emailError"></span>
+        <span class="validate" id="emailValidate"></span>
+
+        <label for="password">Mot de passe:</label>
+        <input type="password" id="password">
+        <span class="error" id="passwordError"></span>
+        <span class="validate" id="passwordValidate"></span>
+
+        <label for="age">Âge:</label>
+        <input type="number" id="age">
+        <span class="error" id="ageError"></span>
+        <span class="validate" id="ageValidate"></span>
+
+        <label for="dob">Date de naissance:</label>
+        <input type="date" id="dob">
+        <span class="error" id="dobError"></span>
+        <span class="validate" id="dobValidate"></span>
+
+        <label>Genre:</label>
+        <input type="radio" name="gender" value="Homme"> Homme 
+        <input type="radio" name="gender" value="Femme"> Femme
+        <span class="error" id="genderError"></span>
+        <span class="validate" id="genderValidate"></span>
+
+        <label for="country">Pays:</label>
+        <select id="country">
+            <option value="">--Sélectionner--</option>
+            <option value="France">France</option>
+            <option value="Canada">Canada</option>
+            <option value="USA">USA</option>
+        </select>
+        <span class="error" id="countryError"></span>
+        <span class="validate" id="countryValidate"></span>
+
+        <label>Hobbies :</label>
+        <input type="checkbox" name="hobby" value="Sport"> Sport
+        <input type="checkbox" name="hobby" value="Lecture"> Lecture
+        <input type="checkbox" name="hobby" value="Musique"> Musique
+        <span class="error" id="hobbyError"></span>
+
+        <label>Accepter les conditions :</label>
+        <input type="checkbox" id="terms">
+        <span class="error" id="termsError"></span>
+        <span class="validate" id="termsValidate"></span>
+
+        <label for="profilePic">Photo de profil:</label>
+        <input type="file" id="profilePic">
+        <span class="error" id="profilePicError"></span>
+        <span class="validate" id="profilePicValidate"></span>
+
+        <button type="submit">Envoyer</button>
+    </form>
+
+    <script>
+        function validateInput(id, validationFunc) {
+            let input = document.getElementById(id);
+            let errorSpan = document.getElementById(id + "Error");
+            let validateSpan = document.getElementById(id + "Validate");
+
+            input.addEventListener("change", function () {
+                let result = validationFunc(input.value);
+                if (result === true) {
+                    errorSpan.innerHTML = "";
+                    validateSpan.innerHTML = "✅";
+                } else {
+                    errorSpan.innerHTML = "❌ " + result;
+                    validateSpan.innerHTML = "";
+                }
+            });
+        }
+
+        validateInput("name", value => value.length >= 3 ? true : "Le nom doit contenir au moins 3 lettres");
+        validateInput("email", value => /\S+@\S+\.\S+/.test(value) ? true : "Email invalide");
+        validateInput("password", value => value.length >= 6 ? true : "Mot de passe trop court");
+        validateInput("age", value => value >= 18 ? true : "Âge minimum 18 ans");
+        validateInput("dob", value => value ? true : "Date invalide");
+
+        document.getElementById("profilePic").addEventListener("change", function () {
+            let file = this.files[0];
+            let errorSpan = document.getElementById("profilePicError");
+            let validateSpan = document.getElementById("profilePicValidate");
+
+            if (file && /\.(jpg|jpeg|png)$/i.test(file.name)) {
+                errorSpan.innerHTML = "";
+                validateSpan.innerHTML = "✅";
+            } else {
+                errorSpan.innerHTML = "❌ Fichier non valide";
+                validateSpan.innerHTML = "";
+            }
+        });
+
+        document.getElementById("myForm").addEventListener("submit", function (e) {
+            let genderChecked = document.querySelector('input[name="gender"]:checked');
+            let termsChecked = document.getElementById("terms").checked;
+            let country = document.getElementById("country").value;
+
+            if (!genderChecked) {
+                document.getElementById("genderError").innerHTML = "❌ Sélectionnez un genre";
+                e.preventDefault();
+            }
+
+            if (!termsChecked) {
+                document.getElementById("termsError").innerHTML = "❌ Vous devez accepter les conditions";
+                e.preventDefault();
+            }
+
+            if (country === "") {
+                document.getElementById("countryError").innerHTML = "❌ Sélectionnez un pays";
+                e.preventDefault();
+            }
+        });
+    </script>
+
+</body>
+</html>

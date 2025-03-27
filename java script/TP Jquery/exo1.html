@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcul valeur énergétique d'un repas</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .food-item {
+            margin-bottom: 10px;
+        }
+
+        .food-item label {
+            display: inline-block;
+            width: 80px;
+        }
+
+        input[type="text"] {
+            width: 80px;
+            margin-right: 10px;
+        }
+
+        .unit {
+            display: inline-block;
+            width: 80px;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+            display: none;
+        }
+
+        button {
+            margin-top: 15px;
+            background-color: blueviolet;
+            color: white;
+            border-radius: 5px;
+            padding: 10PX;
+        }
+
+        button:hover{
+            background-color: brown;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calcul valeur énergétique d'un repas</h1>
+    
+    <div>
+        <p>Choisir les aliments qui composent votre repas :</p>
+        
+        <div class="food-item">
+            <input type="checkbox" id="pain" name="pain">
+            <label for="pain">Pain :</label>
+            <input type="number" id="pain-qty" value="100">
+            <span class="unit">grammes</span>
+        </div>
+        
+        <div class="food-item">
+            <input type="checkbox" id="viande" name="viande">
+            <label for="viande">Viande :</label>
+            <input type="number" id="viande-qty" value="100">
+            <span class="unit">grammes</span>
+        </div>
+        
+        <div class="food-item">
+            <input type="checkbox" id="legumes" name="legumes">
+            <label for="legumes">Légumes :</label>
+            <input type="number" id="legumes-qty" value="100">
+            <span class="unit">grammes</span>
+        </div>
+        
+        <div class="food-item">
+            <input type="checkbox" id="banane" name="banane">
+            <label for="banane">Banane :</label>
+            <input type="number" id="banane-qty" value="1">
+            <span class="unit">unités</span>
+        </div>
+        
+        <div class="food-item">
+            <input type="checkbox" id="pomme" name="pomme">
+            <label for="pomme">Pomme :</label>
+            <input type="number" id="pomme-qty" value="1">
+            <span class="unit">unités</span>
+        </div>
+        
+        <div class="food-item">
+            <input type="checkbox" id="yaourt" name="yaourt">
+            <label for="yaourt">Yaourt :</label>
+            <input type="number" id="yaourt-qty" value="1">
+            <span class="unit">unités</span>
+        </div>
+        
+        <button id="calculer">Calculer</button>
+        
+        
+        <div class="result">
+            La valeur énergétique de votre repas est : <span id="total-calories">0</span> Kilo calories
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#calculer").click(function() {
+                // Vérifier si au moins une case est cochée
+                if ($("input[type=checkbox]:checked").length === 0) {
+                    $("#error-message").show();
+                    return;
+                } else {
+                    $("#error-message").hide();
+                }
+                
+                // Valeurs caloriques (kilo calories) pour 100g ou 1 unité
+                const caloriesValues = {
+                    "pain": 2.75,      // 275 kcal pour 100g
+                    "viande": 1.8,     // 180 kcal pour 100g
+                    "legumes": 0.4,    // 40 kcal pour 100g
+                    "banane": 116,     // 116 kcal par banane
+                    "pomme": 80,       // 80 kcal par pomme
+                    "yaourt": 140      // 140 kcal par yaourt
+                };
+                
+                let totalCalories = 0;
+                
+                // Calculer pour chaque aliment sélectionné
+                if ($("#pain").is(":checked")) {
+                    const painQty = parseFloat($("#pain-qty").val());
+                    totalCalories += (painQty * caloriesValues.pain);
+                }
+                
+                if ($("#viande").is(":checked")) {
+                    const viandeQty = parseFloat($("#viande-qty").val());
+                    totalCalories += (viandeQty * caloriesValues.viande);
+                }
+                
+                if ($("#legumes").is(":checked")) {
+                    const legumesQty = parseFloat($("#legumes-qty").val());
+                    totalCalories += (legumesQty * caloriesValues.legumes);
+                }
+                
+                if ($("#banane").is(":checked")) {
+                    const bananeQty = parseFloat($("#banane-qty").val());
+                    totalCalories += (bananeQty * caloriesValues.banane);
+                }
+                
+                if ($("#pomme").is(":checked")) {
+                    const pommeQty = parseFloat($("#pomme-qty").val());
+                    totalCalories += (pommeQty * caloriesValues.pomme);
+                }
+                
+                if ($("#yaourt").is(":checked")) {
+                    const yaourtQty = parseFloat($("#yaourt-qty").val());
+                    totalCalories += (yaourtQty * caloriesValues.yaourt);
+                }
+                
+                // Afficher le résultat arrondi à l'entier le plus proche
+                $("#total-calories").text(Math.round(totalCalories));
+            });
+        });
+    </script>
+</body>
+</html>

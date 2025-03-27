@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+      <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            label, input, select, button {  margin: 10px; color: violet; }
+            fieldset { border: 3px solid black;  border-radius: 20px; background-color: rgb(255, 239, 149); justify-content: center; align-items: center; }
+      </style>
+</head>
+<body>
+      <fieldset>
+            <h1>Compte à Rebours</h1>
+                  <label for="dateEvenement">Date de l'événement:</label>
+                  <input type="date" id="dateEvenement">
+                  <button onclick="demarrer()">Demarrer</button>
+            </div>
+            <p id="ageResult"></p>
+      </fieldset>
+
+      <script>
+            function demarrer() {
+                  var dateEvenement = document.getElementById("dateEvenement").value;
+                  var dateActuelle = new Date();
+                  var dateDiff = dateEvenement - dateActuelle;
+                  var joursRestants = Math.ceil(dateDiff / (1000 * 60 * 60 * 24));
+                  var heuresRestantes = Math.floor((dateDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                  var minutesRestantes = Math.floor((dateDiff % (1000 * 60 * 60)) / (1000 * 60));
+                  var secondesRestantes = Math.floor((dateDiff % (1000 * 60)) / 1000);
+                  return;
+
+                  if (joursRestants < 0) {
+                        joursRestants = 0;
+                  }
+
+                  if (heuresRestantes < 0) {
+                        heuresRestantes = 0;
+                  }
+
+                  if (minutesRestantes < 0) {
+                        minutesRestantes = 0;
+                  }
+
+                  if (secondesRestantes < 0) {
+                        secondesRestantes = 0;
+                  }
+
+                  document.getElementById("ageResult").innerHTML = "Il reste " + joursRestants + " jours avant l'événement.";
+            }
+      </script>
+</body>
+</html>
