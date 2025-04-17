@@ -1,0 +1,28 @@
+<head>
+    <style>
+        /* Style global du menu de navigation */
+        nav {
+            background-color: #f8f9fa; /* couleur de fond claire */
+            padding: 10px; /* espacement autour du texte */
+            text-align: center; /* centrer le texte */
+            font-family: Arial, sans-serif; /* police sans-serif pour la clarté */
+        }
+
+        nav a {
+            text-decoration: none; /* Supprimer le soulignement */
+            color: #007bff; /* Couleur bleue des liens */
+            margin: 0 15px; /* Espacement entre les liens */
+            font-size: 16px; /* Taille de police */
+        }
+
+        nav a:hover {
+            color: #0056b3; /* Changer la couleur au survol */
+        }
+
+        hr {
+            border: 1px solid #ddd; /* couleur de la ligne horizontale */
+            width: 80%; /* largeur de la ligne */
+            margin: 20px auto; /* centrer la ligne */
+        }
+    </style>
+</head>
